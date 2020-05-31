@@ -27,10 +27,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/intermachine-developers/stack-analyze.git"
+    "url": ["git+https://gitlab.com/Intermachine-dev/stack-analyze.git","git+https://github.com/intermachine-developers/stack-analyze.git"]
   },
   "bugs": {
-    "url": "https://github.com/intermachine-developers/stack-analyze/issues"
+    "url": ["https://gitlab.com/Intermachine-dev/stack-analyze/-/issues","https://github.com/intermachine-developers/stack-analyze/issues"]
   },
-  "homepage": "https://github.com/intermachine-developers/stack-analyze#readme"
+  "homepage": ["https://gitlab.com/Intermachine-dev/stack-analyze","https://github.com/intermachine-developers/stack-analyze#readme"]
 }
