@@ -1,0 +1,36 @@
+{
+  "name": "stack-analyze",
+  "version": "1.0.0",
+  "description": "cli tech stack analyze using node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bin/index.js",
+    "lint": "eslint bin/index.js"
+  },
+  "keywords": [
+    "wappalyzer",
+    "tech stack",
+    "cli"
+  ],
+  "author": "Intermachine developers",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^5.1.0",
+    "inquirer": "^7.1.0",
+    "wappalyzer": "^6.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0"
+  },
+  "bin": {
+    "stack-analyze": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intermachine-developers/stack-analyze.git"
+  },
+  "bugs": {
+    "url": "https://github.com/intermachine-developers/stack-analyze/issues"
+  },
+  "homepage": "https://github.com/intermachine-developers/stack-analyze#readme"
+}
