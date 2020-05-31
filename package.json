@@ -1,36 +1,40 @@
 {
   "name": "stack-analyze",
-  "version": "1.0.0",
-  "description": "cli tech stack analyze using node.js",
+  "version": "1.0.1",
+  "description": "cli tech stack analyze with node.js using the wappalyzer module.",
   "main": "index.js",
-  "scripts": {
-    "start": "node bin/index.js",
-    "lint": "eslint bin/index.js"
+  "bin": {
+    "stack-analyze": "index.js"
   },
-  "keywords": [
-    "wappalyzer",
-    "tech stack",
-    "cli"
-  ],
-  "author": "Intermachine developers",
-  "license": "MIT",
   "dependencies": {
     "commander": "^5.1.0",
-    "inquirer": "^7.1.0",
-    "wappalyzer": "^6.0.2"
+    "inquirer": "^7.1.0"
   },
   "devDependencies": {
     "eslint": "^7.1.0"
   },
-  "bin": {
-    "stack-analyze": "index.js"
+  "scripts": {
+    "start": "node bin/index.js",
+    "lint": "eslint index.js"
   },
   "repository": {
     "type": "git",
-    "url": ["git+https://gitlab.com/Intermachine-dev/stack-analyze.git","git+https://github.com/intermachine-developers/stack-analyze.git"]
+    "url": [
+      "git+https://gitlab.com/Intermachine-dev/stack-analyze.git",
+      "git+https://github.com/intermachine-developers/stack-analyze.git"
+    ]
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
-    "url": ["https://gitlab.com/Intermachine-dev/stack-analyze/-/issues","https://github.com/intermachine-developers/stack-analyze/issues"]
+    "url": [
+      "https://gitlab.com/Intermachine-dev/stack-analyze/-/issues",
+      "https://github.com/intermachine-developers/stack-analyze/issues"
+    ]
   },
-  "homepage": ["https://gitlab.com/Intermachine-dev/stack-analyze","https://github.com/intermachine-developers/stack-analyze#readme"]
+  "homepage": [
+    "https://gitlab.com/Intermachine-dev/stack-analyze",
+    "https://github.com/intermachine-developers/stack-analyze#readme"
+  ]
 }
