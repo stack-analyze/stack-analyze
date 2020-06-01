@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // modules
-const { version, description } = require('../package.json')
+const { version, description } = require('./package.json')
 const Wappalyzer = require('wappalyzer')
 const inquirer = require('inquirer')
 const program = require('commander')
