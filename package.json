@@ -19,22 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": [
-      "git+https://gitlab.com/Intermachine-dev/stack-analyze.git",
-      "git+https://github.com/intermachine-developers/stack-analyze.git"
-    ]
+    "url": "git+https://github.com/intermachine-developers/stack-analyze.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": [
-      "https://gitlab.com/Intermachine-dev/stack-analyze/-/issues",
-      "https://github.com/intermachine-developers/stack-analyze/issues"
-    ]
+    "url": "https://github.com/intermachine-developers/stack-analyze/issues"
   },
-  "homepage": [
-    "https://gitlab.com/Intermachine-dev/stack-analyze",
-    "https://github.com/intermachine-developers/stack-analyze#readme"
-  ]
+  "homepage": "https://github.com/intermachine-developers/stack-analyze#readme"
 }
