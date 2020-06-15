@@ -1,6 +1,6 @@
 {
   "name": "stack-analyze",
-  "version": "2.0",
+  "version": "1.5",
   "description": "cli tech stack analyze with node.js using the wappalyzer module.",
   "main": "index.js",
   "bin": {
