@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
 // modules
-const { version, description } = require('./package.json')
+const { version } = require('./package.json')
 const Wappalyzer = require('wappalyzer')
 const inquirer = require('inquirer')
-const program = require('commander')
 
 //wappalyzer
 const stack = async (url) => {
@@ -23,10 +22,7 @@ const stack = async (url) => {
   await wappalyzer.destroy()
 }
 
-program
-  .version(version, '-v --version')
-  .description(description)
-program.parse(process.argv)
+console.log(`stack analyze by intermachine developers version: ${version}`)
 
 //promot command
 inquirer
@@ -37,3 +33,4 @@ inquirer
   .then((answers) => {
     stack(answers.site)
   })
+
