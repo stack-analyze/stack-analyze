@@ -1,5 +1,6 @@
 # stack analyze
 
+[![npm version](https://badge.fury.io/js/stack-analyze.svg)](https://badge.fury.io/js/stack-analyze)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 cli tech stack analyze with **node.js** using the wappalyzer module this node external module.
