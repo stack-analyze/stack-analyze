@@ -1,3 +1,10 @@
-src
+# repo folders
+/.github
+/.gitlab
+# dev
+/src
+/test
 .eslintrc.json
 .prettierrc
+.eslintignore
+jsconfig.json

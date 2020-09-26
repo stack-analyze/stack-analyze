@@ -1,17 +1,28 @@
 {
-    "env": {
-        "commonjs": true,
-        "es6": true,
-        "node": true
-    },
-    "extends": "eslint:recommended",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaVersion": 11
-    },
-    "rules": {
-    }
+  "env": {
+    "commonjs": true,
+    "es2020": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "rules": {
+    "no-var": "error",
+    "eqeqeq": "warn",
+    "default-case": "error",
+    "valid-jsdoc": "error",
+    "eol-last": "error",
+    "spaced-comment": "error",
+    "comma-spacing": "error",
+    "block-spacing": "error",
+    "prefer-const": "error",
+    "quotes": "error",
+    "indent": ["error", 2, {
+        "SwitchCase": 1
+    }],
+    "semi":"error"
+  }
 }

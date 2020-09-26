@@ -1,21 +1,29 @@
 {
   "name": "stack-analyze",
-  "version": "1.0.6",
-  "description": "cli tech stack analyze with node.js using the wappalyzer module.",
+  "version": "1.0.7",
+  "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api",
   "main": "index.js",
+  "engines": {
+    "node": ">=12"
+  },
   "bin": {
     "stack-analyze": "index.js"
   },
   "dependencies": {
-    "inquirer": "^7.1.0",
-    "wappalyzer": "^6.0.2"
+    "axios": "^0.20.0",
+    "figlet": "^1.5.0",
+    "inquirer": "^7.3.3",
+    "wappalyzer": "^6.3.6"
   },
   "devDependencies": {
-    "eslint": "^7.1.0"
+    "eslint": "^7.9.0",
+    "jest": "^26.4.2"
   },
   "scripts": {
     "start": "node index.js",
-    "lint": "eslint index.js"
+    "test": "jest",
+    "lint:test": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "repository": {
     "type": "git",
@@ -24,7 +32,10 @@
   "keywords": [
     "cli",
     "tech stack",
-    "intermachine"
+    "intermachine",
+    "stack-analyze",
+    "pagespeed analyze",
+    "ascii art"
   ],
   "author": "Intermachine Developers",
   "license": "MIT",
