@@ -2,6 +2,17 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.0.8
+### Added
+- add the new modules:
+    - colors
+    - cli-progress
+### fixed
+change json print to table print version
+### Changed
+- change from text to bar for pagespeed results
+- add the badge tech stack project
+
 ## version 1.0.7
 ### Added
 - add the new modules:

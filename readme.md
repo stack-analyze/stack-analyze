@@ -3,6 +3,7 @@
 ![logo](docs/logo-module.png)
 
 ***
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/intermachine-developers/stack-analyze-cli)
 [![npm version](https://badge.fury.io/js/stack-analyze.svg)](https://badge.fury.io/js/stack-analyze)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

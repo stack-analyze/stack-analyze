@@ -17,9 +17,9 @@
     "eol-last": "error",
     "spaced-comment": "error",
     "comma-spacing": "error",
+    "quotes": "error",
     "block-spacing": "error",
     "prefer-const": "error",
-    "quotes": "error",
     "indent": ["error", 2, {
         "SwitchCase": 1
     }],

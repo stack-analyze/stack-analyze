@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 // modules
 const { performance } = require("perf_hooks");
 const inquirer = require("inquirer");
@@ -27,10 +25,10 @@ function question() {
     name: "analyze",
     message: "what option do you want to analyze stack",
     choices: [
-      "single", 
-      "multiple", 
-      "page speed", 
-      "about", 
+      "single",
+      "multiple",
+      "page speed",
+      "about",
       "exit"
     ]
   })
@@ -43,7 +41,7 @@ function question() {
  * @return { Promise<void> } - return in boolean a result question list
  * 
  */
-async function returnQuestion () {
+async function returnQuestion() {
   const anw = await inquirer.prompt([
     {
       type: "confirm",
@@ -51,9 +49,9 @@ async function returnQuestion () {
       message: "do you want go to the main menu?",
     }
   ]);
-  
-  anw.return 
-    ? question() 
+
+  anw.return
+    ? question()
     : console.log("\x1b[44mthanks for use stack-analyze\x1b[0m");
 }
 
@@ -64,7 +62,7 @@ async function returnQuestion () {
  * @return { void }
  * 
  */
-function anwOption (result) {
+function anwOption(result) {
   // options conditional
   switch (result) {
     case "single":
@@ -128,7 +126,7 @@ function anwOption (result) {
     case "about":
       // about info cli
       console.clear();
-      console.dir(aboutApp);
+      console.table(aboutApp);
       question();
       break;
     default:
