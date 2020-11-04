@@ -53,10 +53,9 @@ const mobile = async (url) => {
         });
         break;
     }
-    // initial bar
+
     bar.start(100, 0);
 
-    // update values
     bar.update(Math.round(movil));
 
     bar.stop();
@@ -107,18 +106,18 @@ const desktop = async (url) => {
         break;
       default:
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.magenta("{bar}")} || {value}/{total} || undifined`
+          format: `Desktop Result | ${colors.magenta("{bar}")} || {value}/{total} || undifined`,
+          barCompleteChar: "\u2588",
+          barIncompleteChar: "\u2591",
+          hideCursor: true
         });
         break;
     }
 
-    // 
     bar.start(100, 0);
 
-    // update values
     bar.update(Math.round(desktop));
 
-    // stop bar
     bar.stop();
   } catch (err) {
     console.error("\x1b[31m", err.message, "\x1b[0m");
