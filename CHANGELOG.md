@@ -4,11 +4,10 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## version 1.0.8
 ### Added
-- add the new modules:
-    - colors
-    - cli-progress
+shorts the pagespeed results under fixed versions
 ### fixed
 remove performance.now under version fixed
+remove modules under fixeds versions
 ### Changed
 - change console.dir about to console.table
 - change from text to bar for pagespeed results

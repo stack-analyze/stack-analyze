@@ -1,9 +1,5 @@
 // module
 const axios = require("axios").default;
-const cliProgress = require("cli-progress");
-
-// result pagespeed bar color
-let bar;
 
 /**
  * @description async function mobile website pagespeed
@@ -20,44 +16,18 @@ const mobile = async (url) => {
 
     switch (true) {
       case (movil === 1 || movil <= 49):
-        bar = new cliProgress.SingleBar({
-          format: `Mobile Result | \x1b[31m{bar}\x1b[0m || {value}/{total} || bad`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[31mDesktop Result ${movil}/100 || bad\x1b[0m`)
         break;
       case (movil === 50 || movil <= 89):
-        bar = new cliProgress.SingleBar({
-          format: `Mobile Result | \x1b[33m{bar}\x1b[0m || {value}/{total} || decent`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[33mDesktop Result ${movil}/100 || decent\x1b[0m`)
         break;
       case (movil >= 90 || movil === 100):
-        bar = new cliProgress.SingleBar({
-          format: `Mobile Result | \x1b[32m{bar}\x1b[0m || {value}/{total} || excelent`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[32mDesktop Result ${movil}/100 || excelent\x1b[0m`)
         break;
       default:
-        bar = new cliProgress.SingleBar({
-          format: `Mobile Result | \x1b[35m{bar}\x1b[0m || {value}/{total} undifined`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[35mDesktop Result ${movil}/100 || undifined\x1b[0m`)
         break;
     }
-
-    bar.start(100, 0);
-
-    bar.update(movil);
-
-    bar.stop();
   } catch (err) {
     console.error(err.message);
   }
@@ -80,44 +50,18 @@ const desktop = async (url) => {
 
     switch (true) {
       case (desktop === 0 || desktop <=49):
-        bar = new cliProgress.SingleBar({
-          format: `Desktop Result | \x1b[31m{bar}\x1b[0m || {value}/{total} || bad`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[31mDesktop Result ${desktop}/100 || bad\x1b[0m`)
         break;
       case (desktop === 50 || desktop <=89):
-        bar = new cliProgress.SingleBar({
-          format: `Desktop Result | \x1b[33m{bar}\x1b[0m || {value}/{total} || decent`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[33mDesktop Result ${desktop}/100 || decent\x1b[0m`)
         break;
       case (desktop >=90 || desktop === 100):
-        bar = new cliProgress.SingleBar({
-          format: `Desktop Result | \x1b[32m{bar}\x1b[0m || {value}/{total} || excelent`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[32mDesktop Result ${desktop}/100 || excelent\x1b[0m`)
         break;
       default:
-        bar = new cliProgress.SingleBar({
-          format: `Desktop Result | \x1b[35m{bar}\x1b[0m || {value}/{total} || undifined`,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
+        console.info(`\x1b[35mDesktop Result ${desktop}/100 || undifined\x1b[0m`)
         break;
     }
-
-    bar.start(100, 0);
-
-    bar.update(desktop);
-
-    bar.stop();
   } catch (err) {
     console.error("\x1b[31m", err.message, "\x1b[0m");
   }
