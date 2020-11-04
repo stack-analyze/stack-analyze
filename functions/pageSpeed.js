@@ -1,6 +1,5 @@
 // module
 const axios = require("axios").default;
-const colors = require("colors");
 const cliProgress = require("cli-progress");
 
 // result pagespeed bar color
@@ -22,7 +21,7 @@ const mobile = async (url) => {
     switch (true) {
       case (movil === 1 || movil <= 49):
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.red("{bar}")} || {value}/{total} || bad`,
+          format: `Mobile Result | \x1b[31m{bar}\x1b[0m || {value}/{total} || bad`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -30,7 +29,7 @@ const mobile = async (url) => {
         break;
       case (movil === 50 || movil <= 89):
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.yellow("{bar}")} || {value}/{total} decent`,
+          format: `Mobile Result | \x1b[33m{bar}\x1b[0m || {value}/{total} || decent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -38,7 +37,7 @@ const mobile = async (url) => {
         break;
       case (movil >= 90 || movil === 100):
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.green("{bar}")} || {value}/{total} excelent`,
+          format: `Mobile Result | \x1b[32m{bar}\x1b[0m || {value}/{total} || excelent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -46,7 +45,7 @@ const mobile = async (url) => {
         break;
       default:
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.magenta("{bar}")} || {value}/{total} undifined`,
+          format: `Mobile Result | \x1b[35m{bar}\x1b[0m || {value}/{total} undifined`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -56,7 +55,7 @@ const mobile = async (url) => {
 
     bar.start(100, 0);
 
-    bar.update(Math.round(movil));
+    bar.update(movil);
 
     bar.stop();
   } catch (err) {
@@ -82,7 +81,7 @@ const desktop = async (url) => {
     switch (true) {
       case (desktop === 0 || desktop <=49):
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.red("{bar}")} || {value}/{total} || bad`,
+          format: `Desktop Result | \x1b[31m{bar}\x1b[0m || {value}/{total} || bad`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -90,7 +89,7 @@ const desktop = async (url) => {
         break;
       case (desktop === 50 || desktop <=89):
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.yellow("{bar}")} || {value}/{total} || decent`,
+          format: `Desktop Result | \x1b[33m{bar}\x1b[0m || {value}/{total} || decent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\2591",
           hideCursor: true
@@ -98,7 +97,7 @@ const desktop = async (url) => {
         break;
       case (desktop >=90 || desktop === 100):
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.green("{bar}")} || {value}/{total} || excelent`,
+          format: `Desktop Result | \x1b[32m{bar}\x1b[0m || {value}/{total} || excelent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -106,7 +105,7 @@ const desktop = async (url) => {
         break;
       default:
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.magenta("{bar}")} || {value}/{total} || undifined`,
+          format: `Desktop Result | \x1b[35m{bar}\x1b[0m || {value}/{total} || undifined`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -116,7 +115,7 @@ const desktop = async (url) => {
 
     bar.start(100, 0);
 
-    bar.update(Math.round(desktop));
+    bar.update(desktop);
 
     bar.stop();
   } catch (err) {
