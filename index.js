@@ -1,5 +1,4 @@
 // modules
-const { performance } = require("perf_hooks");
 const inquirer = require("inquirer");
 const { textSync } = require("figlet");
 
@@ -74,8 +73,7 @@ function anwOption(result) {
         .then((anw) => {
           if (anw.url.indexOf("http" || "https") > -1) {
             singleStack(anw.url);
-            const timeEnd = performance.now();
-            setTimeout(returnQuestion, timeEnd);
+            setTimeout(returnQuestion, 83000);
           } else {
             console.error("\x1b[31mplease insert a URL with parameter http:// or https://");
             question();
@@ -96,8 +94,7 @@ function anwOption(result) {
             const websites = anw.urls.split(" ");
             console.clear();
             multipleStack(websites);
-            const timeEnd = performance.now();
-            setTimeout(returnQuestion, timeEnd);
+            setTimeout(returnQuestion, 83000);
           } else {
             console.error("\x1b[31mplease in each URL insert a website the parameter https:// or http://");
             question();

@@ -48,7 +48,7 @@ const mobile = async (url) => {
         bar = new cliProgress.SingleBar({
           format: `Mobile Result | ${colors.magenta("{bar}")} || {value}/{total} undifined`,
           barCompleteChar: "\u2588",
-          barIncomopleteChar: "\u2591",
+          barIncompleteChar: "\u2591",
           hideCursor: true
         });
         break;

@@ -8,8 +8,9 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
     - colors
     - cli-progress
 ### fixed
-change json print to table print version
+remove performance.now under version fixed
 ### Changed
+- change console.dir about to console.table
 - change from text to bar for pagespeed results
 - add the badge tech stack project
 
