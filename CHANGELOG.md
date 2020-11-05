@@ -4,14 +4,20 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## version 1.0.8
 ### Added
-shorts the pagespeed results under fixed versions
+- add the new modules:
+    - colors
+    - cli-progress
 ### fixed
-remove performance.now under version fixed
-remove modules under fixeds versions
+change json print to table print version
 ### Changed
 - change console.dir about to console.table
 - change from text to bar for pagespeed results
 - add the badge tech stack project
+### patch version 1.0.85
+notes:
+- fixed the cli run
+- remove performance.now for the defined time in pagespeed
+- add recomendations sections
 
 ## version 1.0.7
 ### Added

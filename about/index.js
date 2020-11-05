@@ -13,8 +13,9 @@ const { version } = require("../package.json");
 const aboutApp = {
   mainDeveloper: "omega5300",
   developers: ["omega5300"].join(", "),
-  devRecommendationYoutube: ["fazt", "doriandesings", "bluuweb"].join(", "),
+  devRecommendationYoutube: ["fazt", "doriandesings", "bluuweb", "leonidas esteban"].join(", "),
   nonoliveStreamersRecommendation: ["⚔️GothspiceChann💰"].join(", "),
+  projectsRecommendation: ["Doofy's Projects"].join(", "),
   version
 };
 

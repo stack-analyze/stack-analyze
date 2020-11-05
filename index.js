@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // modules
 const inquirer = require("inquirer");
 const { textSync } = require("figlet");
