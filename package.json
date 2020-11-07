@@ -1,6 +1,6 @@
 {
   "name": "stack-analyze",
-  "version": "1.0.87",
+  "version": "2.0.0",
   "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api",
   "main": "index.js",
   "bin": {
