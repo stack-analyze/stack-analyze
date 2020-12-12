@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // modules
+const { performance } = require("perf_hooks");
 const inquirer = require("inquirer");
 const { textSync } = require("figlet");
 
@@ -13,6 +14,12 @@ const multipleStack = require("./functions/multipleStack");
 
 // pagespeed web
 const { desktop, mobile } = require("./functions/pageSpeed");
+
+// github info
+const githubInfo = require("./functions/gitUser");
+
+// anime search
+const animeSearch = require("./functions/animeInfo");
 
 /**
  * 
@@ -28,8 +35,10 @@ function question() {
     choices: [
       "single",
       "multiple",
-      "page speed",
+      "pagespeed",
       "about",
+      "github-info",
+      "anime search",
       "exit"
     ]
   })
@@ -75,7 +84,8 @@ function anwOption(result) {
         .then((anw) => {
           if (anw.url.indexOf("http" || "https") > -1) {
             singleStack(anw.url);
-            setTimeout(returnQuestion, 83000);
+            const timeEnd = performance.now();
+            setTimeout(returnQuestion, timeEnd);
           } else {
             console.error("\x1b[31mplease insert a URL with parameter http:// or https://");
             question();
@@ -96,14 +106,15 @@ function anwOption(result) {
             const websites = anw.urls.split(" ");
             console.clear();
             multipleStack(websites);
-            setTimeout(returnQuestion, 83000);
+            const timeEnd = performance.now();
+            setTimeout(returnQuestion, timeEnd);
           } else {
             console.error("\x1b[31mplease in each URL insert a website the parameter https:// or http://");
             question();
           }
         });
       break;
-    case "page speed":
+    case "pagespeed":
       console.clear();
       inquirer.prompt({
         name: "speedWeb",
@@ -114,10 +125,44 @@ function anwOption(result) {
             console.clear();
             textSync(anw.speedWeb, "Small");
             mobile(anw.speedWeb);
+            const timeEndA = performance.now();
             desktop(anw.speedWeb);
-            setTimeout(returnQuestion, 83000);
+            const timeEndB = performance.now();
+            setTimeout(returnQuestion, (timeEndA + timeEndB));
           } else {
             console.error("\x1b[31mplease insert a URL with parameter https;// or http://");
+            question();
+          }
+        });
+      break;
+    case "github-info":
+      inquirer.prompt({
+        name: "user",
+        message: "enter a github user"
+      })
+        .then((anw) => {
+          if (anw.user !== "") {
+            console.clear();
+            githubInfo(anw.user);
+            setTimeout(returnQuestion, 2000);
+          } else {
+            console.error("\x1b[31mplease is required the");
+            question();
+          }
+        });
+      break;
+    case "anime search":
+      inquirer.prompt({
+        name: "anime",
+        message: "enter a anime, music or ova search"
+      })
+        .then((anw) => {
+          if (anw.anime !== "") {
+            console.clear();
+            animeSearch(anw.anime);
+            setTimeout(returnQuestion, 5000);
+          } else {
+            console.error("\x1b[31mplease is required the");
             question();
           }
         });

@@ -2,6 +2,17 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.0.9
+### Added
+- add the new modules:
+    - timeago.js for the github user
+- add the options github info and anime search the main options
+- add new recomendations for the about section
+### Fixed
+- return the peformance now for pagespeed
+### Changed
+- add new testing
+
 ## version 1.0.8
 ### Added
 - add the new modules:
