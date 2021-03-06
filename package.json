@@ -1,6 +1,6 @@
 {
   "name": "stack-analyze",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api and hardware",
   "main": "index.js",
   "bin": {
@@ -52,5 +52,9 @@
   "bugs": {
     "url": "https://github.com/intermachine-developers/stack-analyze/issues"
   },
-  "homepage": "https://github.com/intermachine-developers/stack-analyze#readme"
+  "homepage": "https://intermachine-developers.github.io/stack-analyze/",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  }
 }
