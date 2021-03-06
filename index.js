@@ -4,6 +4,11 @@
 const { performance } = require("perf_hooks");
 const inquirer = require("inquirer");
 const { textSync } = require("figlet");
+const {
+  yellow,
+  green,
+  red
+} = require("colors");
 
 // options
 const aboutApp = require("./about");
@@ -21,29 +26,16 @@ const githubInfo = require("./functions/gitUser");
 // anime search
 const animeSearch = require("./functions/animeInfo");
 
-/**
- * 
- * @description call the function question raw list options
- * @return { void }
- * 
- */
-function question() {
-  inquirer.prompt({
-    type: "rawlist",
-    name: "analyze",
-    message: "what option do you want to analyze stack",
-    choices: [
-      "single",
-      "multiple",
-      "pagespeed",
-      "about",
-      "github-info",
-      "anime search",
-      "exit"
-    ]
-  })
-    .then((anw) => anwOption(anw.analyze));
-}
+// hardware modules
+const {
+  cpuInfo,
+  ramMemInfo,
+  osDetail,
+  diskInfo,
+  controllerInfo,
+  displayInfo,
+  biosInfo
+} = require("./functions/hardware");
 
 /**
  * 
@@ -52,17 +44,93 @@ function question() {
  * 
  */
 async function returnQuestion() {
-  const anw = await inquirer.prompt([
-    {
-      type: "confirm",
-      name: "return",
-      message: "do you want go to the main menu?",
-    }
-  ]);
+  try {
+    const anw = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "return",
+        message: "do you want go to the main menu?",
+      }
+    ]);
 
-  anw.return
-    ? question()
-    : console.log("\x1b[44mthanks for use stack-analyze\x1b[0m");
+    anw.return
+      ? question()
+      : console.info(green("thanks for use stack-analyze"));
+  } catch (err) {
+    console.error(red(err.message));
+  }
+}
+
+/** 
+ * @description select a hardware option
+ * @param { string } result - selected a option hardware
+ * @return { void }
+*/
+function hardwareSelected(result) {
+  switch (result) {
+    case "cpu":
+      console.clear();
+      cpuInfo();
+      setTimeout(hardwareOpts, 1000);
+      break;
+    case "ram memory":
+      console.clear();
+      ramMemInfo();
+      setTimeout(hardwareOpts, 1000);
+      break;
+    case "os":
+      console.clear();
+      osDetail();
+      setTimeout(hardwareOpts, 1000);
+      break;
+    case "disk":
+      console.clear();
+      diskInfo();
+      setTimeout(hardwareOpts, 1000);
+      break;
+    case "controller":
+      console.clear();
+      controllerInfo();
+      setTimeout(hardwareOpts, 1000);
+      break;
+    case "display":
+      console.clear();
+      displayInfo();
+      setTimeout(hardwareOpts, 1000);
+      break;
+    case "bios":
+      console.clear();
+      biosInfo();
+      setTimeout(hardwareOpts, 1000);
+      break;
+
+    default:
+      console.clear();
+      question();
+      break;
+  }
+}
+
+/**
+ * @description call hardware information options
+ * @return { void }
+ */
+function hardwareOpts() {
+  inquirer.prompt({
+    type: "list",
+    name: "hardware",
+    message: "select a hardware-information option:",
+    choices: [
+      "cpu",
+      "ram memory",
+      "os",
+      "disk",
+      "controller",
+      "display",
+      "bios",
+      "exit to main menu"
+    ]
+  }).then(({ hardware }) => hardwareSelected(hardware));
 }
 
 /**
@@ -81,13 +149,13 @@ function anwOption(result) {
         name: "url",
         message: "enter url for analyze the tech stack:"
       })
-        .then((anw) => {
-          if (anw.url.indexOf("http" || "https") > -1) {
-            singleStack(anw.url);
+        .then(({ url }) => {
+          if (url.indexOf("http") === 0) {
+            singleStack(url);
             const timeEnd = performance.now();
             setTimeout(returnQuestion, timeEnd);
           } else {
-            console.error("\x1b[31mplease insert a URL with parameter http:// or https://");
+            console.error(red("please insert a URL with parameter http:// or https://"));
             question();
           }
         });
@@ -98,18 +166,18 @@ function anwOption(result) {
         name: "urls",
         message: "enter URLs for analyze the tech stacks with whitespace without quotes example 'http://example.com https://nodejs.org': \n"
       })
-        .then((anw) => {
+        .then(({ urls }) => {
           if (
-            anw.urls.match(/(http|https)/g) !== null ||
-            anw.urls.match(/(http|https)/g) === 2
+            urls.match(/(http|https)/g) !== null ||
+            urls.match(/(http|https)/g) >= 2
           ) {
-            const websites = anw.urls.split(" ");
+            const websites = urls.split(" ");
             console.clear();
             multipleStack(websites);
             const timeEnd = performance.now();
             setTimeout(returnQuestion, timeEnd);
           } else {
-            console.error("\x1b[31mplease in each URL insert a website the parameter https:// or http://");
+            console.error(red("please in each URL insert a website the parameter https:// or http://"));
             question();
           }
         });
@@ -120,17 +188,24 @@ function anwOption(result) {
         name: "speedWeb",
         message: "insert URL for page speed analyze:"
       })
-        .then((anw) => {
-          if (anw.speedWeb.indexOf("http" || "https") > -1) {
+        .then(({ speedWeb }) => {
+          if (speedWeb.indexOf("http") === 0) {
             console.clear();
-            textSync(anw.speedWeb, "Small");
-            mobile(anw.speedWeb);
+            console.info(green(textSync(speedWeb)));
+
+            // start pagespeed results mobile
+            textSync(speedWeb, "Small");
+            mobile(speedWeb);
             const timeEndA = performance.now();
-            desktop(anw.speedWeb);
+
+            // start pagespeed results mobile
+            desktop(speedWeb);
             const timeEndB = performance.now();
+
+            // stop time
             setTimeout(returnQuestion, (timeEndA + timeEndB));
           } else {
-            console.error("\x1b[31mplease insert a URL with parameter https;// or http://");
+            console.error(red("please insert a URL with parameter https;// or http://"));
             question();
           }
         });
@@ -140,32 +215,36 @@ function anwOption(result) {
         name: "user",
         message: "enter a github user"
       })
-        .then((anw) => {
-          if (anw.user !== "") {
+        .then(({ user }) => {
+          if (user !== "") {
             console.clear();
-            githubInfo(anw.user);
+            githubInfo(user);
             setTimeout(returnQuestion, 2000);
           } else {
-            console.error("\x1b[31mplease is required the");
+            console.error(red("please the github username is required"));
             question();
           }
         });
       break;
-    case "anime search":
+    case "anime-search":
       inquirer.prompt({
         name: "anime",
         message: "enter a anime, music or ova search"
       })
-        .then((anw) => {
-          if (anw.anime !== "") {
+        .then(({ anime }) => {
+          if (anime !== "") {
             console.clear();
-            animeSearch(anw.anime);
+            animeSearch(anime);
             setTimeout(returnQuestion, 5000);
           } else {
-            console.error("\x1b[31mplease is required the");
+            console.error(red("please the anime is required"));
             question();
           }
         });
+      break;
+    case "hardware-information":
+      console.clear();
+      hardwareOpts();
       break;
     case "about":
       // about info cli
@@ -174,13 +253,39 @@ function anwOption(result) {
       question();
       break;
     default:
-      console.log("\x1b[44mthanks for use stack-analyze\x1b[0m");
+      console.log(green("thanks for use stack-analyze"));
       break;
   }
 }
 
+/**
+ * 
+ * @description call the function question raw list options
+ * @return { void }
+ * 
+ */
+function question() {
+  console.info(yellow(textSync("stack-analyze")));
+  inquirer.prompt({
+    type: "rawlist",
+    name: "analyze",
+    message: "what option do you want to analyze stack",
+    choices: [
+      "single",
+      "multiple",
+      "pagespeed",
+      "github-info",
+      "anime-search",
+      "hardware-information",
+      "about",
+      "exit"
+    ]
+  })
+    .then(({ analyze }) => anwOption(analyze))
+    .catch((err) => console.error(red(err.message)));
+}
+
 // call the message title and question list
 console.clear();
-console.info("\x1b[33m", textSync("stack-analyze"));
 question();
 

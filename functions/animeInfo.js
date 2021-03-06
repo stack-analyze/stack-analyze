@@ -1,5 +1,7 @@
 // modules
 const axios = require("axios").default;
+const { format } = require("timeago.js");
+const { red } = require("colors");
 
 /**
  *
@@ -19,25 +21,17 @@ const animeSearch = async (query) => {
       }
     });
 
-    const animeData = res.data.results.map((anime) => {
-      const { title, episodes, start_date, end_date, type } = anime;
-      
-      // anime dates
-      const timeStart = new Date(start_date);
-      const timeEnd = new Date(end_date);
-
-      return {
-        title,
-        type,
-        episodes,
-        debut_date: `${timeStart.getFullYear()}-${timeStart.getMonth()}-${timeStart.getDate()}`,
-        final_date: end_date === null ? "current date" : `${timeEnd.getFullYear()}-${timeEnd.getMonth()}-${timeEnd.getDate()}`
-      };
-    });
+    const animeData = res.data.results.map(({ title, episodes, start_date, end_date, type }) => ({
+      title,
+      type,
+      episodes,
+      debut_date: format(start_date),
+      final_date: end_date === null ? "current date" : format(end_date)
+    }));
 
     console.table(animeData);
 
-  } catch (err) { console.error(err.message); }
+  } catch (err) { console.error(red(err.message)); }
 };
 
 // exports module

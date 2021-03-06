@@ -1,6 +1,7 @@
 // modules
 const axios = require("axios").default;
 const { format } = require("timeago.js");
+const { red, yellow } = require("colors");
 
 /**
  *
@@ -11,11 +12,7 @@ const { format } = require("timeago.js");
  */
 async function githubInfo(user) {
   try {
-    const res = await axios.get(`https://api.github.com/users/${user}`, {
-      headers: {
-        Authorization: "token a3d5c587fde84c07064688a6cce6152ba3ada184"
-      }
-    });
+    const res = await axios.get(`https://api.github.com/users/${user}`);
 
     if (res.status !== 404){
       const info = {
@@ -33,10 +30,10 @@ async function githubInfo(user) {
 
       console.table(info);
     } else {
-      console.info(res.status);
+      console.info(yellow(""+res.status));
     }
   } catch(err) {
-    console.error(err);
+    console.error(red(err.message));
   }
 }
 

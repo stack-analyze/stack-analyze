@@ -15,10 +15,20 @@ const { version } = require("../package.json");
 const aboutApp = {
   mainDeveloper: "omega5300",
   developers: ["omega5300"].join(", "),
-  devRecommendationYoutube: ["fazt", "doriandesings", "bluuweb", "leonidas esteban"].join(", "),
-  nonoliveStreamersRecommendation: ["⚔️GothspiceChann💰"].join(", "),
+  devRecommendationYoutube: [
+    "fazt", 
+    "doriandesings", 
+    "bluuweb", 
+    "leonidas esteban",
+  ].join(", "),
+  nonoliveStreamersRecommendation: [
+    "⚔️GothspiceChann💰 (14278329)",
+    "JUJU جوهري🎵SS (17342980)",
+    "ᴹᴰToni😈🦇Stream (41145492)",
+    "AlpiCornioRex🦙🦄🦖 (35874353)"
+  ].join(","),
   projectsRecommendation: ["Doofy's Projects"].join(", "),
-  twitchRecommendation: ["lunnany", "dannyaegyo"].join(", "),
+  twitchRecommendation: ["lunanny", "dannyaegyo"].join(", "),
   version
 };
 

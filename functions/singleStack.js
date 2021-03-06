@@ -1,6 +1,7 @@
 // module
 const Wappalyzer = require("wappalyzer");
 const { textSync } = require("figlet");
+const { red } = require("colors");
 
 /**
  * 
@@ -17,15 +18,15 @@ async function singleStack (url) {
 
     const results = await wappalyzer.open(url).analyze();
 
-    console.info("\x1b[32m", textSync(url), "\x1b[0m");
+    console.info(textSync(url).green);
 
     console.table(results.technologies.map((app) => ({
       "tech-name": app.name,
       "tech-website": app.website,
-      "tech-categories": Object.values(app.categories).map((categorie) => categorie.name).join(", ")
+      "tech-categories": app.categories.map((categorie) => categorie.name).join(", ")
     })));
   } catch (err) {
-    console.error("\x1b[31m", err.message, "\x1b[0m");
+    console.error(red(err.message));
   }
 
   await wappalyzer.destroy();

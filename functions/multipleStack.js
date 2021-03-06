@@ -1,5 +1,7 @@
+// modules
 const { textSync } = require("figlet");
 const Wappalyzer = require("wappalyzer");
+const { red, green } = require("colors");
 
 /**
  *
@@ -24,17 +26,17 @@ const multipleStack = async (urls) => {
     console.group();
     // loop web site tech stack
     for (const result of results) {
-      console.info("\x1b[36m", textSync(result.url, "Small"), "\x1b[0m");
+      console.info(green(textSync(result.url, "Small")));
       console.group();
       console.table(result.stack.technologies.map((app) => ({
-        "tech-name": app.name,
-        "tech-website": app.website,
-        "tech-categories": Object.values(app.categories).map((categorie) => categorie.name).join(", ")
+        tech_name: app.name,
+        tech_website: app.website,
+        tech_categories: app.categories.map((categorie) => categorie.name).join(", ")
       })));
       console.groupEnd();
     }
   } catch (err) {
-    console.error("\x1b[31m", err.message, "\x1b[0m");
+    console.error(red(err.message));
   }
 
   await wappalyzer.destroy();

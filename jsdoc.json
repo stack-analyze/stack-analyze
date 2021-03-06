@@ -1,0 +1,22 @@
+{
+    "source": {
+        "include": ["./index.js", "functions", "about"],
+        "includePatter": ".js$",
+        "excludePattern": "(node_modules|docs)"
+    },
+    "templates": {
+    "default": {
+        "name": "stack-analyze docs",
+        "footerText": "stack-analyze is created and maintainer for omega5300",
+        "staticFiles": {
+            "include": ["./logo-module.png"]
+        }
+    }
+},
+    "opts": {
+        "template": "node_modules/minami",
+        "recurse": true,
+        "destination": "./docs",
+        "readme": "./readme.md"
+    }
+}

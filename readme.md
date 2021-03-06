@@ -1,6 +1,6 @@
 # stack analyze
 
-![logo](docs/logo-module.png)
+![logo](logo-module.png)
 
 ***
 [![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/intermachine-developers/stack-analyze-cli)

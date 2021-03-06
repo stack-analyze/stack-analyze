@@ -1,6 +1,12 @@
 // modules
 const axios = require("axios").default;
-const colors = require("colors");
+const {
+  red,
+  yellow,
+  green,
+  magenta,
+  bgRed
+} = require("colors");
 const cliProgress = require("cli-progress");
 
 // result pagespeed bar color
@@ -26,7 +32,7 @@ const mobile = async (url) => {
     switch (true) {
       case (movil === 1 || movil <= 49):
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.red("{bar}")} || {value}/{total} || bad`,
+          format: `Mobile Result | ${red("{bar}")} || {value}/{total} || bad`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -34,7 +40,7 @@ const mobile = async (url) => {
         break;
       case (movil === 50 || movil <= 89):
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.yellow("{bar}")} || {value}/{total} decent`,
+          format: `Mobile Result | ${yellow("{bar}")} || {value}/{total} decent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -42,7 +48,7 @@ const mobile = async (url) => {
         break;
       case (movil >= 90 || movil === 100):
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.green("{bar}")} || {value}/{total} excelent`,
+          format: `Mobile Result | ${green("{bar}")} || {value}/{total} excelent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -50,7 +56,7 @@ const mobile = async (url) => {
         break;
       default:
         bar = new cliProgress.SingleBar({
-          format: `Mobile Result | ${colors.green("{bar}")} || {value}/{total} excelent`,
+          format: `Mobile Result | ${magenta("{bar}")} || {value}/{total} excelent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -65,7 +71,7 @@ const mobile = async (url) => {
 
     bar.stop();
   } catch (err) {
-    console.error(err.message);
+    console.error(err.message.red);
   }
 };
 
@@ -91,7 +97,7 @@ const desktop = async (url) => {
     switch (true) {
       case (desktop === 0 || desktop <=49):
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.red("{bar}")} || {value}/{total} || bad`,
+          format: `Desktop Result | ${red("{bar}")} || {value}/{total} || bad`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -99,7 +105,7 @@ const desktop = async (url) => {
         break;
       case (desktop === 50 || desktop <=89):
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.yellow("{bar}")} || {value}/{total} decent`,
+          format: `Desktop Result | ${yellow("{bar}")} || {value}/{total} decent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -107,7 +113,7 @@ const desktop = async (url) => {
         break;
       case (desktop >=90 || desktop === 100):
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.green("{bar}")} || {value}/{total} excelent`,
+          format: `Desktop Result | ${green("{bar}")} || {value}/{total} excelent`,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
@@ -115,9 +121,9 @@ const desktop = async (url) => {
         break;
       default:
         bar = new cliProgress.SingleBar({
-          format: `Desktop Result | ${colors.magenta("{bar}")} || {value}/{total} undifined`,
+          format: `Desktop Result | ${magenta("{bar}")} || {value}/{total} undifined`,
           barCompleteChar: "\u2588",
-          barIncomopleteChar: "\u2591",
+          barIncompleteChar: "\u2591",
           hideCursor: true
         });
         break;
@@ -130,7 +136,7 @@ const desktop = async (url) => {
 
     bar.stop();
   } catch (err) {
-    console.error("\x1b[31m", err.message, "\x1b[0m");
+    console.error(bgRed(err.message));
   }
 };
 

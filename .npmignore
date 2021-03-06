@@ -4,7 +4,9 @@
 # dev
 /src
 /test
+/docs
 .eslintrc.json
 .prettierrc
 .eslintignore
 jsconfig.json
+jsdoc.json
