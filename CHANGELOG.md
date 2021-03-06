@@ -2,6 +2,19 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.0
+### Added
+- add the new modules:
+    - systeminformation the main module
+    - jsdoc + the template minami the dev modules
+- add the hardware information
+- add new recomendations for about section
+### fixed
+- rewrite the code the functions singlestack and multiple
+- add the name app to question function
+### Changed
+- changed the node style color to using colors
+
 ## version 1.0.9
 ### Added
 - add the new modules:
