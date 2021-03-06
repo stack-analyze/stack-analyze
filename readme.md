@@ -7,6 +7,9 @@
 [![npm version](https://badge.fury.io/js/stack-analyze.svg)](https://badge.fury.io/js/stack-analyze)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+<a href="https://www.buymeacoffee.com/omega5300" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
+
 cli tech stack analyze with **node.js** using the wappalyzer and google pagespeed api the module this node external module or install.
 
 use the cli program install
@@ -17,6 +20,8 @@ use the cli program install
 >note: if global install fail using npx
 
 [github repo](https://github.com/intermachine-developers/stack-analyze.git)
+
+[docs](https://intermachine-developers.github.io/stack-analyze)
 
 [gitlab repo](https://gitlab.com/Intermachine-dev/stack-analyze)
 
