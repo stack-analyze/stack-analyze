@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>functions/multipleStack.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#anwOption">anwOption</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#biosInfo">biosInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#controllerInfo">controllerInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cpuInfo">cpuInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#desktop">desktop</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#diskInfo">diskInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#displayInfo">displayInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#githubInfo">githubInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareSelected">hardwareSelected</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#mobile">mobile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#osDetail">osDetail</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ramMemInfo">ramMemInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#singleStack">singleStack</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">functions/multipleStack.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// modules
+const { textSync } = require("figlet");
+const Wappalyzer = require("wappalyzer");
+const { red, green } = require("colors");
+
+/**
+ *
+ * @description call multiple websites tech stack analyze
+ * @param { string[] } urls - tech analyze in multiples websites
+ * @returns { Promise&lt;void> } - async results in multiples websites
+ * 
+ */
+const multipleStack = async (urls) => {
+  const wappalyzer = await new Wappalyzer();
+
+  try {
+    await wappalyzer.init();
+
+    const results = await Promise.all(
+      urls.map(async (url) => ({
+        url,
+        stack: await wappalyzer.open(url).analyze()
+      })));
+
+    console.info("multiple websites tech stack \n");
+    console.group();
+    // loop web site tech stack
+    for (const result of results) {
+      console.info(green(textSync(result.url, "Small")));
+      console.group();
+      console.table(result.stack.technologies.map((app) => ({
+        tech_name: app.name,
+        tech_website: app.website,
+        tech_categories: app.categories.map((categorie) => categorie.name).join(", ")
+      })));
+      console.groupEnd();
+    }
+  } catch (err) {
+    console.error(red(err.message));
+  }
+
+  await wappalyzer.destroy();
+};
+
+module.exports = multipleStack;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Sat Mar 06 2021 14:32:39 GMT-0500 (hora estándar de Colombia) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

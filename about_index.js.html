@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>about/index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#anwOption">anwOption</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#biosInfo">biosInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#controllerInfo">controllerInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cpuInfo">cpuInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#desktop">desktop</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#diskInfo">diskInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#displayInfo">displayInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#githubInfo">githubInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareSelected">hardwareSelected</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#mobile">mobile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#osDetail">osDetail</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ramMemInfo">ramMemInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#singleStack">singleStack</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">about/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// version module
+const { version } = require("../package.json");
+
+/**
+ * about data object
+ * @typedef { Object } aboutApp - structure info app
+ * @property { string } aboutApp.mainDeveloper - leader cli app developers
+ * @property { string[] } aboutApp.developers - developers author the cli app
+ * @property { string[] } aboutApp.devRecommendationYoutube - youtubers recomendation from omega5300
+ * @property { string[] } aboutApp.nonoliveStreamersRecommendation - nonolive streamers recomendation from omega5300 
+ * @property { string[] } aboutApp.projectsRecommendation - projects recomendation from omega5300
+ * @property { string[] } aboutApp.twitchRecommendation - twitch users recomendation from omega5300
+ * @property { string } aboutApp.version - version the cli app
+ */
+const aboutApp = {
+  mainDeveloper: "omega5300",
+  developers: ["omega5300"].join(", "),
+  devRecommendationYoutube: [
+    "fazt", 
+    "doriandesings", 
+    "bluuweb", 
+    "leonidas esteban",
+  ].join(", "),
+  nonoliveStreamersRecommendation: [
+    "⚔️GothspiceChann💰 (14278329)",
+    "JUJU جوهري🎵SS (17342980)",
+    "ᴹᴰToni😈🦇Stream (41145492)",
+    "AlpiCornioRex🦙🦄🦖 (35874353)"
+  ].join(","),
+  projectsRecommendation: ["Doofy's Projects"].join(", "),
+  twitchRecommendation: ["lunanny", "dannyaegyo"].join(", "),
+  version
+};
+
+module.exports = aboutApp;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Sat Mar 06 2021 14:32:39 GMT-0500 (hora estándar de Colombia) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
