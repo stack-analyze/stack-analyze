@@ -2,34 +2,98 @@
 const { version } = require("../package.json");
 
 /**
- * about data object
- * @typedef { Object } aboutApp - structure info app
- * @property { string } aboutApp.mainDeveloper - leader cli app developers
- * @property { string[] } aboutApp.developers - developers author the cli app
- * @property { string[] } aboutApp.devRecommendationYoutube - youtubers recomendation from omega5300
- * @property { string[] } aboutApp.nonoliveStreamersRecommendation - nonolive streamers recomendation from omega5300 
- * @property { string[] } aboutApp.projectsRecommendation - projects recomendation from omega5300
- * @property { string[] } aboutApp.twitchRecommendation - twitch users recomendation from omega5300
- * @property { string } aboutApp.version - version the cli app
+ * @type { { mainDeveloper: string, version: string } }
  */
 const aboutApp = {
   mainDeveloper: "omega5300",
-  developers: ["omega5300"].join(", "),
-  devRecommendationYoutube: [
-    "fazt", 
-    "doriandesings", 
-    "bluuweb", 
-    "leonidas esteban",
-  ].join(", "),
-  nonoliveStreamersRecommendation: [
-    "⚔️GothspiceChann💰 (14278329)",
-    "JUJU جوهري🎵SS (17342980)",
-    "ᴹᴰToni😈🦇Stream (41145492)",
-    "AlpiCornioRex🦙🦄🦖 (35874353)"
-  ].join(","),
-  projectsRecommendation: ["Doofy's Projects"].join(", "),
-  twitchRecommendation: ["lunanny", "dannyaegyo"].join(", "),
   version
 };
 
-module.exports = aboutApp;
+/** @type { string[] } */
+const developers = [
+  "omega5300"
+];
+
+/**
+ * @typedef {Object[]} youtubeDev
+ * @property {string} youtubeDev.youtubeChannel
+ * @property {string} youtubeDev.recomendation
+ */
+const youtubeDev = [
+  {
+    youtubeChannel: "fazt",
+    recomendation: "recommend"
+  },
+  {
+    youtubeChannel: "doriandesings",
+    recomendation: "recommend"
+  },
+  {
+    youtubeChannel: "bluuweb",
+    recomendation: "recommend"
+  },
+  {
+    youtubeChannel: "leonidas esteban",
+    recomendation: "neutral recommend"
+  },
+  {
+    youtubeChannel: "fernando herrera",
+    recomendation: "recommend"
+  },
+  {
+    youtubeChannel: "soy dalto",
+    recomendation: "neutral recommend"
+  },
+];
+
+/**
+ * @typedef {Object[]} nonolive
+ * @property {string} nonolive.youtubeChannel
+ * @property {string} nonolive.recomendation
+ */
+const nonolive = [
+  {
+    nonoID: 14278329,
+    name: "⚔️GothspiceChann💰"
+  },
+  {
+    nonoID: 33519748,
+    name: "Ly Pháp GOTH ❤️",
+  },
+  {
+    nonoID: 28525468,
+    name: "Seyyahi Solist"
+  },
+  {
+    nonoID: 41145492,
+    name: "ᴹᴰToni😈🦇Stream"
+  },
+  {
+    nonoID: 35874353,
+    name: "AlpiCornioRex🦙🦄🦖"
+  },
+  {
+    nonoID: 41135433,
+    name: "ᴹᴰ🐰CELI🦄🦎"
+  }
+];
+
+/** @type { string[] } */
+const twitch = [
+  "lunanny",
+  "dannyaegyo"
+];
+
+/** @type { string[] } */
+const projects = [
+  "Doofy's Projects"
+];
+
+module.exports = {
+  aboutApp,
+  developers,
+  youtubeDev,
+  nonolive,
+  twitch,
+  projects
+};

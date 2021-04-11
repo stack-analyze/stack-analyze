@@ -9,9 +9,17 @@ const {
   green,
   red
 } = require("colors");
+const { printTable, Table } = require("console-table-printer");
 
 // options
-const aboutApp = require("./about");
+const {
+  aboutApp,
+  developers,
+  nonolive,
+  projects,
+  twitch,
+  youtubeDev
+} = require("./about");
 
 // analyze web
 const singleStack = require("./functions/singleStack");
@@ -38,6 +46,107 @@ const {
 } = require("./functions/hardware");
 
 /**
+ * @description about selected anw
+ * @param { string } result - about option selected
+ * @return { void }
+ */
+function aboutSelected(result) {
+
+  // tables
+  const youtubeDevTable = new Table({
+    columns: [
+      {
+        name: "youtubeChannel",
+        alignment: "left",
+        color: "green"
+      },
+      {
+        name: "recomendation",
+        alignment: "left",
+        color: "cyan"
+      }
+    ]
+  });
+  const nonoliveTable = new Table({
+    columns: [
+      {
+        name: "nonoID",
+        alignment: "left",
+        color: "red"
+      },
+      {
+        name: "name",
+        alignment: "left",
+        color: "yellow"
+      }
+    ]
+  });
+
+  switch (result) {
+    case "main info":
+      console.clear();
+      console.table(aboutApp);
+      setTimeout(aboutOpts, 1000);
+      break;
+    case "devolepers lineup":
+      console.clear();
+      printTable(developers.map((dev, i) => ({ index: i + 1, dev })));
+      setTimeout(aboutOpts, 1000);
+      break;
+    case "youtube streamers recomendation":
+      console.clear();
+      youtubeDevTable.addRows(youtubeDev);
+      youtubeDevTable.printTable();
+      setTimeout(aboutOpts, 1000);
+      break;
+    case "nonolive recomendation":
+      console.clear();
+      nonoliveTable.addRows(nonolive);
+      nonoliveTable.printTable();
+      setTimeout(aboutOpts, 1000);
+      break;
+    case "twitch recomendation":
+      console.clear();
+      printTable(twitch.map((streamer, i) => ({ index: i + 1, streamer })));
+      setTimeout(aboutOpts, 1000);
+      break;
+    case "projects recomendation":
+      console.clear();
+      printTable(projects.map((project, i) => ({ index: i + 1, project })));
+      setTimeout(aboutOpts, 1000);
+      break;
+
+    default:
+      console.clear();
+      question();
+      break;
+  }
+}
+
+/** 
+ * @description about menu
+ * @return { void }
+ */
+function aboutOpts() {
+  inquirer.prompt({
+    type: "list",
+    name: "about",
+    message: "select about option info",
+    choices: [
+      "main info",
+      "devolepers lineup",
+      "youtube streamers recomendation",
+      "nonolive recomendation",
+      "twitch recomendation",
+      "projects recomendation",
+      "return to main menu"
+    ]
+  }).then(({ about }) => aboutSelected(about))
+    .catch((err) => console.error(red(err.message)));
+}
+
+
+/**
  * 
  * @description call the async function return list to question list
  * @return { Promise<void> } - return in boolean a result question list
@@ -53,9 +162,13 @@ async function returnQuestion() {
       }
     ]);
 
-    anw.return
-      ? question()
-      : console.info(green("thanks for use stack-analyze"));
+    if (anw.return) {
+      console.clear();
+      question();
+    } else {
+      console.info(green("thanks for use stack-analyze"));
+
+    }
   } catch (err) {
     console.error(red(err.message));
   }
@@ -249,11 +362,11 @@ function anwOption(result) {
     case "about":
       // about info cli
       console.clear();
-      console.table(aboutApp);
-      question();
+      aboutOpts();
       break;
     default:
-      console.log(green("thanks for use stack-analyze"));
+      console.clear();
+      console.info(green("thanks for use stack-analyze"));
       break;
   }
 }

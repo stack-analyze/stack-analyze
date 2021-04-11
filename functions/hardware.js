@@ -7,7 +7,9 @@ const {
   graphics,
   bios
 } = require("systeminformation");
+const { printTable } = require("console-table-printer");
 const { red } = require("colors");
+
 
 /**
  * 
@@ -118,8 +120,10 @@ async function osDetail() {
  */
 async function diskInfo() {
   try {
-    console.table((await diskLayout())
-      .map(({ type, name, vendor, size, interfaceType }) => ({
+    const disks = await diskLayout();
+    
+    printTable(
+      disks.map(({ type, name, vendor, size, interfaceType }) => ({
         type,
         name,
         vendor,
@@ -143,7 +147,7 @@ async function controllerInfo() {
     const { controllers } = await graphics();
 
     // show results
-    console.table(controllers.map(({
+    printTable(controllers.map(({
       model,
       vendor,
       vram
@@ -168,7 +172,7 @@ async function displayInfo() {
     const { displays } = await graphics();
 
     // show results
-    console.table(displays.map(({
+    printTable(displays.map(({
       model,
       main,
       connection,

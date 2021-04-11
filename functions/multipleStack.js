@@ -2,6 +2,7 @@
 const { textSync } = require("figlet");
 const Wappalyzer = require("wappalyzer");
 const { red, green } = require("colors");
+const { Table } = require("console-table-printer");
 
 /**
  *
@@ -13,14 +14,38 @@ const { red, green } = require("colors");
 const multipleStack = async (urls) => {
   const wappalyzer = await new Wappalyzer();
 
+  const p = new Table({
+    columns: [
+      {
+        name: "techName",
+        alignment: "left",
+        color: "cyan"
+      },
+      {
+        name: "techWebsite",
+        alignment: "left",
+        color: "green"
+      },
+      {
+        name: "techCategories",
+        alignment: "left",
+        color: "cyan"
+      }
+    ]
+  });
+
   try {
     await wappalyzer.init();
 
     const results = await Promise.all(
-      urls.map(async (url) => ({
-        url,
-        stack: await wappalyzer.open(url).analyze()
-      })));
+      urls.map(async (url) => {
+        const { technologies } = await wappalyzer.open(url).analyze();
+
+        return {
+          url,
+          stack: technologies
+        };
+      }));
 
     console.info("multiple websites tech stack \n");
     console.group();
@@ -28,11 +53,12 @@ const multipleStack = async (urls) => {
     for (const result of results) {
       console.info(green(textSync(result.url, "Small")));
       console.group();
-      console.table(result.stack.technologies.map((app) => ({
-        tech_name: app.name,
-        tech_website: app.website,
-        tech_categories: app.categories.map((categorie) => categorie.name).join(", ")
+      p.addRows(result.stack.map(({ name, website, categories }) => ({
+        techName: name,
+        techWebsite: website,
+        techCategories: categories.map(({name}) => name).join(", ")
       })));
+      p.printTable();
       console.groupEnd();
     }
   } catch (err) {

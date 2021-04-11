@@ -1,7 +1,8 @@
 // module
 const Wappalyzer = require("wappalyzer");
 const { textSync } = require("figlet");
-const { red } = require("colors");
+const { red, green } = require("colors");
+const { Table } = require("console-table-printer");
 
 /**
  * 
@@ -10,21 +11,44 @@ const { red } = require("colors");
  * @returns { Promise<void> } - return async results single web
  * 
  */
-async function singleStack (url) {
+async function singleStack(url) {
   const wappalyzer = await new Wappalyzer;
+
+  const p = new Table({
+    columns: [
+      {
+        name: "techName",
+        alignment: "left",
+        color: "cyan"
+      },
+      {
+        name: "techWebsite",
+        alignment: "left",
+        color: "green"
+      },
+      {
+        name: "techCategories",
+        alignment: "left",
+        color: "cyan"
+      }
+    ]
+
+  });
 
   try {
     await wappalyzer.init();
 
-    const results = await wappalyzer.open(url).analyze();
+    const { technologies } = await wappalyzer.open(url).analyze();
 
-    console.info(textSync(url).green);
+    console.info(green(textSync(url)));
 
-    console.table(results.technologies.map((app) => ({
-      "tech-name": app.name,
-      "tech-website": app.website,
-      "tech-categories": app.categories.map((categorie) => categorie.name).join(", ")
+    p.addRows(technologies.map(({ name, website, categories }) => ({
+      techName: name,
+      techWebsite: website,
+      techCategories: categories.map(({ name }) => name).join(", ")
     })));
+
+    p.printTable();
   } catch (err) {
     console.error(red(err.message));
   }

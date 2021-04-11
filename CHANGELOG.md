@@ -2,6 +2,19 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.1
+### Addenged
+- using console.table only in objects variables
+- using the console-table-printer in arrays in some functions and the about sectiond
+- add the new module: console-table-printer
+- add the new nonolive streamers and youtube dev recommedation
+### fixed
+- rewrite some funcions
+- fragment about section
+### changed
+- using console.table only in objects variables
+- using the console-table-printer in arrays in some functions and the about section
+
 ## version 1.1.0
 ### Added
 - add the new modules:

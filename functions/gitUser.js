@@ -30,7 +30,7 @@ async function githubInfo(user) {
 
       console.table(info);
     } else {
-      console.info(yellow(""+res.status));
+      console.info(yellow(res.status));
     }
   } catch(err) {
     console.error(red(err.message));

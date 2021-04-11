@@ -2,6 +2,7 @@
 const axios = require("axios").default;
 const { format } = require("timeago.js");
 const { red } = require("colors");
+const { Table } = require("console-table-printer");
 
 /**
  *
@@ -14,22 +15,52 @@ const animeSearch = async (query) => {
   /* error manager */
   try {
     // call api
-    const res = await axios.get("https://api.jikan.moe/v3/search/anime", {
+    const { data } = await axios.get("https://api.jikan.moe/v3/search/anime", {
       params: {
         q: query,
         limit: 10
       }
     });
 
-    const animeData = res.data.results.map(({ title, episodes, start_date, end_date, type }) => ({
+    const animeList = new Table({
+      columns: [
+        {
+          name: "title",
+          alignment: "left",
+          color: "green"
+        },
+        {
+          name: "type",
+          alignment: "left",
+          color: "magenta"
+        },
+        {
+          name: "episodes",
+          alignment: "left",
+          color: "magenta"
+        },
+        {
+          name: "debutDate",
+          alignment: "left",
+          color: "magenta"
+        },
+        {
+          name: "finalDate",
+          alignment: "left",
+          color: "green"
+        }
+      ]
+    });
+
+    animeList.addRows(data.results.map(({ title, episodes, start_date, end_date, type }) => ({
       title,
       type,
       episodes,
-      debut_date: format(start_date),
-      final_date: end_date === null ? "current date" : format(end_date)
-    }));
+      debutDate: format(start_date),
+      finalDate: end_date === null ? "current date" : format(end_date)
+    })));
 
-    console.table(animeData);
+    animeList.printTable();
 
   } catch (err) { console.error(red(err.message)); }
 };

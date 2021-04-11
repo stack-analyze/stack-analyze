@@ -15,7 +15,7 @@
 },
     "opts": {
         "template": "node_modules/minami",
-        "recurse": true,
+        "recurse": false,
         "destination": "./docs",
         "readme": "./readme.md"
     }

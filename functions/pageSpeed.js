@@ -18,7 +18,7 @@ let bar;
  * @returns { Promise<void> } - return async mobile results
  */
 const mobile = async (url) => {
-  const res = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
+  const { data } = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
     params: {
       url,
       key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
@@ -27,7 +27,7 @@ const mobile = async (url) => {
   });
   
   try {
-    const movil = res.data.lighthouseResult.categories.performance.score * 100;
+    const movil = data.lighthouseResult.categories.performance.score * 100;
 
     switch (true) {
       case (movil === 1 || movil <= 49):
@@ -83,7 +83,7 @@ const mobile = async (url) => {
  *
  */
 const desktop = async (url) => {
-  const res = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
+  const { data } = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
     params: {
       url,
       key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
@@ -92,7 +92,7 @@ const desktop = async (url) => {
   });
 
   try {
-    const desktop = res.data.lighthouseResult.categories.performance.score * 100;
+    const desktop = data.lighthouseResult.categories.performance.score * 100;
 
     switch (true) {
       case (desktop === 0 || desktop <=49):
