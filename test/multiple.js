@@ -7,13 +7,15 @@ const multiple = async (urls) => {
   try {
     await wappalyzer.init()
 
-    const results = await Promise.all(
-      urls.map(async (url) => ({
-        url,
-        stack: await wappalyzer.open(url).analyze()
-      })))
+    testReturn = await Promise.all(
+      urls.map(async (url) => {
+        const { technologies } = await wappalyzer.open(url).analyze();
 
-    testReturn = results;
+        return {
+          url,
+          technologies
+        };
+      }));
     
   } catch (err) {
     testReturn = err;

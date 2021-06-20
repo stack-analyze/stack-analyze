@@ -58,7 +58,7 @@ const nonolive = [
   },
   {
     nonoID: 33519748,
-    name: "Ly Pháp GOTH ❤️",
+    name: "Ly Pháp ❤️",
   },
   {
     nonoID: 28525468,
@@ -75,6 +75,18 @@ const nonolive = [
   {
     nonoID: 41135433,
     name: "ᴹᴰ🐰CELI🦄🦎"
+  },
+  {
+    nonoID: 17342980,
+    name: "🎬Sailormoon🌙"
+  },
+  {
+    nonoID: 31655138,
+    name: "🦎🌟Aidee💋🦜"
+  },
+  {
+    nonoID: 9330839,
+    name: "🦎🌟GUANI🌻🍦"
   }
 ];
 

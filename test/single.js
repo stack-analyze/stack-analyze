@@ -8,11 +8,11 @@ async function single (url) {
   try {
     await wappalyzer.init();
 
-    const results = await wappalyzer.open(url).analyze()
+    const { technologies } = await wappalyzer.open(url).analyze()
 
-    testReturn = results.technologies;
+    testReturn = technologies;
   } catch (err) {
-    testReturn = err;
+    testReturn = err.message;
   }
 
   await wappalyzer.destroy();

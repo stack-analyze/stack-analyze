@@ -43,24 +43,24 @@ const multipleStack = async (urls) => {
 
         return {
           url,
-          stack: technologies
+          technologies
         };
       }));
 
     console.info("multiple websites tech stack \n");
     console.group();
     // loop web site tech stack
-    for (const result of results) {
-      console.info(green(textSync(result.url, "Small")));
+    results.forEach(({url, technologies}) => {
+      console.info(green(textSync(url, "Small")));
       console.group();
-      p.addRows(result.stack.map(({ name, website, categories }) => ({
+      p.addRows(technologies.map(({ name, website, categories }) => ({
         techName: name,
         techWebsite: website,
         techCategories: categories.map(({name}) => name).join(", ")
       })));
       p.printTable();
       console.groupEnd();
-    }
+    });
   } catch (err) {
     console.error(red(err.message));
   }

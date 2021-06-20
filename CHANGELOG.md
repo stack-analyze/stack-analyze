@@ -2,8 +2,17 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.2
+### Added
+- add new nonolive streamers Recomend
+### fixed
+- rewrite multiple techstack
+- rewrite test files
+### changed
+- changed the for loop to foreach loop
+
 ## version 1.1.1
-### Addenged
+### Added
 - using console.table only in objects variables
 - using the console-table-printer in arrays in some functions and the about sectiond
 - add the new module: console-table-printer
