@@ -1,11 +1,12 @@
 // version module
-const { version } = require("../package.json");
+const { version, license } = require("../package.json");
 
 /**
- * @type { { mainDeveloper: string, version: string } }
+ * @type { { mainDeveloper: string, version: string, license: string } }
  */
 const aboutApp = {
   mainDeveloper: "omega5300",
+  license,
   version
 };
 
