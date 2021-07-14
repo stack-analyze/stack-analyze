@@ -2,6 +2,18 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.3
+### Added
+- add new module: coingecko-api
+- add new tool: crypto market
+- add new recomends
+- add new test
+### fixed
+- rewrite some functions
+- update npm modules via manual
+### changed
+- add new const variables for map array functions
+
 ## version 1.1.2
 ### Added
 - add new nonolive streamers Recomend

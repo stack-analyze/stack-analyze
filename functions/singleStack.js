@@ -40,13 +40,19 @@ async function singleStack(url) {
 
     const { technologies } = await wappalyzer.open(url).analyze();
 
-    console.info(green(textSync(url)));
-
-    p.addRows(technologies.map(({ name, website, categories }) => ({
+    const stackResult = technologies.map(({
+      name,
+      website,
+      categories
+    }) => ({
       techName: name,
       techWebsite: website,
       techCategories: categories.map(({ name }) => name).join(", ")
-    })));
+    }));
+
+    console.info(green(textSync(url)));
+
+    p.addRows(stackResult);
 
     p.printTable();
   } catch (err) {

@@ -51,13 +51,19 @@ const multipleStack = async (urls) => {
     console.group();
     // loop web site tech stack
     results.forEach(({url, technologies}) => {
-      console.info(green(textSync(url, "Small")));
-      console.group();
-      p.addRows(technologies.map(({ name, website, categories }) => ({
+      const stackResult = technologies.map(({ 
+        name,
+        website,
+        categories
+      }) => ({
         techName: name,
         techWebsite: website,
-        techCategories: categories.map(({name}) => name).join(", ")
-      })));
+        techCategories: categories.map(({ name }) => name).join(", ")
+      }));
+
+      console.info(green(textSync(url, "Small")));
+      console.group();
+      p.addRows(stackResult);
       p.printTable();
       console.groupEnd();
     });

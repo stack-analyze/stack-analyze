@@ -26,7 +26,8 @@ const singleStack = require("./functions/singleStack");
 const multipleStack = require("./functions/multipleStack");
 
 // pagespeed web
-const { desktop, mobile } = require("./functions/pageSpeed");
+// const { desktop, mobile } = require("./functions/pageSpeed");
+const pageSpeed = require("./functions/pageSpeed");
 
 // github info
 const githubInfo = require("./functions/gitUser");
@@ -44,6 +45,9 @@ const {
   displayInfo,
   biosInfo
 } = require("./functions/hardware");
+
+// crypto market module
+const cryptoMarket = require("./functions/cryptoList");
 
 /**
  * @description about selected anw
@@ -308,15 +312,15 @@ function anwOption(result) {
 
             // start pagespeed results mobile
             textSync(speedWeb, "Small");
-            mobile(speedWeb);
-            const timeEndA = performance.now();
+            pageSpeed(speedWeb);
+            const timeEnd = performance.now();
 
             // start pagespeed results mobile
-            desktop(speedWeb);
-            const timeEndB = performance.now();
+            /* desktop(speedWeb);
+            const timeEndB = performance.now(); */
 
             // stop time
-            setTimeout(returnQuestion, (timeEndA + timeEndB));
+            setTimeout(returnQuestion, timeEnd);
           } else {
             console.error(red("please insert a URL with parameter https;// or http://"));
             question();
@@ -364,6 +368,11 @@ function anwOption(result) {
       console.clear();
       aboutOpts();
       break;
+    case "crypto market":
+      console.clear();
+      cryptoMarket();
+      setTimeout(returnQuestion, 3000);
+      break;
     default:
       console.clear();
       console.info(green("thanks for use stack-analyze"));
@@ -390,6 +399,7 @@ function question() {
       "github-info",
       "anime-search",
       "hardware-information",
+      "crypto market",
       "about",
       "exit"
     ]

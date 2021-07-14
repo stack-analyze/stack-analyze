@@ -52,13 +52,23 @@ const animeSearch = async (query) => {
       ]
     });
 
-    animeList.addRows(data.results.map(({ title, episodes, start_date, end_date, type }) => ({
+    const animeData = data.results.map(({
+      title,
+      episodes,
+      start_date,
+      end_date,
+      type }) => ({
       title,
       type,
       episodes,
       debutDate: format(start_date),
-      finalDate: end_date === null ? "current date" : format(end_date)
-    })));
+      finalDate: end_date !== null 
+        ? format(end_date) 
+        : "current date"
+    }));
+        
+
+    animeList.addRows(animeData);
 
     animeList.printTable();
 

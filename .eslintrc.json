@@ -9,19 +9,19 @@
         "ecmaVersion": 12
     },
     "rules": {
-    "no-var": "error",
-    "eqeqeq": "warn",
-    "default-case": "error",
-    "valid-jsdoc": "error",
-    "eol-last": "error",
-    "spaced-comment": "error",
-    "comma-spacing": "error",
-    "quotes": "error",
-    "block-spacing": "error",
-    "prefer-const": "error",
-    "indent": ["error", 2, {
-        "SwitchCase": 1
-    }],
-    "semi":"error"
-  }
+        "no-var": "error",
+        "eqeqeq": "warn",
+        "valid-jsdoc": "error",
+        "default-case": "error",
+        "eol-last": "error",
+        "spaced-comment": "error",
+        "comma-spacing": "error",
+        "quotes": "error",
+        "block-spacing": "error",
+        "prefer-const": "error",
+        "indent": ["error", 2, {
+            "SwitchCase": 1
+        }],
+        "semi":"error"
+    }
 }

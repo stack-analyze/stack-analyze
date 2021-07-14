@@ -67,15 +67,15 @@ const nonolive = [
   },
   {
     nonoID: 41145492,
-    name: "ᴹᴰToni😈🦇Stream"
+    name: "ᴹᴰToniDAle 𝕊𝐋"
   },
   {
     nonoID: 35874353,
-    name: "AlpiCornioRex🦙🦄🦖"
+    name: "VirideCachorro🐶"
   },
   {
     nonoID: 41135433,
-    name: "ᴹᴰ🐰CELI🦄🦎"
+    name: "ᴹᴰ🐰CELI69🦄🦎"
   },
   {
     nonoID: 17342980,
@@ -86,14 +86,29 @@ const nonolive = [
     name: "🦎🌟Aidee💋🦜"
   },
   {
+    nonoID: 34109808,
+    name: "🤡😻AFIGATITA🌻💀"
+  },
+  {
+    nonoID: 18539967,
+    name: "💋🧉Narki🐺Lili"
+  },
+  {
+    nonoID: 28480328,
+    name: "🌼PAPATYA❣SS🌼"
+  },
+  {
     nonoID: 9330839,
     name: "🦎🌟GUANI🌻🍦"
   }
 ];
 
+// console.table(nonolive, ["name"]);
+
 /** @type { string[] } */
 const twitch = [
   "lunanny",
+  "lamua_",
   "dannyaegyo"
 ];
 

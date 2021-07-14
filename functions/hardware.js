@@ -121,15 +121,22 @@ async function osDetail() {
 async function diskInfo() {
   try {
     const disks = await diskLayout();
+
+    const disksList = disks.map(({
+      type,
+      name,
+      vendor,
+      size,
+      interfaceType
+    }) => ({
+      type,
+      name,
+      vendor,
+      diskSize: `${(size / 1073741824).toFixed(2)} GB`,
+      interfaceType
+    }));
     
-    printTable(
-      disks.map(({ type, name, vendor, size, interfaceType }) => ({
-        type,
-        name,
-        vendor,
-        disk_size: `${(size / 1073741824).toFixed(2)} GB`,
-        interfaceType
-      })));
+    printTable(disksList);
 
   } catch (err) {
     console.error(red(err.message));
@@ -146,16 +153,20 @@ async function controllerInfo() {
   try {
     const { controllers } = await graphics();
 
-    // show results
-    printTable(controllers.map(({
+    const controllersList = controllers.map(({
       model,
       vendor,
       vram
     }) => ({
       model,
       vendor,
-      vram_size: vram < 1024 ? `${vram} MB` : `${(vram / 1024).toFixed(2)} GB`
-    })));
+      vramSize: vram < 1024 
+        ? `${vram} MB`
+        : `${(vram / 1024).toFixed(2)} GB`
+    }));
+
+    // show results
+    printTable(controllersList);
   } catch (err) {
     console.error(red(err.message));
   }
@@ -171,22 +182,22 @@ async function displayInfo() {
   try {
     const { displays } = await graphics();
 
-    // show results
-    printTable(displays.map(({
+    const displayList = displays.map(({
       model,
       main,
       connection,
-      // in px
       resolutionX,
       resolutionY
     }) => ({
       model,
       main,
       connection,
-      // in px
       resolutionX,
       resolutionY
-    })));
+    }));
+
+    // show results
+    printTable(displayList);
   } catch (err) {
     console.error(red(err.message));
   }
