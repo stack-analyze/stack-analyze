@@ -14,8 +14,8 @@ const {
   displayInfo,
   biosInfo
 } = require("./hardware");
-
 const cryptoMarket = require("./crypto");
+const bitlyInfo = require("./bitly");
 
 test('single stack', async () => await single("http://example.com"), 34000);
 
@@ -42,3 +42,6 @@ test('controllerInfo', async () => await controllerInfo());
 test('biosInfo', async () => await biosInfo());
 
 test('crypto market', async () => await cryptoMarket());
+
+// using fake token
+test('bitly info', async () => await bitlyInfo('bit.ly/onlyfans-rougekamcosplay', 'AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAACOxyz'));

@@ -18,7 +18,8 @@ const {
   nonolive,
   projects,
   twitch,
-  youtubeDev
+  youtubeDev,
+  ideas
 } = require("./about");
 
 // analyze web
@@ -48,6 +49,9 @@ const {
 
 // crypto market module
 const cryptoMarket = require("./functions/cryptoList");
+
+// bitly module
+const bitlyInfo = require("./functions/bitly");
 
 /**
  * @description about selected anw
@@ -85,6 +89,20 @@ function aboutSelected(result) {
       }
     ]
   });
+  const ideasTable = new Table({
+    columns: [
+      {
+        name: "author",
+        alignment: "left",
+        color: "green"
+      },
+      {
+        name: "tool",
+        alignment: "left",
+        color: "green"
+      }
+    ]
+  });
 
   switch (result) {
     case "main info":
@@ -119,6 +137,12 @@ function aboutSelected(result) {
       printTable(projects.map((project, i) => ({ index: i + 1, project })));
       setTimeout(aboutOpts, 1000);
       break;
+    case "stack-analyze ideas":
+      console.clear();
+      ideasTable.addRows(ideas);
+      ideasTable.printTable();
+      setTimeout(aboutOpts, 1000);
+      break;
 
     default:
       console.clear();
@@ -143,6 +167,7 @@ function aboutOpts() {
       "nonolive recomendation",
       "twitch recomendation",
       "projects recomendation",
+      "stack-analyze ideas",
       "return to main menu"
     ]
   }).then(({ about }) => aboutSelected(about))
@@ -373,6 +398,24 @@ function anwOption(result) {
       cryptoMarket();
       setTimeout(returnQuestion, 3000);
       break;
+    case "bitly info":
+      console.clear();
+      inquirer.prompt([
+        {
+          name: "link",
+          message: "enter a bitly link without http|https",
+        },
+        {
+          name: "token",
+          message: "enter a bitly token",
+          type: "password"
+        }
+      ])
+        .then(({link, token})=> {
+          bitlyInfo(link, token);
+          setTimeout(returnQuestion, 3000);
+        });
+      break;
     default:
       console.clear();
       console.info(green("thanks for use stack-analyze"));
@@ -400,6 +443,7 @@ function question() {
       "anime-search",
       "hardware-information",
       "crypto market",
+      "bitly info",
       "about",
       "exit"
     ]

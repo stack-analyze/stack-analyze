@@ -10,6 +10,18 @@ const aboutApp = {
   version
 };
 
+/**
+ * @typedef {Object[]} ideas
+ * @property {string} ideas.author
+ * @property {string} ideas.tool
+ */
+const ideas = [
+  {
+    author: "verguiskarime",
+    tool: "bitly info"
+  }
+];
+
 /** @type { string[] } */
 const developers = [
   "omega5300"
@@ -58,20 +70,12 @@ const nonolive = [
     name: "⚔️GothspiceChann💰"
   },
   {
-    nonoID: 33519748,
-    name: "Ly Pháp ❤️",
-  },
-  {
     nonoID: 28525468,
     name: "Seyyahi Solist"
   },
   {
     nonoID: 41145492,
-    name: "ᴹᴰToniDAle 𝕊𝐋"
-  },
-  {
-    nonoID: 35874353,
-    name: "VirideCachorro🐶"
+    name: "ᴹᴰToniDAle"
   },
   {
     nonoID: 41135433,
@@ -86,10 +90,6 @@ const nonolive = [
     name: "🦎🌟Aidee💋🦜"
   },
   {
-    nonoID: 34109808,
-    name: "🤡😻AFIGATITA🌻💀"
-  },
-  {
     nonoID: 18539967,
     name: "💋🧉Narki🐺Lili"
   },
@@ -102,8 +102,6 @@ const nonolive = [
     name: "🦎🌟GUANI🌻🍦"
   }
 ];
-
-// console.table(nonolive, ["name"]);
 
 /** @type { string[] } */
 const twitch = [
@@ -123,5 +121,6 @@ module.exports = {
   youtubeDev,
   nonolive,
   twitch,
-  projects
+  projects,
+  ideas
 };

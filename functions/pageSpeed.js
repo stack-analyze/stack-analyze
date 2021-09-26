@@ -1,6 +1,34 @@
 // modules
 const axios = require("axios").default;
 const cliProgress = require("cli-progress");
+const colors = require("colors");
+
+/**
+ * @description get color bar
+ * @param { number } valueOne - get value data desktop
+ * @param { number } valueTwo - get value data mobile
+ * @param { any } bar - using bar
+ * @returns { void }
+ */
+const barColor = (valueOne, valueTwo, bar) => {
+  switch (true) {
+    case (valueOne === 1 || valueOne <= 49):
+    case (valueTwo === 1 || valueTwo <= 49):
+      colors.red(bar);
+      break;
+    case (valueOne === 50 || valueOne <= 89):
+    case (valueTwo === 50 || valueTwo <= 89):
+      colors.yellow(bar);
+      break;
+    case (valueOne >= 90 || valueOne === 100):
+    case (valueTwo >= 90 || valueTwo === 100):
+      colors.green(bar);
+      break;
+    default:
+      colors.bgMagenta(bar);
+      break;
+  }
+};
 
 /**
  * @description async function mobile website pagespeed
@@ -36,36 +64,36 @@ const pageSpeed = async (url) => {
     barCompleteChar: "\u2588",
     barIncompleteChar: "\u2591",
   }, cliProgress.Presets.rect);
-  
+
   // add bars
   const b1 = multibar.create(100, 0);
   const b2 = multibar.create(100, 0);
-  
+
   try {
 
     // valid results
     switch (true) {
       case (movil === 1 || movil <= 49):
-      case (desktop === 1 || desktop <=49):
-        b1.update(movil, {text: "mobile result".red});
-        b2.update(desktop, {text: "desktop result".red});
+      case (desktop === 1 || desktop <= 49):
+        b1.update(movil, { text: "mobile result".red });
+        b2.update(desktop, { text: "desktop result".red });
         break;
       case (movil === 50 || movil <= 89):
-      case (desktop === 50 || desktop <=89):
-        b1.update(movil, {text: "mobile result".yellow});
-        b2.update(desktop, {text: "desktop result".yellow});
+      case (desktop === 50 || desktop <= 89):
+        b1.update(movil, { text: "mobile result".yellow });
+        b2.update(desktop, { text: "desktop result".yellow });
         break;
       case (movil >= 90 || movil === 100):
-      case (desktop >=90 || desktop === 100):
-        b1.update(movil, {text: "mobile result".green});
-        b2.update(desktop, {text: "desktop result".green});
+      case (desktop >= 90 || desktop === 100):
+        b1.update(movil, { text: "mobile result".green });
+        b2.update(desktop, { text: "desktop result".green });
         break;
       default:
-        b1.update(movil, {text: "mobile result"});
-        b2.update(desktop, {text: "desktop result"});
+        b1.update(movil, { text: "mobile result" });
+        b2.update(desktop, { text: "desktop result" });
         break;
     }
-    
+
     // stop all bars
     multibar.stop();
   } catch (err) {
