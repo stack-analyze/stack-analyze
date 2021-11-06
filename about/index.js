@@ -1,13 +1,13 @@
 // version module
-const { version, license } = require("../package.json");
+const { license } = require("../package.json");
 
 /**
- * @type { { mainDeveloper: string, version: string, license: string } }
+ * @type {{ mainDeveloper: string, version: string, license: string }}
  */
 const aboutApp = {
   mainDeveloper: "omega5300",
   license,
-  version
+  version: process.env.npm_package_version
 };
 
 /**
@@ -16,16 +16,11 @@ const aboutApp = {
  * @property {string} ideas.tool
  */
 const ideas = [
-  {
-    author: "verguiskarime",
-    tool: "bitly info"
-  }
+  { author: "verguiskarime", tool: "bitly info" }
 ];
 
 /** @type { string[] } */
-const developers = [
-  "omega5300"
-];
+const developers = [ "omega5300" ];
 
 /**
  * @typedef {Object[]} youtubeDev
@@ -33,30 +28,12 @@ const developers = [
  * @property {string} youtubeDev.recomendation
  */
 const youtubeDev = [
-  {
-    youtubeChannel: "fazt",
-    recomendation: "recommend"
-  },
-  {
-    youtubeChannel: "doriandesings",
-    recomendation: "recommend"
-  },
-  {
-    youtubeChannel: "bluuweb",
-    recomendation: "recommend"
-  },
-  {
-    youtubeChannel: "leonidas esteban",
-    recomendation: "neutral recommend"
-  },
-  {
-    youtubeChannel: "fernando herrera",
-    recomendation: "recommend"
-  },
-  {
-    youtubeChannel: "soy dalto",
-    recomendation: "neutral recommend"
-  },
+  { youtubeChannel: "fazt", recomendation: "recommend" },
+  { youtubeChannel: "doriandesings", recomendation: "recommend" },
+  { youtubeChannel: "bluuweb", recomendation: "recommend" },
+  { youtubeChannel: "leonidas esteban", recomendation: "neutral recommend" },
+  { youtubeChannel: "fernando herrera", recomendation: "recommend" },
+  { youtubeChannel: "soy dalto", recomendation: "neutral recommend" },
 ];
 
 /**
@@ -65,55 +42,23 @@ const youtubeDev = [
  * @property {string} nonolive.recomendation
  */
 const nonolive = [
-  {
-    nonoID: 14278329,
-    name: "⚔️GothspiceChann💰"
-  },
-  {
-    nonoID: 28525468,
-    name: "Seyyahi Solist"
-  },
-  {
-    nonoID: 41145492,
-    name: "ᴹᴰToniDAle"
-  },
-  {
-    nonoID: 41135433,
-    name: "ᴹᴰ🐰CELI69🦄🦎"
-  },
-  {
-    nonoID: 17342980,
-    name: "🎬Sailormoon🌙"
-  },
-  {
-    nonoID: 31655138,
-    name: "🦎🌟Aidee💋🦜"
-  },
-  {
-    nonoID: 18539967,
-    name: "💋🧉Narki🐺Lili"
-  },
-  {
-    nonoID: 28480328,
-    name: "🌼PAPATYA❣SS🌼"
-  },
-  {
-    nonoID: 9330839,
-    name: "🦎🌟GUANI🌻🍦"
-  }
+  { nonoID: 14278329, name: "⚔️GothspiceChann💰" },
+  { nonoID: 28525468, name: "Seyyahi Solist" },
+  { nonoID: 41145492, name: "ᴹᴰToniDAle" },
+  { nonoID: 41135433, name: "ᴹᴰ🐰CELI69🦄🦎" },
+  { nonoID: 17342980, name: "🎬Sailormoon🌙" },
+  { nonoID: 31655138, name: "🦎🌟Aidee💋🦜" },
+  { nonoID: 18539967, name: "💋🧉Narki🐺Lili" },
+  { nonoID: 28480328, name: "🌼PAPATYA❣SS🌼" },
+  { nonoID: 31925565, name: "💲💋Lili🧉🌟" },
+  { nonoID: 9330839, name: "🦎🌟GUANI🌻🍦" }
 ];
 
 /** @type { string[] } */
-const twitch = [
-  "lunanny",
-  "lamua_",
-  "dannyaegyo"
-];
+const twitch = [ "lunanny", "dannyaegyo" ];
 
 /** @type { string[] } */
-const projects = [
-  "Doofy's Projects"
-];
+const projects = [ "Doofy's Projects" ];
 
 module.exports = {
   aboutApp,

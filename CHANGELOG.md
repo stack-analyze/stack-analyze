@@ -2,6 +2,19 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.5
+### Added
+- add new tool: movie info
+- add new test
+- renove menu
+### fixed
+- rewrite in some functions and about
+- remove some dependencies not using project
+### changed
+- change multibar to 2 single bars
+- change switch in all tools for hash functions tables
+- renove nonolive recommends
+
 ## version 1.1.4
 ### Added
 - add new tool: bitly info

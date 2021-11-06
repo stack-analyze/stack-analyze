@@ -1,6 +1,6 @@
 {
     "source": {
-        "include": ["./index.js", "functions", "about"],
+        "include": ["./index.js", "functions", "about", "hash"],
         "includePatter": ".js$",
         "excludePattern": "(node_modules|docs)"
     },
