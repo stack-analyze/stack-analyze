@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>hash/hardwareTools.js - Documentation</title>
+    <title>hash/infoTools.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">hash/hardwareTools.js</h1>
+    <h1 class="page-title">hash/infoTools.js</h1>
     
 
     
@@ -39,53 +39,96 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// hardware modules
-const {
-  cpuInfo,
-  ramMemInfo,
-  osDetail,
-  diskInfo,
-  controllerInfo,
-  displayInfo,
-  biosInfo
-} = require("../functions/hardware");
+            <pre class="prettyprint source linenums"><code>// modules
+const inquirer = require("inquirer");
 
-/**
- * @type {{ cpu(): void, ram_memory(): void, os(): void, disk(): void, controller(): void, display(): void, bios(): void }}
- */
-const hardwareTools = {
-  cpu() {
-    console.clear();
-    cpuInfo();
+// github info
+const githubInfo = require("../functions/gitUser");
+
+// anime search
+const animeSearch = require("../functions/animeInfo");
+
+// crypto market
+const cryptoMarket = require("../functions/cryptoList");
+
+// bitly
+const bitlyInfo = require("../functions/bitly");
+
+// movies
+const movieDB = require("../functions/moviesInfo");
+
+
+/** 
+ * @type {{ github_info(): Promise&lt;void>, anime_search(): Promise&lt;void>, crypto_market(): void, bitly_info(): Promise&lt;void>, movie_info(): Promise&lt;void> }} 
+*/
+const infoTools = {
+  async github_info() {
+    const { user } = await inquirer.prompt({
+      name: "user",
+      message: "enter a github user"
+    });
+
+    if (user !== "") {
+      console.clear();
+      githubInfo(user);
+    } else {
+      console.error("please the github username is required".red);
+    }
   },
-  ram_memory() {
-    console.clear();
-    ramMemInfo();
+  async anime_search() {
+    const { anime } = await inquirer.prompt({
+      name: "anime",
+      message: "enter a anime, movie or ova search"
+    });
+
+    if (anime !== "") {
+      console.clear();
+      animeSearch(anime);
+    } else {
+      console.error("please the anime is required".red);
+    }
   },
-  os() {
+  crypto_market() {
     console.clear();
-    osDetail();
+    cryptoMarket();
   },
-  disk() {
+  async bitly_info() {
     console.clear();
-    diskInfo();
+    const { link, token } = await inquirer.prompt([
+      {
+        name: "link",
+        message: "enter a bitly link without http|https",
+      },
+      {
+        name: "token",
+        message: "enter a bitly token",
+        type: "password",
+        mask: "?"
+      }
+    ]);
+
+    bitlyInfo(link, token);
   },
-  controller() {
-    console.clear();
-    controllerInfo();
-  },
-  display() {
-    console.clear();
-    displayInfo();
-  },
-  bios() {
-    console.clear();
-    biosInfo();
+  async movie_info() {
+    const { api_key, query } = await inquirer.prompt([
+      {
+        name: "api_key",
+        message: "insert api key",
+        type: "password",
+        mask: "?"
+      },
+      {
+        name: "query",
+        message: "please search a movie search",
+      }
+    ]);
+
+    movieDB(api_key, query);
   }
 };
 
 // exports
-module.exports = hardwareTools;
+module.exports = infoTools;
 </code></pre>
         </article>
     </section>
