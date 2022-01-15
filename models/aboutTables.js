@@ -17,22 +17,6 @@ const youtubeDevTable = new Table({
   ]
 });
 
-// nonolive model
-const nonoliveTable = new Table({
-  columns: [
-    {
-      name: "nonoID",
-      alignment: "left",
-      color: "red"
-    },
-    {
-      name: "name",
-      alignment: "left",
-      color: "yellow"
-    }
-  ]
-});
-
 // ideas model
 const ideasTable = new Table({
   columns: [
@@ -52,6 +36,5 @@ const ideasTable = new Table({
 // exports tables
 module.exports = {
   youtubeDevTable,
-  nonoliveTable,
   ideasTable
 };

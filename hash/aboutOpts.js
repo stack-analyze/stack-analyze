@@ -34,11 +34,6 @@ const aboutTool = {
     youtubeDevTable.addRows(youtubeDev);
     youtubeDevTable.printTable();
   },
-  nonolive_recomendation() {
-    console.clear();
-    nonoliveTable.addRows(nonolive);
-    nonoliveTable.printTable();
-  },
   twitch_recomendation() {
     console.clear();
     const streamers = twitch.map((streamer, i) => ({ index: i + 1, streamer }));

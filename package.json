@@ -1,10 +1,10 @@
 {
   "name": "stack-analyze",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api, hardware and crypto market",
   "main": "index.js",
   "bin": {
-    "stack-analyze": "index.js"
+    "stack-analyze": "cli.js"
   },
   "dependencies": {
     "axios": "^0.21.4",
@@ -26,7 +26,7 @@
     "minami": "^1.2.3"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node cli.js",
     "test": "jest",
     "lint:test": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix",

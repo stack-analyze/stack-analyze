@@ -2,6 +2,17 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.6
+### Added
+- module stack-analyze mode
+### fixed
+- rewrite code
+- renove nonolive recommends
+### changed
+- menu renove
+- renove jsdocs in some function or variables
+- remove nonolive recommends soon in versions desktop 7 and pwa 1.5.0
+
 ## version 1.1.5
 ### Added
 - add new tool: movie info

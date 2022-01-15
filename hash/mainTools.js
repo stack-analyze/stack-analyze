@@ -10,23 +10,8 @@ const multipleStack = require("../functions/multipleStack");
 // pagespeed web
 const pageSpeed = require("../functions/pageSpeed");
 
-// github info
-const githubInfo = require("../functions/gitUser");
-
-// anime search
-const animeSearch = require("../functions/animeInfo");
-
-// crypto market
-const cryptoMarket = require("../functions/cryptoList");
-
-// bitly
-const bitlyInfo = require("../functions/bitly");
-
-// movies
-const movieDB = require("../functions/moviesInfo");
-
 /**
- * @type {{ single(): Promise<void>, multiple(): Promise<void>,  pagespeed(): Promise<void>, github_info(): Promise<void>, anime_search(): Promise<void>, cryto_market(): void, bitly_info(): Promise<void>, movie_info(): Promise<void> }}
+ * @type {{ single(): Promise<void>, multiple(): Promise<void>,  pagespeed(): Promise<void> }}
  */
 const mainTools = {
   async single() {
@@ -75,69 +60,6 @@ const mainTools = {
     } else {
       console.error("please insert a URL with parameter https;// or http://".red);
     }
-  },
-  async github_info() {
-    const { user } = await inquirer.prompt({
-      name: "user",
-      message: "enter a github user"
-    });
-
-    if (user !== "") {
-      console.clear();
-      githubInfo(user);
-    } else {
-      console.error("please the github username is required".red);
-    }
-  },
-  async anime_search() {
-    const { anime } = await inquirer.prompt({
-      name: "anime",
-      message: "enter a anime, movie or ova search"
-    });
-
-    if (anime !== "") {
-      console.clear();
-      animeSearch(anime);
-    } else {
-      console.error("please the anime is required".red);
-    }
-  },
-  cryto_market() {
-    console.clear();
-    cryptoMarket();
-  },
-  async bitly_info() {
-    console.clear();
-    const { link, token } = await inquirer.prompt([
-      {
-        name: "link",
-        message: "enter a bitly link without http|https",
-      },
-      {
-        name: "token",
-        message: "enter a bitly token",
-        type: "password",
-        mask: "?"
-      }
-    ]);
-
-    bitlyInfo(link, token);
-  },
-  async movie_info() {
-    const { api_key, query } = await inquirer.prompt([
-      {
-        name: "api_key",
-        message: "insert api key",
-        type: "password",
-        mask: "?"
-      },
-      {
-        name: "query",
-        message: "please search a movie search",
-      }
-    ]);
-
-    movieDB(api_key, query);
   }
 };
 

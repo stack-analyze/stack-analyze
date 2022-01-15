@@ -1,170 +1,359 @@
-#!/usr/bin/env node
-
 // modules
-const { performance } = require("perf_hooks");
-const inquirer = require("inquirer");
-const { textSync } = require("figlet");
-const { yellow, red } = require("colors");
+const axios = require("axios").default;
+const CoinGecko = require("coingecko-api");
+const {
+  cpu,
+  mem,
+  osInfo,
+  diskLayout,
+  graphics,
+  bios
+} = require("systeminformation");
+const Wappalyzer = require("wappalyzer");
 
-// hash tables
-const mainTools = require("./hash/mainTools");
-const hardwareTools = require("./hash/hardwareTools");
-const aboutTool = require("./hash/aboutOpts");
+// init coingecko api
+const CoinGeckoClient = new CoinGecko();
 
-/** 
- * @description about menu
- * @return { Promise<void> } about option sections answer
- */
-async function aboutOpts() {
-  const { about } = await inquirer.prompt({
-    type: "list",
-    pageSize: 9,
-    name: "about",
-    message: "select about option info",
-    choices: [
-      "main_info",
-      "lineup",
-      "youtube_recomendation",
-      "nonolive_recomendation",
-      "twitch_recomendation",
-      "projects_recomendation",
-      "tools_ideas",
-      "return to main menu"
-    ]
-  });
+// functions
 
-  if (about !== "return to main menu") {
-    aboutTool[about]();
-    setTimeout(aboutOpts, 1000);
-  } else {
-    question();
-  }  
-}
-
-/**
- * 
- * @description call the async function return list to question list
- * @return { Promise<void> } - return in boolean a result question list
- * 
- */
-async function returnQuestion() {
+const animeSearch = async (query) => {
+  /* error manager */
   try {
-    const anw = await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "return",
-        message: "do you want go to the tools menu?",
+    // call api
+    const { data } = await axios.get("https://api.jikan.moe/v3/search/anime", {
+      params: {
+        q: query,
+        limit: 10
       }
-    ]);
+    });
 
-    if (anw.return) {
-      console.clear();
-      mainOptions();
-    } else {
-      question();
-    }
-  } catch (err) {
-    console.error(red(err.message));
-  }
-}
+    return data.results;
 
-/**
- * @description call hardware information options
- * @returns { Promise<void> } hardware options tool
+  } catch (err) { return err; }
+};
+
+const bitlyInfo = async (link, token) => {
+  try {
+    const { data } = await axios.post(
+      "https://api-ssl.bitly.com/v4/expand",
+      {
+        bitlink_id: link
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    return data;
+  } catch (err) { return err; }
+};
+
+/*
+ *
+ * @descripiton call the crypto market list
+ * @returns { Promise<void> } - return results search
+ *
  */
-async function hardwareOpts() {
-  const { hardware } = await inquirer.prompt({
-    type: "list",
-    name: "hardware",
-    pageSize: 9,
-    message: "select a hardware-information option:",
-    choices: [
-      "cpu",
-      "ram_memory",
-      "os",
-      "disk",
-      "controller",
-      "display",
-      "bios",
-      "exit to main menu"
-    ]
-  });
+const cryptoMarket = async () => {
+  try {
+    // start crypto
+    const coinData = await CoinGeckoClient.coins.markets({
+      per_page: 10
+    });
 
-  if(hardware !== "exit to main menu") {
-    hardwareTools[hardware]();
-    setTimeout(hardwareOpts, 1000);
-  } else {
-    question();
-  }
+    // map coinData
+    return coinData.data;
+  } catch (err) { return err; }
+};
+
+async function githubInfo(user) {
+  try {
+    const { data } = await axios.get(`https://api.github.com/users/${user}`);
+
+    return data;
+  } catch (err) { return err; }
 }
 
-/**
- * 
- * @description call the function question raw list options
- * @returns { Promise<void> } return main tools options
- * 
- */
-async function mainOptions() {
-  const { main } = await inquirer.prompt({
-    type: "list",
-    pageSize: 9,
-    name: "main",
-    message: "",
-    choices: [
-      "single",
-      "multiple",
-      "pagespeed",
-      "github_info",
-      "anime_search",
-      "cryto_market",
-      "bitly_info",
-      "movie_info",
-      "return main menu"
-    ]
-  });
+async function cpuInfo() {
+  try {
+    const {
+      manufacturer,
+      brand,
+      speed,
+      cores,
+      physicalCores,
+      processors,
+      vendor,
+      family,
+      model
+    } = await cpu();
 
-  if (main !== "return main menu") {
-    mainTools[main]();
-    const timeEnd = performance.now();
-    setTimeout(returnQuestion, timeEnd);
-  } else {
-    question();
-  }
+    // show results
+    return {
+      manufacturer,
+      brand,
+      speed,
+      cores,
+      physicalCores,
+      processors,
+      vendor,
+      family,
+      model
+    };
+  } catch (err) { return err; }
 }
 
-/**
- * 
- * @description call the function question raw list options
- * @returns { Promise<void> } return exit question
- * 
- */
-async function question() {
-  console.clear();
-  console.info(yellow(textSync("stack-analyze")));
-  const { analyze } = await inquirer.prompt({
-    type: "list",
-    name: "analyze",
-    message: "what option do you want to analyze stack",
-    choices: ["main tools", "hardware tools", "about", "exit"]
-  });
+async function ramMemInfo() {
+  try {
+    const {
+      total,
+      free,
+      used,
+      active,
+      available
+    } = await mem();
 
-  switch (analyze) {
-    case "main tools":
-      mainOptions();
-      break;
-    case "hardware tools":
-      hardwareOpts();
-      break;
-    case "about":
-      aboutOpts();
-      break;
-    default:
-      console.clear();
-      console.info("thanks for use stack-analyze".green);
-      break;
-  }
+    // show results
+    return {
+      total_mem: `${(total / 1073741824).toFixed(2)} GB`,
+      free_mem: `${(free / 1073741824).toFixed(2)} GB`,
+      used_mem: `${(used / 1073741824).toFixed(2)} GB`,
+      active_mem: `${(active / 1073741824).toFixed(2)} GB`,
+      available_mem: `${(available / 1073741824).toFixed(2)} GB`
+    };
+  } catch (err) { return err; }
 }
 
-// call the message title and question list
-question();
+async function osDetail() {
+  try {
+    const {
+      hostname,
+      platform,
+      distro,
+      release,
+      kernel,
+      arch,
+      serial,
+      uefi
+    } = await osInfo();
 
+    // show results
+    return {
+      hostname,
+      platform,
+      distro,
+      release,
+      kernel,
+      arch,
+      serial,
+      uefi
+    };
+  } catch (err) { return err; }
+}
+
+async function diskInfo() {
+  try {
+    const disks = await diskLayout();
+
+    const disksList = disks.map(({
+      type,
+      name,
+      vendor,
+      size,
+      interfaceType
+    }) => ({
+      type,
+      name,
+      vendor,
+      diskSize: `${(size / 1073741824).toFixed(2)} GB`,
+      interfaceType
+    }));
+
+    return disksList;
+
+  } catch (err) { return err; }
+}
+
+async function controllerInfo() {
+  try {
+    const { controllers } = await graphics();
+
+    const controllersList = controllers.map(({
+      model,
+      vendor,
+      vram
+    }) => ({
+      model,
+      vendor,
+      vramSize: vram < 1024
+        ? `${vram} MB`
+        : `${(vram / 1024).toFixed(2)} GB`
+    }));
+
+    return controllersList;
+  } catch (err) { return err; }
+}
+
+async function displayInfo() {
+  try {
+    const { displays } = await graphics();
+
+    const displayList = displays.map(({
+      model,
+      main,
+      connection,
+      resolutionX,
+      resolutionY
+    }) => ({
+      model,
+      main,
+      connection,
+      resolutionX,
+      resolutionY
+    }));
+
+    return displayList;
+  } catch (err) { return err; }
+}
+
+async function biosInfo() {
+  try {
+    const {
+      releaseDate,
+      vendor,
+      revision,
+      version
+    } = await bios();
+
+    return { releaseDate, vendor, revision, version };
+  } catch (err) { return err; }
+}
+
+const movieDB = async (api_key, query) => {
+  try {
+    const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
+      params: {
+        api_key,
+        query,
+        page: 1
+      }
+    });
+
+    const movieData = data.results
+      .map(({
+        title,
+        original_language,
+        popularity,
+        vote_average,
+        release_date
+      }) => ({
+        title,
+        original_language,
+        popularity,
+        vote_average,
+        release_date
+      }))
+      .sort((x, y) => {
+        // date values
+        const primaryDate = new Date(x.release_date);
+        const secondaryDate = new Date(y.release_date);
+
+        return primaryDate.getTime() - secondaryDate.getTime();
+      })
+      .filter(({ release_date }) => release_date !== undefined && release_date !== "");
+
+    return movieData;
+  } catch (err) { return err; }
+};
+
+async function multipleStack(urls) {
+  let result;
+  const wappalyzer = new Wappalyzer();
+  try {
+    await wappalyzer.init();
+    result = await Promise.all(
+      urls.map(async (url) => {
+        const { technologies } = await wappalyzer.open(url).analyze();
+        return {
+          url,
+          technologies
+        };
+      })
+    );
+  } catch (err) { result = err; }
+  await wappalyzer.destroy();
+  return result;
+}
+
+const pageSpeed = async (url) => {
+  try {
+    const resMobile = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
+      params: {
+        url,
+        key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
+        strategy: "mobile"
+      }
+    });
+
+    const resDesktop = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
+      params: {
+        url,
+        key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
+        strategy: "desktop"
+      }
+    });
+
+    // extract results
+    const mobile = Math.round(resMobile.data.lighthouseResult.categories.performance.score * 100);
+    const desktop = Math.round(resDesktop.data.lighthouseResult.categories.performance.score * 100);
+
+    return {mobile, desktop};
+  } catch (err) { return err; }
+};
+
+async function singleStack(url) {
+  const wappalyzer = await new Wappalyzer;
+
+  let result;
+  try {
+    await wappalyzer.init();
+
+    const { technologies } = await wappalyzer.open(url).analyze();
+
+    result = technologies.map(({
+      name,
+      website,
+      categories
+    }) => ({
+      techName: name,
+      techWebsite: website,
+      techCategories: categories.map(({ name }) => name).join(", ")
+    }));
+  } catch (err) { result = err; }
+
+  await wappalyzer.destroy();
+  return result;
+}
+
+
+// exports
+exports = {
+  animeSearch,
+  bitlyInfo,
+  cryptoMarket,
+  githubInfo,
+  controllerInfo,
+  osDetail,
+  diskInfo,
+  displayInfo,
+  biosInfo,
+  cpuInfo,
+  ramMemInfo,
+  movieDB,
+  multipleStack,
+  pageSpeed,
+  singleStack
+};
