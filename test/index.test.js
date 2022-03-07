@@ -1,22 +1,22 @@
-// @ts-nocheck
 // test modules
 const single = require("./single");
 const multiple = require("./multiple");
 const pageSpeed = require("./pageSpeed");
 const githubInfo = require("./githubinfo");
 const animeSearch = require("./githubinfo");
-const {
-  cpuInfo,
-  ramMemInfo,
-  osDetail,
-  diskInfo,
-  controllerInfo,
-  displayInfo,
-  biosInfo
+const { 
+  cpuInfo, 
+  ramMemInfo, 
+  osDetail, 
+  diskInfo, 
+  controllerInfo, 
+  displayInfo, 
+  biosInfo 
 } = require("./hardware");
 const cryptoMarket = require("./crypto");
 const bitlyInfo = require("./bitly");
-movieDB = require("./moviesInfo");
+const movieDB = require("./moviesInfo");
+const twitchInfo = require("./twitch");
 
 test('single stack', async () => await single("http://example.com"), 34000);
 
@@ -49,3 +49,6 @@ test('bitly info', async () => await bitlyInfo('bit.ly/onlyfans-rougekamcosplay'
 
 // using fake api
 test('movies info', async () => await movieDB('AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAACOxyz', 'dragonball'));
+
+// fake twitch token
+test('twitch info', async () => await twitchInfo('example', 'AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAACOxyz'))

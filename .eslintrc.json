@@ -1,12 +1,13 @@
 {
     "env": {
-        "commonjs": true,
         "es2021": true,
+        "commonjs": true,
         "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaVersion": 12
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
     "rules": {
         "no-var": "error",
@@ -18,9 +19,13 @@
         "quotes": "error",
         "block-spacing": "error",
         "prefer-const": "error",
-        "indent": ["error", 2, {
-            "SwitchCase": 1
-        }],
-        "semi":"error"
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "semi": "error"
     }
 }

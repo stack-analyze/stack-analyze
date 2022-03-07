@@ -1,14 +1,14 @@
 // modules
-const inquirer = require("inquirer");
-const { textSync } = require("figlet");
-const { green } = require("colors");
+import inquirer from "inquirer";
+import figlet from "figlet";
+import colors from "colors";
 
 // analyze web
-const singleStack = require("../functions/singleStack");
-const multipleStack = require("../functions/multipleStack");
+import singleStack from "../functions/singleStack.js";
+import multipleStack from "../functions/multipleStack.js";
 
 // pagespeed web
-const pageSpeed = require("../functions/pageSpeed");
+import pageSpeed from "../functions/pageSpeed.js";
 
 /**
  * @type {{ single(): Promise<void>, multiple(): Promise<void>,  pagespeed(): Promise<void> }}
@@ -52,10 +52,10 @@ const mainTools = {
 
     if (speedWeb.indexOf("http") === 0) {
       console.clear();
-      console.info(green(textSync(speedWeb)));
+      console.info(colors.green(figlet.textSync(speedWeb)));
 
       // start pagespeed results mobile
-      textSync(speedWeb, "Small");
+      figlet.textSync(speedWeb, "Small");
       pageSpeed(speedWeb);
     } else {
       console.error("please insert a URL with parameter https;// or http://".red);
@@ -64,4 +64,4 @@ const mainTools = {
 };
 
 // export
-module.exports = mainTools;
+export default mainTools;

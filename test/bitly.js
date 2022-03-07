@@ -1,6 +1,5 @@
 // modules
 const axios = require("axios").default;
-const { format } = require("timeago.js");
 
 const bitlyInfo = async (link, token) => {
   let run;
@@ -21,7 +20,7 @@ const bitlyInfo = async (link, token) => {
     status === 404
       ? run = "no found link"
       : run = {
-        created_link: format(data.created_at),
+        created_link: data.created_at,
         bitly_link: data.link,
         link: data.long_url
       };

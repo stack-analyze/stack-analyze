@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
 // modules
-const { performance } = require("perf_hooks");
-const inquirer = require("inquirer");
-const { textSync } = require("figlet");
-const { yellow, red } = require("colors");
+import { performance } from "perf_hooks";
+import inquirer from "inquirer";
+import figlet from "figlet";
+import colors from "colors";
 
 // hash tables
-const mainTools = require("./hash/mainTools");
-const hardwareTools = require("./hash/hardwareTools");
-const aboutTool = require("./hash/aboutOpts");
-const infoTools = require("./hash/infoTools");
+import mainTools from "./hash/mainTools.js";
+import hardwareTools from "./hash/hardwareTools.js";
+import aboutTool from "./hash/aboutOpts.js";
+import infoTools from "./hash/infoTools.js";
 
 /** 
  * @description about menu
@@ -64,7 +64,7 @@ async function returnWebQuestion() {
       question();
     }
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -91,7 +91,7 @@ async function returnInfoQuestion() {
       question();
     }
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -172,6 +172,7 @@ async function infoOpts() {
       "crypto_market",
       "bitly_info",
       "movie_info",
+      "twitch_info",
       "return main menu"
     ]
   });
@@ -194,7 +195,7 @@ async function infoOpts() {
  */
 async function question() {
   console.clear();
-  console.info(yellow(textSync("stack-analyze")));
+  console.info(colors.yellow(figlet.textSync("stack-analyze")));
   const { analyze } = await inquirer.prompt({
     type: "list",
     name: "analyze",

@@ -1,5 +1,7 @@
-// version module
-const { license, version } = require("../package.json");
+// package.json
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { license, version } = require("./package.json");
 
 /**
  * @type {{ mainDeveloper: string, version: string, license: string }}
@@ -41,12 +43,12 @@ const youtubeDev = [
 ];
 
 /** @type { string[] } */
-const twitch = [ "dannyaegyo" ];
+const twitch = [ "dannyaegyo", "Lunanny" ];
 
 /** @type { string[] } */
 const projects = [ "Doofy's Projects" ];
 
-module.exports = {
+export {
   aboutApp,
   developers,
   youtubeDev,

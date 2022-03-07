@@ -1,14 +1,18 @@
 // modules
-const {
-  cpu,
-  mem,
-  osInfo,
-  diskLayout,
-  graphics,
-  bios
-} = require("systeminformation");
-const { printTable } = require("console-table-printer");
-const { red } = require("colors");
+import { 
+  cpu, 
+  mem, 
+  osInfo, 
+  diskLayout, 
+  graphics, 
+  bios 
+} from "systeminformation";
+import colors from "colors";
+import { 
+  controllersTable, 
+  diskTables, 
+  displayTables 
+} from "../models/hardwareTables.js";
 
 
 /**
@@ -44,7 +48,7 @@ async function cpuInfo() {
       model
     });
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -73,7 +77,7 @@ async function ramMemInfo() {
       available_mem: `${(available / 1073741824).toFixed(2)} GB`
     });
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -108,7 +112,7 @@ async function osDetail() {
       uefi
     });
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -135,11 +139,13 @@ async function diskInfo() {
       diskSize: `${(size / 1073741824).toFixed(2)} GB`,
       interfaceType
     }));
-    
-    printTable(disksList);
+
+    diskTables.addRows(disksList);
+
+    diskTables.printTable();
 
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -160,15 +166,16 @@ async function controllerInfo() {
     }) => ({
       model,
       vendor,
-      vramSize: vram < 1024 
+      vramSize: vram < 1024
         ? `${vram} MB`
         : `${(vram / 1024).toFixed(2)} GB`
     }));
 
     // show results
-    printTable(controllersList);
+    controllersTable.addRows(controllersList);
+    controllersTable.printTable();
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -197,9 +204,10 @@ async function displayInfo() {
     }));
 
     // show results
-    printTable(displayList);
+    displayTables.addRows(displayList);
+    displayTables.printTable();
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
@@ -221,16 +229,16 @@ async function biosInfo() {
     console.table({
       releaseDate,
       vendor,
-      bios_revision: revision === "" ? "no info": revision,
+      bios_revision: revision === "" ? "no info" : revision,
       version
     });
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
 
 // exports modules
-module.exports = {
+export {
   cpuInfo,
   ramMemInfo,
   osDetail,

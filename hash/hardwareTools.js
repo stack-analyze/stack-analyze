@@ -1,5 +1,5 @@
 // hardware modules
-const {
+import {
   cpuInfo,
   ramMemInfo,
   osDetail,
@@ -7,7 +7,7 @@ const {
   controllerInfo,
   displayInfo,
   biosInfo
-} = require("../functions/hardware");
+} from "../functions/hardware.js";
 
 /**
  * @type {{ cpu(): void, ram_memory(): void, os(): void, disk(): void, controller(): void, display(): void, bios(): void }}
@@ -44,4 +44,4 @@ const hardwareTools = {
 };
 
 // exports
-module.exports = hardwareTools;
+export default hardwareTools;

@@ -1,7 +1,7 @@
 // modules
-const axios = require("axios").default;
-const cliProgress = require("cli-progress");
-const { red } = require("colors");
+import axios from "axios";
+import { SingleBar } from "cli-progress";
+import colors from "colors";
 
 /**
  * @description async function mobile website pagespeed
@@ -39,13 +39,13 @@ const pageSpeed = async (url) => {
     switch (true) {
       case (mobile === 1 || mobile <= 49):
       case (desktop === 1 || desktop <= 49):
-        b1 = new cliProgress.SingleBar({
+        b1 = new SingleBar({
           format: "Mobile Result | {bar} || {value}/{total} || bad".red,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
         });
-        b2 = new cliProgress.SingleBar({
+        b2 = new SingleBar({
           format: "Desktop Result | {bar} || {value}/{total} || bad".red,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
@@ -54,13 +54,13 @@ const pageSpeed = async (url) => {
         break;
       case (mobile === 50 || mobile <= 89):
       case (desktop === 50 || desktop <= 89):
-        b1 = new cliProgress.SingleBar({
+        b1 = new SingleBar({
           format: "Mobile Result | {bar} || {value}/{total} || decent".yellow,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
         });
-        b2 = new cliProgress.SingleBar({
+        b2 = new SingleBar({
           format: "Desktop Result | {bar} || {value}/{total} || decent".yellow,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
@@ -69,13 +69,13 @@ const pageSpeed = async (url) => {
         break;
       case (mobile >= 90 || mobile === 100):
       case (desktop >= 90 || desktop === 100):
-        b1 = new cliProgress.SingleBar({
+        b1 = new SingleBar({
           format: "Mobile Result | {bar} || {value}/{total} || excelent".green,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
         });
-        b2 = new cliProgress.SingleBar({
+        b2 = new SingleBar({
           format: "Desktop Result | {bar} || {value}/{total} || excelent".green,
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
@@ -83,13 +83,13 @@ const pageSpeed = async (url) => {
         });
         break;
       default:
-        b1 = new cliProgress.SingleBar({
+        b1 = new SingleBar({
           format: "Mobile Result | {bar} || {value}/{total} || undifined",
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
           hideCursor: true
         });
-        b2 = new cliProgress.SingleBar({
+        b2 = new SingleBar({
           format: "Desktop Result | {bar} || {value}/{total} || undifined",
           barCompleteChar: "\u2588",
           barIncompleteChar: "\u2591",
@@ -109,8 +109,8 @@ const pageSpeed = async (url) => {
     b1.stop();
     b2.stop();
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 };
 
-module.exports = pageSpeed;
+export default pageSpeed;

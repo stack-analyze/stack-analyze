@@ -1,5 +1,5 @@
 // table model module
-const { Table } = require("console-table-printer");
+import { Table } from "console-table-printer";
 
 // youtube model
 const youtubeDevTable = new Table({
@@ -34,7 +34,7 @@ const ideasTable = new Table({
 });
 
 // exports tables
-module.exports = {
+export {
   youtubeDevTable,
   ideasTable
 };

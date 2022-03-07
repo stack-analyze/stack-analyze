@@ -1,8 +1,8 @@
 // modules
-const axios = require("axios").default;
-const { format } = require("timeago.js");
-const { red } = require("colors");
-const { Table } = require("console-table-printer");
+import axios from "axios";
+import { format } from "timeago.js";
+import colors from "colors";
+import animeList from "../models/animeTable.js";
 
 /**
  *
@@ -22,36 +22,6 @@ const animeSearch = async (query) => {
       }
     });
 
-    const animeList = new Table({
-      columns: [
-        {
-          name: "title",
-          alignment: "left",
-          color: "green"
-        },
-        {
-          name: "type",
-          alignment: "left",
-          color: "magenta"
-        },
-        {
-          name: "episodes",
-          alignment: "left",
-          color: "magenta"
-        },
-        {
-          name: "debutDate",
-          alignment: "left",
-          color: "magenta"
-        },
-        {
-          name: "finalDate",
-          alignment: "left",
-          color: "green"
-        }
-      ]
-    });
-
     const animeData = data.results.map(({
       title,
       episodes,
@@ -62,18 +32,18 @@ const animeSearch = async (query) => {
       type,
       episodes,
       debutDate: format(start_date),
-      finalDate: end_date !== null 
-        ? format(end_date) 
+      finalDate: end_date !== null
+        ? format(end_date)
         : "current date"
     }));
-        
+
 
     animeList.addRows(animeData);
 
     animeList.printTable();
 
-  } catch (err) { console.error(red(err.message)); }
+  } catch (err) { console.error(colors.red(err.message)); }
 };
 
 // exports module
-module.exports = animeSearch;
+export default animeSearch;

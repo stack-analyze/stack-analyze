@@ -1,25 +1,23 @@
 // print table
-const { printTable } = require("console-table-printer");
+import { printTable } from "console-table-printer";
 
 // tables models 
-const {
+import {
   youtubeDevTable,
-  nonoliveTable,
   ideasTable
-} = require("../models/aboutTables");
+} from "../models/aboutTables.js";
 
 // about sections
-const {
+import {
   aboutApp,
   developers,
-  youtubeDev,
-  nonolive,
   twitch,
   projects,
-  ideas
-} = require("../about");
+  ideas,
+  youtubeDev
+} from "../about.js";
 
-/** @type {{ main_info(): void, lineup(): void, youtube_recomendation(): void, nonolive_recomendation(): void, twitch_recomendation(): void, projects_recomendation(): void, tools_ideas(): void }} */
+/** @type {{ main_info(): void, lineup(): void, youtube_recomendation(): void, twitch_recomendation(): void, projects_recomendation(): void, tools_ideas(): void }} */
 const aboutTool = {
   main_info() {
     console.clear();
@@ -52,4 +50,4 @@ const aboutTool = {
 };
 
 // export hash
-module.exports = aboutTool;
+export default aboutTool;

@@ -1,10 +1,10 @@
-const {
-  cpu,
-  mem,
-  osInfo,
-  diskLayout,
-  graphics,
-  bios
+const { 
+  cpu, 
+  mem, 
+  osInfo, 
+  diskLayout, 
+  graphics, 
+  bios 
 } = require("systeminformation");
 
 async function cpuInfo() {

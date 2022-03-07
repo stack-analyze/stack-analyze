@@ -1,7 +1,7 @@
 // modules
-const axios = require("axios").default;
-const { format } = require("timeago.js");
-const { red, yellow } = require("colors");
+import axios from "axios";
+import { format } from "timeago.js";
+import colors from "colors";
 
 /**
  *
@@ -10,7 +10,7 @@ const { red, yellow } = require("colors");
  * @returns { Promise<void> } - return results info
  *
  */
-async function githubInfo(user) {
+export default async function githubInfo(user) {
   try {
     const res = await axios.get(`https://api.github.com/users/${user}`);
 
@@ -30,12 +30,9 @@ async function githubInfo(user) {
 
       console.table(info);
     } else {
-      console.info(yellow(res.status.toString()));
+      console.info(colors.yellow(res.status.toString()));
     }
   } catch(err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 }
-
-module.exports = githubInfo;
-

@@ -1,24 +1,27 @@
 // modules
-const inquirer = require("inquirer");
+import inquirer from "inquirer";
 
 // github info
-const githubInfo = require("../functions/gitUser");
+import githubInfo from "../functions/gitUser.js";
 
 // anime search
-const animeSearch = require("../functions/animeInfo");
+import animeSearch from "../functions/animeInfo.js";
 
 // crypto market
-const cryptoMarket = require("../functions/cryptoList");
+import cryptoMarket from "../functions/cryptoList.js";
 
 // bitly
-const bitlyInfo = require("../functions/bitly");
+import bitlyInfo from "../functions/bitly.js";
 
 // movies
-const movieDB = require("../functions/moviesInfo");
+import movieDB from "../functions/moviesInfo.js";
+
+// twitch
+import twitchInfo from "../functions/twitch.js";
 
 
 /** 
- * @type {{ github_info(): Promise<void>, anime_search(): Promise<void>, crypto_market(): void, bitly_info(): Promise<void>, movie_info(): Promise<void> }} 
+ * @type {{ github_info(): Promise<void>, anime_search(): Promise<void>, crypto_market(): void, bitly_info(): Promise<void>, movie_info(): Promise<void>, twitch_info(): Promise<void>}} 
 */
 const infoTools = {
   async github_info() {
@@ -53,38 +56,57 @@ const infoTools = {
   },
   async bitly_info() {
     console.clear();
-    const { link, token } = await inquirer.prompt([
+    const { link } = await inquirer.prompt([
       {
         name: "link",
         message: "enter a bitly link without http|https",
-      },
-      {
-        name: "token",
-        message: "enter a bitly token",
-        type: "password",
-        mask: "?"
       }
     ]);
 
-    bitlyInfo(link, token);
+    if (link !== "") {
+      console.clear();
+      bitlyInfo(link);
+    } else {
+      console.error("bitly link is required".red);
+    }
   },
   async movie_info() {
-    const { api_key, query } = await inquirer.prompt([
-      {
-        name: "api_key",
-        message: "insert api key",
-        type: "password",
-        mask: "?"
-      },
+    const { query } = await inquirer.prompt([
       {
         name: "query",
         message: "please search a movie search",
       }
     ]);
 
-    movieDB(api_key, query);
+    if (query !== "") {
+      console.clear();
+      movieDB(query);
+    } else {
+      console.error("please the movie is required".red);
+    }
+  },
+  async twitch_info() {
+    const { user, twitch_token } = await inquirer.prompt([
+      {
+        name: "user",
+        message: "get twitch user"
+      },
+      {
+        name: "twitch_token",
+        message: "enter a twitch token without the key Bearer",
+        type: "password",
+        mask: "?"
+      }
+    ]);
+
+    if (user !== "" && twitch_token !== "") {
+      console.clear();
+      twitchInfo(user, twitch_token);
+    } else {
+      console.error("twitch info fields is required".red);
+    }
   }
 };
 
 // exports
-module.exports = infoTools;
+export default infoTools;

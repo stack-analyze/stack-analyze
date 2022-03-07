@@ -1,8 +1,9 @@
 // modules
-const CoinGecko = require("coingecko-api");
-const { format } = require("timeago.js");
-const { red, green } = require("colors");
-const { Table } = require("console-table-printer");
+import CoinGecko from "coingecko-api";
+import { format } from "timeago.js";
+import colors from "colors";
+
+import coinTable from "../models/cryptoTables.js";
 
 // init coingecko api
 const CoinGeckoClient = new CoinGecko();
@@ -32,40 +33,10 @@ const cryptoMarket = async () => {
       name,
       price: current_price,
       priceChanged: price_change_percentage_24h > 0 
-        ? green(price_change_percentage_24h) 
-        : red(price_change_percentage_24h),
+        ? colors.green(price_change_percentage_24h) 
+        : colors.red(price_change_percentage_24h),
       lastUpdated: format(last_updated)
     }));
-
-    // init table
-    const coinTable = new Table({
-      columns: [
-        {
-          name: "symbol",
-          alignment: "left",
-          color: "green"
-        },
-        {
-          name: "name",
-          alignment: "left",
-          color: "white_bold"
-        },
-        {
-          name: "price",
-          alignment: "left",
-          color: "yellow"
-        },
-        {
-          name: "priceChanged",
-          alignment: "left"
-        },
-        {
-          name: "lastUpdated",
-          alignment: "left",
-          color: "magenta"
-        }
-      ]
-    });
 
     coinTable.addRows(coinList);
 
@@ -73,8 +44,8 @@ const cryptoMarket = async () => {
     coinTable.printTable();
   } catch (err) {
     // print err message
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 };
 
-module.exports = cryptoMarket;
+export default cryptoMarket;

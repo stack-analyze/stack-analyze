@@ -14,9 +14,45 @@ const Wappalyzer = require("wappalyzer");
 // init coingecko api
 const CoinGeckoClient = new CoinGecko();
 
-// functions
+/**
+ * @typedef {Object} anime
+ * @property {string} anime.query
+ * @property {function(data): void} anime.results
+ * 
+ * @typedef {Object} bitly
+ * @property {string} bitly.link
+ * @property {string} bitly.token
+ * @property {function(data): void} bitly.results
+ * 
+ * @typedef {Object} github
+ * @property {string} github.user
+ * @property {string} github.results
+ * 
+ * @typedef {Object} movie
+ * @property {string} movie.api_key
+ * @property {string} movie.query
+ * @property {function(data): void} movie.results
+ * 
+ * @typedef {Object} multiple
+ * @property {string[]} multiple.urls
+ * @property {function(data): void} multiple.results
+ * 
+ * @typedef {Object} stack
+ * @property {string} stack.urls
+ * @property {function(data): void} stack.results
+ * 
+ * @typedef {Object} twitch
+ * @property {string} twitch.query
+ * @property {string} twitch.token
+ * @property {string} twitch.clientID
+ * @property {function(data): void} twitch.results
+ */
 
-const animeSearch = async (query) => {
+/**
+ * @param {anime} {query, results}
+ * @returns {Promise<void>}
+ */
+const animeSearch = async ({ query, results }) => {
   /* error manager */
   try {
     // call api
@@ -27,12 +63,16 @@ const animeSearch = async (query) => {
       }
     });
 
-    return data.results;
+    results(data.results);
 
-  } catch (err) { return err; }
+  } catch (err) { results(err); }
 };
 
-const bitlyInfo = async (link, token) => {
+/**
+ * @param {bitly} {link, token, results}
+ * @returns {Promise<void>}
+ */
+const bitlyInfo = async ({ link, token, results }) => {
   try {
     const { data } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
@@ -47,17 +87,17 @@ const bitlyInfo = async (link, token) => {
       }
     );
 
-    return data;
-  } catch (err) { return err; }
+    results(data);
+  } catch (err) { results(err); }
 };
 
-/*
+/**
  *
  * @descripiton call the crypto market list
+ * @param {function(data): void} callback
  * @returns { Promise<void> } - return results search
- *
  */
-const cryptoMarket = async () => {
+const cryptoMarket = async (callback) => {
   try {
     // start crypto
     const coinData = await CoinGeckoClient.coins.markets({
@@ -65,19 +105,29 @@ const cryptoMarket = async () => {
     });
 
     // map coinData
-    return coinData.data;
-  } catch (err) { return err; }
+    callback(coinData.data);
+  } catch (err) { callback(err); }
 };
 
-async function githubInfo(user) {
+/**
+ *
+ * @param {github} {user, results}
+ * @returns {Promise<void>}
+ */
+async function githubInfo({ user, results }) {
   try {
     const { data } = await axios.get(`https://api.github.com/users/${user}`);
 
-    return data;
-  } catch (err) { return err; }
+    results(data);
+  } catch (err) { results(err); }
 }
 
-async function cpuInfo() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function cpuInfo(callback) {
   try {
     const {
       manufacturer,
@@ -92,7 +142,7 @@ async function cpuInfo() {
     } = await cpu();
 
     // show results
-    return {
+    callback({
       manufacturer,
       brand,
       speed,
@@ -102,11 +152,16 @@ async function cpuInfo() {
       vendor,
       family,
       model
-    };
-  } catch (err) { return err; }
+    });
+  } catch (err) { callback(err); }
 }
 
-async function ramMemInfo() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function ramMemInfo(callback) {
   try {
     const {
       total,
@@ -117,17 +172,22 @@ async function ramMemInfo() {
     } = await mem();
 
     // show results
-    return {
+    callback({
       total_mem: `${(total / 1073741824).toFixed(2)} GB`,
       free_mem: `${(free / 1073741824).toFixed(2)} GB`,
       used_mem: `${(used / 1073741824).toFixed(2)} GB`,
       active_mem: `${(active / 1073741824).toFixed(2)} GB`,
       available_mem: `${(available / 1073741824).toFixed(2)} GB`
-    };
-  } catch (err) { return err; }
+    });
+  } catch (err) { callback(err); }
 }
 
-async function osDetail() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function osDetail(callback) {
   try {
     const {
       hostname,
@@ -141,7 +201,7 @@ async function osDetail() {
     } = await osInfo();
 
     // show results
-    return {
+    callback({
       hostname,
       platform,
       distro,
@@ -150,11 +210,16 @@ async function osDetail() {
       arch,
       serial,
       uefi
-    };
-  } catch (err) { return err; }
+    });
+  } catch (err) { callback(err); }
 }
 
-async function diskInfo() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function diskInfo(callback) {
   try {
     const disks = await diskLayout();
 
@@ -172,12 +237,17 @@ async function diskInfo() {
       interfaceType
     }));
 
-    return disksList;
+    callback(disksList);
 
-  } catch (err) { return err; }
+  } catch (err) { callback(err); }
 }
 
-async function controllerInfo() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function controllerInfo(callback) {
   try {
     const { controllers } = await graphics();
 
@@ -193,11 +263,16 @@ async function controllerInfo() {
         : `${(vram / 1024).toFixed(2)} GB`
     }));
 
-    return controllersList;
-  } catch (err) { return err; }
+    callback(controllersList);
+  } catch (err) { callback(err); }
 }
 
-async function displayInfo() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function displayInfo(callback) {
   try {
     const { displays } = await graphics();
 
@@ -215,11 +290,16 @@ async function displayInfo() {
       resolutionY
     }));
 
-    return displayList;
-  } catch (err) { return err; }
+    callback(displayList);
+  } catch (err) { callback(err); }
 }
 
-async function biosInfo() {
+/**
+ *
+ * @param {function(data): void} callback
+ * @returns {Promise<void>}
+ */
+async function biosInfo(callback) {
   try {
     const {
       releaseDate,
@@ -228,11 +308,15 @@ async function biosInfo() {
       version
     } = await bios();
 
-    return { releaseDate, vendor, revision, version };
-  } catch (err) { return err; }
+    callback({ releaseDate, vendor, revision, version });
+  } catch (err) { callback(err); }
 }
 
-const movieDB = async (api_key, query) => {
+/**
+ * @param {movie} {api_key, query, results}
+ * @returns {Promise<void>} void results
+ */
+const movieDB = async ({ api_key, query, results }) => {
   try {
     const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
       params: {
@@ -265,11 +349,15 @@ const movieDB = async (api_key, query) => {
       })
       .filter(({ release_date }) => release_date !== undefined && release_date !== "");
 
-    return movieData;
-  } catch (err) { return err; }
+    results(movieData);
+  } catch (err) { results(err); }
 };
 
-async function multipleStack(urls) {
+/**
+ * @param {multiple} {urls, results}
+ * @returns {Promise<void>}
+ */
+async function multipleStack({ urls, results }) {
   let result;
   const wappalyzer = new Wappalyzer();
   try {
@@ -285,10 +373,14 @@ async function multipleStack(urls) {
     );
   } catch (err) { result = err; }
   await wappalyzer.destroy();
-  return result;
+  results(result);
 }
 
-const pageSpeed = async (url) => {
+/**
+ * @param {stack} {url, results}
+ * @returns {Promise<void>}
+ */
+const pageSpeed = async ({ url, results }) => {
   try {
     const resMobile = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
       params: {
@@ -310,11 +402,15 @@ const pageSpeed = async (url) => {
     const mobile = Math.round(resMobile.data.lighthouseResult.categories.performance.score * 100);
     const desktop = Math.round(resDesktop.data.lighthouseResult.categories.performance.score * 100);
 
-    return {mobile, desktop};
-  } catch (err) { return err; }
+    results({ mobile, desktop });
+  } catch (err) { results(err); }
 };
 
-async function singleStack(url) {
+/**
+ * @param {stack} {url, results}
+ * @returns {Promise<void>}
+ */
+async function singleStack({ url, results }) {
   const wappalyzer = await new Wappalyzer;
 
   let result;
@@ -332,15 +428,33 @@ async function singleStack(url) {
       techWebsite: website,
       techCategories: categories.map(({ name }) => name).join(", ")
     }));
-  } catch (err) { result = err; }
+  } catch (err) { results(err); }
 
   await wappalyzer.destroy();
-  return result;
+  results(result);
 }
 
+/**
+ *
+ * @param {twitch} { query, token, clientID, results }
+ * @returns {Promise<void>}
+ */
+async function twitchInfo({ query, token, clientID, results }) {
+  try {
+    const { data: twitchData } = await axios.get(`https://api.twitch.tv/helix/users?login=${query}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Client-Id": clientID
+        }
+      });
+
+    results(twitchData.data);
+  } catch (err) { results(err); }
+}
 
 // exports
-exports = {
+module.exports = {
   animeSearch,
   bitlyInfo,
   cryptoMarket,
@@ -355,5 +469,6 @@ exports = {
   movieDB,
   multipleStack,
   pageSpeed,
-  singleStack
+  singleStack,
+  twitchInfo
 };

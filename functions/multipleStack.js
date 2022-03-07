@@ -1,8 +1,8 @@
 // modules
-const { textSync } = require("figlet");
-const Wappalyzer = require("wappalyzer");
-const { red, green } = require("colors");
-const { Table } = require("console-table-printer");
+import figlet from "figlet";
+import Wappalyzer from "wappalyzer";
+import colors from "colors";
+import stackTable from "../models/stackTables.js";
 
 /**
  *
@@ -13,26 +13,6 @@ const { Table } = require("console-table-printer");
  */
 const multipleStack = async (urls) => {
   const wappalyzer = await new Wappalyzer();
-
-  const p = new Table({
-    columns: [
-      {
-        name: "techName",
-        alignment: "left",
-        color: "cyan"
-      },
-      {
-        name: "techWebsite",
-        alignment: "left",
-        color: "green"
-      },
-      {
-        name: "techCategories",
-        alignment: "left",
-        color: "cyan"
-      }
-    ]
-  });
 
   try {
     await wappalyzer.init();
@@ -61,17 +41,17 @@ const multipleStack = async (urls) => {
         techCategories: categories.map(({ name }) => name).join(", ")
       }));
 
-      console.info(green(textSync(url, "Small")));
+      console.info(colors.green(figlet.textSync(url, "Small")));
       console.group();
-      p.addRows(stackResult);
-      p.printTable();
+      stackTable.addRows(stackResult);
+      stackTable.printTable();
       console.groupEnd();
     });
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 
   await wappalyzer.destroy();
 };
 
-module.exports = multipleStack;
+export default multipleStack;

@@ -1,17 +1,17 @@
 // modules
-const axios = require("axios").default;
-const { format } = require("timeago.js");
-const { red } = require("colors");
+import "../env/bitly.env.js";
+import axios from "axios";
+import { format } from "timeago.js";
+import colors from "colors";
 
 /**
  *
  * @description call the bitly info data
  * @param { string } link - link for search info
- * @param { string } token - token for using tool
  * @returns { Promise<void> } - return results serach
  *
  */
-const bitlyInfo = async (link, token) => {
+const bitlyInfo = async (link) => {
   try {
     const { data, status } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
@@ -20,7 +20,7 @@ const bitlyInfo = async (link, token) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${process.env.BITLY_TOKEN}`,
           "Content-Type": "application/json"
         }
       }
@@ -34,10 +34,9 @@ const bitlyInfo = async (link, token) => {
         link: data.long_url
       });
   } catch (err) {
-    console.error(red(err.message));
+    console.error(colors.red(err.message));
   }
 };
 
 // export
-module.exports = bitlyInfo;
-
+export default bitlyInfo;

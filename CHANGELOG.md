@@ -2,6 +2,19 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.7
+### Added
+- twitch info tool
+- remove one js module for module to cjs and esm
+### fixed
+- change write token to process.env varaibles own (not avalible values in github and gitlab)
+- migrate cjs to esm
+- rewrite module
+### change
+- except some hardware tools and github using models from console-table-printer
+- now using esm now about is js file not folder about with index.js
+- rewrite all tests functions
+
 ## version 1.1.6
 ### Added
 - module stack-analyze mode
