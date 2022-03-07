@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>functions/multipleStack.js - Documentation</title>
+    <title>about.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">functions/multipleStack.js</h1>
+    <h1 class="page-title">about.js</h1>
     
 
     
@@ -39,63 +39,64 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// modules
-import figlet from "figlet";
-import Wappalyzer from "wappalyzer";
-import colors from "colors";
-import stackTable from "../models/stackTables.js";
+            <pre class="prettyprint source linenums"><code>// package.json
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { license, version } = require("./package.json");
 
 /**
- *
- * @description call multiple websites tech stack analyze
- * @param { string[] } urls - tech analyze in multiples websites
- * @returns { Promise&lt;void> } - async results in multiples websites
- * 
+ * @type {{ mainDeveloper: string, version: string, license: string }}
  */
-const multipleStack = async (urls) => {
-  const wappalyzer = await new Wappalyzer();
-
-  try {
-    await wappalyzer.init();
-
-    const results = await Promise.all(
-      urls.map(async (url) => {
-        const { technologies } = await wappalyzer.open(url).analyze();
-
-        return {
-          url,
-          technologies
-        };
-      }));
-
-    console.info("multiple websites tech stack \n");
-    console.group();
-    // loop web site tech stack
-    results.forEach(({url, technologies}) => {
-      const stackResult = technologies.map(({ 
-        name,
-        website,
-        categories
-      }) => ({
-        techName: name,
-        techWebsite: website,
-        techCategories: categories.map(({ name }) => name).join(", ")
-      }));
-
-      console.info(colors.green(figlet.textSync(url, "Small")));
-      console.group();
-      stackTable.addRows(stackResult);
-      stackTable.printTable();
-      console.groupEnd();
-    });
-  } catch (err) {
-    console.error(colors.red(err.message));
-  }
-
-  await wappalyzer.destroy();
+const aboutApp = {
+  mainDeveloper: "omega5300",
+  license,
+  version
 };
 
-export default multipleStack;
+/**
+ * @typedef {Object} ideas
+ * @property {string} ideas.author
+ * @property {string} ideas.tool
+ */
+
+/** @type {ideas[]} */
+const ideas = [
+  { author: "verguiskarime", tool: "bitly info" }
+];
+
+/** @type { string[] } */
+const developers = [ "omega5300" ];
+
+/**
+ * @typedef {Object} youtubeDev
+ * @property {string} youtubeDev.youtubeChannel
+ * @property {string} youtubeDev.recomendation
+ */
+
+/** @type {youtubeDev[]} */
+const youtubeDev = [
+  { youtubeChannel: "fazt", recomendation: "recommend" },
+  { youtubeChannel: "doriandesings", recomendation: "recommend" },
+  { youtubeChannel: "bluuweb", recomendation: "recommend" },
+  { youtubeChannel: "leonidas esteban", recomendation: "neutral recommend" },
+  { youtubeChannel: "fernando herrera", recomendation: "recommend" },
+  { youtubeChannel: "soy dalto", recomendation: "neutral recommend" },
+];
+
+/** @type { string[] } */
+const twitch = [ "dannyaegyo", "Lunanny" ];
+
+/** @type { string[] } */
+const projects = [ "Doofy's Projects" ];
+
+export {
+  aboutApp,
+  developers,
+  youtubeDev,
+  twitch,
+  projects,
+  ideas
+};
 </code></pre>
         </article>
     </section>
