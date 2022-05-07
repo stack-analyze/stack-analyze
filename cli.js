@@ -7,10 +7,18 @@ import figlet from "figlet";
 import colors from "colors";
 
 // hash tables
-import mainTools from "./hash/mainTools.js";
 import hardwareTools from "./hash/hardwareTools.js";
 import aboutTool from "./hash/aboutOpts.js";
-import infoTools from "./hash/infoTools.js";
+
+import singleStack from "./functions/singleStack.js";
+import multipleStack from "./functions/multipleStack.js";
+import pageSpeed from "./functions/pageSpeed.js";
+import githubInfo from "./functions/gitUser.js";
+import animeSearch from "./functions/animeInfo.js";
+import cryptoMarket from "./functions/cryptoList.js";
+import bitlyInfo from "./functions/bitly.js";
+import movieDB from "./functions/moviesInfo.js";
+import twitchInfo from "./functions/twitch.js";
 
 /** 
  * @description about menu
@@ -38,7 +46,7 @@ async function aboutOpts() {
     setTimeout(aboutOpts, 1000);
   } else {
     question();
-  }  
+  }
 }
 
 /**
@@ -47,7 +55,7 @@ async function aboutOpts() {
  * @return { Promise<void> } - return in boolean a result question list
  * 
  */
-async function returnWebQuestion() {
+async function returnQuestion() {
   try {
     const anw = await inquirer.prompt([
       {
@@ -59,9 +67,10 @@ async function returnWebQuestion() {
 
     if (anw.return) {
       console.clear();
-      mainOptions();
-    } else {
       question();
+    } else {
+      console.clear();
+      console.info("thanks for use stack-analyze".green);
     }
   } catch (err) {
     console.error(colors.red(err.message));
@@ -69,31 +78,168 @@ async function returnWebQuestion() {
 }
 
 /**
- * 
- * @description call the async function return list to question list
- * @return { Promise<void> } - return in boolean a result question list
- * 
- */
-async function returnInfoQuestion() {
-  try {
-    const anw = await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "return",
-        message: "do you want go to the tools menu?",
+  @description This is a hash table with the options of the tools menu. 
+  @type {{ single(): void, multiple(): void,  pagespeed(): void, github_info(): void, anime_search(): void, crypto_market(): void, bitly_info(): void, movie_info(): void, twitch_info(): void }}
+*/
+const toolsOpts = {
+  single() {
+    console.clear();
+    inquirer.prompt({
+      name: "url",
+      message: "enter url for analyze the tech stack:"
+    }).then(({ url }) => {
+      if (url.indexOf("http") === 0) {
+        singleStack(url);
+        const timeEnd = performance.now();
+        setTimeout(returnQuestion, timeEnd);
+      } else {
+        console.error("please insert a URL with parameter http:// or https://".red);
       }
-    ]);
+    });
+  },
+  multiple() {
+    console.clear();
+    inquirer.prompt({
+      name: "urls",
+      message: "enter URLs for analyze the tech stacks with whitespace without quotes example 'http://example.com https://nodejs.org': \n"
+    }).then(({ urls }) => {
 
-    if (anw.return) {
+      if (
+        urls.match(/(http|https)/g) !== null ||
+        urls.match(/(http|https)/g) >= 2
+      ) {
+        const websites = urls.split(" ");
+        console.clear();
+        multipleStack(websites);
+        const timeEnd = performance.now();
+        setTimeout(returnQuestion, timeEnd);
+      } else {
+        console.error("please in each URL insert a website the parameter https:// or http://".red);
+      }
+    });
+  },
+  pagespeed() {
+    console.clear();
+    inquirer.prompt({
+      name: "speedWeb",
+      message: "insert URL for page speed analyze:"
+    }).then(({ speedWeb }) => {
+      if (speedWeb.indexOf("http") === 0) {
+        console.clear();
+
+        // start pagespeed results mobile
+        figlet.textSync(speedWeb, "Small");
+        pageSpeed(speedWeb);
+        const timeEnd = performance.now();
+        setTimeout(returnQuestion, timeEnd);
+      } else {
+        console.error("please insert a URL with parameter https;// or http://".red);
+      }
+    });
+  },
+  github_info() {
+    console.clear();
+    inquirer.prompt({
+      name: "user",
+      message: "enter a github user"
+    }).then(({ user }) => {
+      if (user !== "") {
+        console.clear();
+        githubInfo(user);
+        setTimeout(returnQuestion, 2000);
+      } else {
+        console.error("please the github username is required".red);
+      }
+    });
+  },
+  anime_search() {
+    console.clear();
+    inquirer.prompt({
+      name: "anime",
+      message: "enter a anime, movie or ova search"
+    }).then(({ anime }) => {
+      if (anime !== "") {
+        console.clear();
+        animeSearch(anime);
+        setTimeout(returnQuestion, 2000);
+      } else {
+        console.error("please the anime is required".red);
+      }
+    });
+  },
+  crypto_market() {
+    console.clear();
+    cryptoMarket();
+    setTimeout(returnQuestion, 5000);
+  },
+  bitly_info() {
+    console.clear();
+    inquirer.prompt([
+      {
+        name: "link",
+        message: "enter a bitly link without http|https",
+      },
+      {
+        name: "token",
+        message: "enter a bitly token",
+        type: "password",
+        mask: "?"
+      }
+    ])
+      .then(({ link, token }) => {
+        bitlyInfo(link, token);
+        setTimeout(returnQuestion, 3000);
+      });
+  },
+  movie_info() {
+    console.clear();
+    inquirer.prompt([
+      {
+        name: "api_key",
+        message: "insert api key",
+        type: "password",
+        mask: "?"
+      },
+      {
+        name: "query",
+        message: "please search a movie search",
+      }
+    ]).then(({ api_key, query }) => {
       console.clear();
-      infoOpts();
-    } else {
-      question();
-    }
-  } catch (err) {
-    console.error(colors.red(err.message));
+      movieDB(api_key, query);
+      setTimeout(returnQuestion, 3000);
+    });
+  },
+  twitch_info() {
+    console.clear();
+    inquirer.prompt([
+      {
+        name: "user",
+        message: "get twitch user"
+      },
+      {
+        name: "twitch_client",
+        message: "enter a twitch token client",
+        type: "password",
+        mask: "*"
+      },
+      {
+        name: "twitch_token",
+        message: "enter a twitch token without the key Bearer",
+        type: "password",
+        mask: "?"
+      }
+    ]).then(({ user, twitch_client, twitch_token }) => {
+      if (user !== "" && twitch_client !== "" && twitch_token !== "") {
+        console.clear();
+        twitchInfo(user, twitch_client, twitch_token);
+        setTimeout(returnQuestion, 3000);
+      } else {
+        console.error("twitch info fields is required".red);
+      }
+    });
   }
-}
+};
 
 /**
  * @description call hardware information options
@@ -117,75 +263,13 @@ async function hardwareOpts() {
     ]
   });
 
-  if(hardware !== "exit to main menu") {
+  if (hardware !== "exit to main menu") {
     hardwareTools[hardware]();
     setTimeout(hardwareOpts, 1000);
   } else {
     question();
   }
 }
-
-/**
- * 
- * @description call the function question web tools options
- * @returns { Promise<void> } return main tools options
- * 
- */
-async function mainOptions() {
-  const { main } = await inquirer.prompt({
-    type: "list",
-    pageSize: 9,
-    name: "main",
-    message: "",
-    choices: [
-      "single",
-      "multiple",
-      "pagespeed",
-      "return main menu"
-    ]
-  });
-
-  if (main !== "return main menu") {
-    mainTools[main]();
-    const timeEnd = performance.now();
-    setTimeout(returnWebQuestion, timeEnd);
-  } else {
-    question();
-  }
-}
-
-/**
- * 
- * @description call the function question info tools options
- * @returns { Promise<void> } return main tools options
- * 
- */
-async function infoOpts() {
-  const { info } = await inquirer.prompt({
-    type: "list",
-    pageSize: 9,
-    name: "info",
-    message: "enter a info tools option",
-    choices: [
-      "github_info",
-      "anime_search",
-      "crypto_market",
-      "bitly_info",
-      "movie_info",
-      "twitch_info",
-      "return main menu"
-    ]
-  });
-
-  if (info !== "return main menu") {
-    infoTools[info]();
-    const timeEnd = performance.now();
-    setTimeout(returnInfoQuestion, timeEnd);
-  } else {
-    question();
-  }
-}
-
 
 /**
  * 
@@ -198,31 +282,41 @@ async function question() {
   console.info(colors.yellow(figlet.textSync("stack-analyze")));
   const { analyze } = await inquirer.prompt({
     type: "list",
+    pageSize: 15,
     name: "analyze",
     message: "what option do you want to analyze stack",
-    choices: ["web tools", "info tools", "hardware tools", "about", "exit"]
+    choices: [
+      "single",
+      "multiple",
+      "pagespeed",
+      "github_info",
+      "anime_search",
+      "crypto_market",
+      "bitly_info",
+      "movie_info",
+      "twitch_info",
+      "hardware tools",
+      "about",
+      "exit"
+    ]
   });
 
   switch (analyze) {
-    case "web tools":
-      mainOptions();
-      break;
-    case "info tools":
-      infoOpts();
-      break;
     case "hardware tools":
       hardwareOpts();
       break;
     case "about":
       aboutOpts();
       break;
-    default:
+    case "exit":
       console.clear();
       console.info("thanks for use stack-analyze".green);
+      break;
+    default:
+      toolsOpts[analyze]();
       break;
   }
 }
 
 // call the message title and question list
 question();
-

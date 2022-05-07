@@ -20,7 +20,6 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - module stack-analyze mode
 ### fixed
 - rewrite code
-- renove nonolive recommends
 ### changed
 - menu renove
 - renove jsdocs in some function or variables

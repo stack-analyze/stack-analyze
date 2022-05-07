@@ -1,12 +1,9 @@
 // modules
-import CoinGecko from "coingecko-api";
+import axios from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
 
 import coinTable from "../models/cryptoTables.js";
-
-// init coingecko api
-const CoinGeckoClient = new CoinGecko();
 
 /*
  *
@@ -17,12 +14,17 @@ const CoinGeckoClient = new CoinGecko();
 const cryptoMarket = async () => {
   try {
     // start crypto
-    const coinData = await CoinGeckoClient.coins.markets({
-      per_page: 10
-    });
+    const { data } = await axios.get(
+      "https://api.coingecko.com/api/v3/coins/markets",{
+        params: {
+          vs_currency: "usd",
+          per_page: 10
+        }
+      }
+    );
 
     // map coinData
-    const coinList = coinData.data.map(({
+    const coinList = data.map(({
       symbol,
       name,
       current_price,

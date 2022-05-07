@@ -1,5 +1,4 @@
 // modules
-import "../env/movie.env.js";
 import axios from "axios";
 import colors from "colors";
 
@@ -11,11 +10,11 @@ import movieList from "../models/movieTables.js";
  * @param { string } query - search any movie
  * @returns { Promise<void> } - return movie lisy
 */
-const movieDB = async (query) => {
+const movieDB = async (query, token) => {
   try {
     const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
       params: {
-        api_key: process.env.MOVIE_CODE,
+        api_key: token,
         query,
         page: 1
       }

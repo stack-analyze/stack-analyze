@@ -1,5 +1,4 @@
 // modules
-import "../env/twitchID.env.js";
 import axios from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
@@ -14,13 +13,13 @@ import twitchTable from "../models/twitchTables.js";
  * @param {string} apiToken - twitch api token
  * @returns { Promise<void> } - return twitch results
  */
-const twitchInfo = async (twitchUser, apiToken) => {
+const twitchInfo = async (twitchUser, twitchClient, apiToken) => {
 
   try {
     const { data: twitchData } = await axios.get(`https://api.twitch.tv/helix/users?login=${twitchUser}`, {
       headers: {
         Authorization: `Bearer ${apiToken}`,
-        "Client-Id": process.env.CLIENT_ID
+        "Client-Id": twitchClient
       }
     });
 

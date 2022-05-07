@@ -19,9 +19,9 @@ use the cli program install
 >npm i -g stack-analyze "global install"<br>
 >note: if global install fail using npx
 
-[github repo](https://github.com/intermachine-developers/stack-analyze.git)
+[github repo](https://github.com/stack-analyze/stack-analyze.git)
 
-[docs](https://intermachine-developers.github.io/stack-analyze)
+[docs](https://stack-analyze.github.io/stack-analyze/)
 
 [gitlab repo](https://gitlab.com/Intermachine-dev/stack-analyze)
 

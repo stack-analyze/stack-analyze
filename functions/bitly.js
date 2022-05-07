@@ -1,5 +1,4 @@
 // modules
-import "../env/bitly.env.js";
 import axios from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
@@ -11,7 +10,7 @@ import colors from "colors";
  * @returns { Promise<void> } - return results serach
  *
  */
-const bitlyInfo = async (link) => {
+const bitlyInfo = async (link, token) => {
   try {
     const { data, status } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
@@ -20,7 +19,7 @@ const bitlyInfo = async (link) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.BITLY_TOKEN}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       }
