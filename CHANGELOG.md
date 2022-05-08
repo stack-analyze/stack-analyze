@@ -8,6 +8,7 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - update all modules
 ### change
 - remove the module coingecko-api
+- remove process.env variables to writting manual token for security 
 
 ## version 1.1.7
 ### Added
