@@ -2,6 +2,13 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.8
+### fixed
+- restructure all tools as a hash table with promises except the tool hardware information and about section
+- update all modules
+### change
+- remove the module coingecko-api
+
 ## version 1.1.7
 ### Added
 - twitch info tool
