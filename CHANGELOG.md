@@ -2,6 +2,22 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.1.9
+### Added
+- new module cheerio
+- new tool webscraping
+- new test
+### fixed
+- rewirte axios import
+### change
+- hardware information change from functions to hash table
+- about now is hash table
+- now using the function printTable avoid overwritting.
+- remove jsdocs the modules files
+### remove 
+- remove models console-table-printer
+- remove hash tables
+
 ## version 1.1.8
 ### fixed
 - restructure all tools as a hash table with promises except the tool hardware information and about section
@@ -53,8 +69,6 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 ### fixed
 - rewrite some functions
 - update npm modules via manual
-### changed
-- no changed
 
 ## version 1.1.3
 ### Added

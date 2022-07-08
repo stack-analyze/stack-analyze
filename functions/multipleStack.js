@@ -2,7 +2,10 @@
 import figlet from "figlet";
 import Wappalyzer from "wappalyzer";
 import colors from "colors";
-import stackTable from "../models/stackTables.js";
+import { printTable } from "console-table-printer";
+
+// list format
+import { listFormat } from "../utils.js";
 
 /**
  *
@@ -35,16 +38,18 @@ const multipleStack = async (urls) => {
         name,
         website,
         categories
-      }) => ({
-        techName: name,
-        techWebsite: website,
-        techCategories: categories.map(({ name }) => name).join(", ")
-      }));
+      }) => {
+        const stackCategories = categories.map(({ name }) => name);
+        return {
+          techName: name,
+          techWebsite: website,
+          techCategories: listFormat.format(stackCategories)
+        };
+      });
 
       console.info(colors.green(figlet.textSync(url, "Small")));
       console.group();
-      stackTable.addRows(stackResult);
-      stackTable.printTable();
+      printTable(stackResult);
       console.groupEnd();
     });
   } catch (err) {

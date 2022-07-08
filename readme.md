@@ -15,8 +15,16 @@ cli tech stack analyze with **node.js** using the wappalyzer and google pagespee
 use the cli program install
 
 ## example module
->npx stack-analyze "using external without install"<br>
->npm i -g stack-analyze "global install"<br>
+``` sh
+# global old npm versions
+npm i -g stack-analyze
+
+# global new module
+npm i --location=global
+
+# portable
+npx stack-analyze
+```
 >note: if global install fail using npx
 
 [github repo](https://github.com/stack-analyze/stack-analyze.git)
@@ -29,4 +37,4 @@ use the cli program install
 - [changelog module](/CHANGELOG.md)
 ## author this project Julian David Cordoba Torres as omega5300
 
-**Intermachine Developers LICENSE MIT**
+**stack-analyze LICENSE MIT**

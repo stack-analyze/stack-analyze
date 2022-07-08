@@ -1,5 +1,5 @@
 // modules
-import axios from "axios";
+import {default as axios} from "axios";
 import CoinGecko from "coingecko-api";
 import {
   cpu,
@@ -11,48 +11,7 @@ import {
 } from "systeminformation";
 import Wappalyzer from "wappalyzer";
 
-// init coingecko api
-const CoinGeckoClient = new CoinGecko();
-
-/**
- * @typedef {Object} anime
- * @property {string} anime.query
- * @property {function(data): void} anime.results
- * 
- * @typedef {Object} bitly
- * @property {string} bitly.link
- * @property {string} bitly.token
- * @property {function(data): void} bitly.results
- * 
- * @typedef {Object} github
- * @property {string} github.user
- * @property {string} github.results
- * 
- * @typedef {Object} movie
- * @property {string} movie.api_key
- * @property {string} movie.query
- * @property {function(data): void} movie.results
- * 
- * @typedef {Object} multiple
- * @property {string[]} multiple.urls
- * @property {function(data): void} multiple.results
- * 
- * @typedef {Object} stack
- * @property {string} stack.urls
- * @property {function(data): void} stack.results
- * 
- * @typedef {Object} twitch
- * @property {string} twitch.query
- * @property {string} twitch.token
- * @property {string} twitch.clientID
- * @property {function(data): void} twitch.results
- */
-
-/**
- * @param {anime} {query, results}
- * @returns {Promise<void>}
- */
- const animeSearch = async ({ query, results }) => {
+const animeSearch = async ({ query, results }) => {
   /* error manager */
   try {
     // call api
@@ -68,10 +27,6 @@ const CoinGeckoClient = new CoinGecko();
   } catch (err) { results(err); }
 };
 
-/**
- * @param {bitly} {link, token, results}
- * @returns {Promise<void>}
- */
 const bitlyInfo = async ({ link, token, results }) => {
   try {
     const { data } = await axios.post(
@@ -91,29 +46,23 @@ const bitlyInfo = async ({ link, token, results }) => {
   } catch (err) { results(err); }
 };
 
-/**
- *
- * @descripiton call the crypto market list
- * @param {function(data): void} callback
- * @returns { Promise<void> } - return results search
- */
 const cryptoMarket = async (callback) => {
   try {
     // start crypto
-    const coinData = await CoinGeckoClient.coins.markets({
-      per_page: 10
-    });
+    const { data } = await axios.get(
+      "https://api.coingecko.com/api/v3/coins/markets", {
+        params: {
+          vs_currency: "usd",
+          per_page: 10
+        }
+      }
+    );
 
     // map coinData
-    callback(coinData.data);
+    callback(data);
   } catch (err) { callback(err); }
 };
 
-/**
- *
- * @param {github} {user, results}
- * @returns {Promise<void>}
- */
 async function githubInfo({ user, results }) {
   try {
     const { data } = await axios.get(`https://api.github.com/users/${user}`);
@@ -122,11 +71,6 @@ async function githubInfo({ user, results }) {
   } catch (err) { results(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function cpuInfo(callback) {
   try {
     const {
@@ -156,11 +100,6 @@ async function cpuInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function ramMemInfo(callback) {
   try {
     const {
@@ -182,11 +121,6 @@ async function ramMemInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function osDetail(callback) {
   try {
     const {
@@ -214,11 +148,6 @@ async function osDetail(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function diskInfo(callback) {
   try {
     const disks = await diskLayout();
@@ -242,11 +171,6 @@ async function diskInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function controllerInfo(callback) {
   try {
     const { controllers } = await graphics();
@@ -267,11 +191,6 @@ async function controllerInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function displayInfo(callback) {
   try {
     const { displays } = await graphics();
@@ -294,11 +213,6 @@ async function displayInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- *
- * @param {function(data): void} callback
- * @returns {Promise<void>}
- */
 async function biosInfo(callback) {
   try {
     const {
@@ -312,10 +226,6 @@ async function biosInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-/**
- * @param {movie} {api_key, query, results}
- * @returns {Promise<void>} void results
- */
 const movieDB = async ({ api_key, query, results }) => {
   try {
     const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
@@ -353,10 +263,6 @@ const movieDB = async ({ api_key, query, results }) => {
   } catch (err) { results(err); }
 };
 
-/**
- * @param {multiple} {urls, results}
- * @returns {Promise<void>}
- */
 async function multipleStack({ urls, results }) {
   let result;
   const wappalyzer = new Wappalyzer();
@@ -376,10 +282,6 @@ async function multipleStack({ urls, results }) {
   results(result);
 }
 
-/**
- * @param {stack} {url, results}
- * @returns {Promise<void>}
- */
 const pageSpeed = async ({ url, results }) => {
   try {
     const resMobile = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
@@ -406,10 +308,6 @@ const pageSpeed = async ({ url, results }) => {
   } catch (err) { results(err); }
 };
 
-/**
- * @param {stack} {url, results}
- * @returns {Promise<void>}
- */
 async function singleStack({ url, results }) {
   const wappalyzer = await new Wappalyzer;
 
@@ -434,11 +332,6 @@ async function singleStack({ url, results }) {
   results(result);
 }
 
-/**
- *
- * @param {twitch} { query, token, clientID, results }
- * @returns {Promise<void>}
- */
 async function twitchInfo({ query, token, clientID, results }) {
   try {
     const { data: twitchData } = await axios.get(`https://api.twitch.tv/helix/users?login=${query}`,
@@ -452,6 +345,134 @@ async function twitchInfo({ query, token, clientID, results }) {
     results(twitchData.data);
   } catch (err) { results(err); }
 }
+
+function scrape(url) {
+  let $;
+
+  const scraping = axios.create({
+    baseURL: url
+  });
+
+  const title = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      callback($("title").text());
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  const images = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const imgs = $("img").map((i, el) => ({
+        imagePath: $(el).attr("src"),
+        imageTitle: $(el).attr("alt")
+      })).toArray();
+
+      callback(imgs);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  const metadata = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const metadataList = $("meta").map((i, el) => ({
+        metaInfo: $(el).attr("name"),
+        metaContent: $(el).attr("content")
+      })).toArray()
+        .filter(({ metaInfo }) => metaInfo !== undefined);
+
+      callback(metadataList);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  const headings = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const headingList = $("h1, h2, h3, h4, h5, h6").map((i, el) => ({
+        headingTag: $(el).prop("tagName"),
+        headingText: $(el).text()
+      })).toArray();
+
+      callback(headingList);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  const table_heading = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const tableHeadList = $("th").map((i, el) => ({
+        headingRow: i,
+        text: $(el).text()
+      })).toArray();
+
+      callback(tableHeadList);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  const table_data = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const tableColumnList = $("td").map((i, el) => $(el).text()).toArray();
+
+      callback(tableColumnList);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+
+  const links = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const linkList = $("a").map((i, el) => ({
+        url: $(el).attr("href"),
+        text: $(el).text()
+      })).toArray()
+        .filter(({ url }) => url.indexOf("#") !== 0);
+
+      callback(linkList);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  const cites = async (callback) => {
+    try {
+      const { data } = await scraping.get("");
+      $ = load(data);
+
+      const citeList = $("q, blockquote").map((i, el) => ({
+        citeTag: $(el).prop("tagName"),
+        citeLink: $(el).attr("cite"),
+        citeText: $(el).text()
+      })).toArray();
+      
+      callback(citeList);
+    } catch (err) { console.error(colors.red(err.message)); }
+  };
+
+  return {
+    title,
+    images,
+    metadata,
+    headings,
+    table_heading,
+    table_data,
+    links,
+    cites
+  };
+}
+
 
 // exports
 export {
@@ -470,5 +491,6 @@ export {
   multipleStack,
   pageSpeed,
   singleStack,
-  twitchInfo
+  twitchInfo,
+  scrape
 };

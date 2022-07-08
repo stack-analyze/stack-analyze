@@ -1,9 +1,7 @@
 // modules
-import axios from "axios";
+import { default as axios } from "axios";
 import colors from "colors";
-
-// table module
-import movieList from "../models/movieTables.js";
+import { printTable } from "console-table-printer";
 
 /** 
  * @description movie info tool
@@ -43,9 +41,7 @@ const movieDB = async (query, token) => {
       })
       .filter(({ release_date }) => release_date !== undefined && release_date !== "");
 
-    movieList.addRows(movieData);
-
-    movieList.printTable();
+    printTable(movieData);
   } catch (err) {
     console.error(colors.red(err.message));
   }

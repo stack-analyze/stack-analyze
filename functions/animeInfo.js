@@ -1,8 +1,8 @@
 // modules
-import axios from "axios";
+import { default as axios } from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
-import animeList from "../models/animeTable.js";
+import { printTable } from "console-table-printer";
 
 /**
  *
@@ -38,10 +38,7 @@ const animeSearch = async (query) => {
     }));
 
 
-    animeList.addRows(animeData);
-
-    animeList.printTable();
-
+    printTable(animeData);
   } catch (err) { console.error(colors.red(err.message)); }
 };
 

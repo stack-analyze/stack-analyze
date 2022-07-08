@@ -1,10 +1,10 @@
 // modules
-import axios from "axios";
+import { default as axios } from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
 
 // table
-import twitchTable from "../models/twitchTables.js";
+import { printTable } from "console-table-printer";
 
 /**
  * 
@@ -35,8 +35,7 @@ const twitchInfo = async (twitchUser, twitchClient, apiToken) => {
       createdTime: format(created_at)
     }));
 
-    twitchTable.addRows(result);
-    twitchTable.printTable();
+    printTable(result);
   } catch (err) {
     console.error(colors.red(err));
   }

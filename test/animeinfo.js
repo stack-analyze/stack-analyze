@@ -18,4 +18,3 @@ async function animeSearch(query) {
 }
 
 module.exports = animeSearch;
-

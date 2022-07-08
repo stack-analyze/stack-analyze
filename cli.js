@@ -7,8 +7,8 @@ import figlet from "figlet";
 import colors from "colors";
 
 // hash tables
-import hardwareTools from "./hash/hardwareTools.js";
-import aboutTool from "./hash/aboutOpts.js";
+import hardwareTools from "./functions/hardware.js";
+import aboutTool from "./about.js";
 
 import singleStack from "./functions/singleStack.js";
 import multipleStack from "./functions/multipleStack.js";
@@ -19,6 +19,112 @@ import cryptoMarket from "./functions/cryptoList.js";
 import bitlyInfo from "./functions/bitly.js";
 import movieDB from "./functions/moviesInfo.js";
 import twitchInfo from "./functions/twitch.js";
+import scrape from "./functions/scraping.js";
+
+/**
+ * @description web scraping menu
+ * @return { Promise<void>} web scraping options
+ */
+async function scrapingOpts (url) {
+  console.info("web:", url);
+  
+  const { option } = await inquirer.prompt({
+    type: "list",
+    name: "option",
+    message: "select a options for scraping",
+    pageSize: 15,
+    choices: [
+      "pageTitle",
+      "pageImages",
+      "pageMetadata",
+      "pageHeadings",
+      "pageTableHead",
+      "pageTableData",
+      "pageLinks",
+      "pageCites",
+      "exit to main menu"
+    ]
+  });
+    
+  const {
+    cites,
+    headings,
+    images,
+    links,
+    title,
+    metadata,
+    table_data,
+    table_heading
+  } = scrape(url);
+
+  /** @type {Object.<string, function(): void>} */
+  const scrapeOpt = {
+    pageTitle() {
+      title();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageImages() {
+      images();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageMetadata() {
+      metadata();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageHeadings() {
+      headings();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageTableHead() {
+      table_heading();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageTableData() {
+      table_data();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageLinks() {
+      links();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+    pageCites() {
+      cites();
+      const timeScrape = performance.now();
+      setTimeout(question, timeScrape);
+    },
+  };
+
+  option === "exit to main menu" 
+    ? question() 
+    : scrapeOpt[option]();
+}
+
+/**
+ * @description web scraping menu
+ * @return { Promise<void>} web scraping options
+ */
+async function scrapingLink() {
+  console.clear();
+  const { link } = await inquirer.prompt({
+    type: "input",
+    name: "link",
+    message: "enter a web scraping options?"
+  });
+
+  if(link.indexOf("http") === -1) {
+    console.error("https:// or http:// is required".red);
+    setTimeout(question, 5000);
+  } else {
+    scrapingOpts(link);
+  }
+}
 
 /** 
  * @description about menu
@@ -31,12 +137,11 @@ async function aboutOpts() {
     name: "about",
     message: "select about option info",
     choices: [
-      "main_info",
+      "mainInfo",
       "lineup",
-      "youtube_recomendation",
-      "twitch_recomendation",
-      "projects_recomendation",
-      "tools_ideas",
+      "youtubeRecomendation",
+      "twitchRecomendation",
+      "projectsRecomendation",
       "return to main menu"
     ]
   });
@@ -78,9 +183,9 @@ async function returnQuestion() {
 }
 
 /**
-  @description This is a hash table with the options of the tools menu. 
-  @type {{ single(): void, multiple(): void,  pagespeed(): void, github_info(): void, anime_search(): void, crypto_market(): void, bitly_info(): void, movie_info(): void, twitch_info(): void }}
-*/
+ * @description This is a hash table with the options of the tools menu. 
+ * @type {Object.<string, function(): void>}
+ */
 const toolsOpts = {
   single() {
     console.clear();
@@ -206,7 +311,7 @@ const toolsOpts = {
       }
     ]).then(({ api_key, query }) => {
       console.clear();
-      movieDB(api_key, query);
+      movieDB(query, api_key);
       setTimeout(returnQuestion, 3000);
     });
   },
@@ -252,13 +357,13 @@ async function hardwareOpts() {
     pageSize: 9,
     message: "select a hardware-information option:",
     choices: [
-      "cpu",
-      "ram_memory",
-      "os",
-      "disk",
-      "controller",
-      "display",
-      "bios",
+      "cpuInfo",
+      "ramMemInfo",
+      "osDetail",
+      "diskInfo",
+      "controllerInfo",
+      "displayInfo",
+      "biosInfo",
       "exit to main menu"
     ]
   });
@@ -296,6 +401,7 @@ async function question() {
       "movie_info",
       "twitch_info",
       "hardware tools",
+      "scraping",
       "about",
       "exit"
     ]
@@ -307,6 +413,9 @@ async function question() {
       break;
     case "about":
       aboutOpts();
+      break;
+    case "scraping":
+      scrapingLink();
       break;
     case "exit":
       console.clear();

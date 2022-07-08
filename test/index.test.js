@@ -4,19 +4,20 @@ const multiple = require("./multiple");
 const pageSpeed = require("./pageSpeed");
 const githubInfo = require("./githubinfo");
 const animeSearch = require("./githubinfo");
-const { 
-  cpuInfo, 
-  ramMemInfo, 
-  osDetail, 
-  diskInfo, 
-  controllerInfo, 
-  displayInfo, 
-  biosInfo 
+const {
+  cpuInfo,
+  ramMemInfo,
+  osDetail,
+  diskInfo,
+  controllerInfo,
+  displayInfo,
+  biosInfo
 } = require("./hardware");
 const cryptoMarket = require("./crypto");
 const bitlyInfo = require("./bitly");
 const movieDB = require("./moviesInfo");
 const twitchInfo = require("./twitch");
+const scrape = require("./scraping");
 
 test('single stack', async () => await single("http://example.com"), 34000);
 
@@ -52,3 +53,31 @@ test('movies info', async () => await movieDB('AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAAC
 
 // fake twitch token
 test('twitch info', async () => await twitchInfo('example', 'AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAACOxyz'))
+
+/* web scraping */
+const {
+  title,
+  images,
+  metadata,
+  headings,
+  table_heading,
+  table_data,
+  links,
+  cites
+} = scrape('https://example.com');
+
+test('title', async () => await title());
+
+test('images', async () => await images());
+
+test('metadata', async () => await metadata());
+
+test('headings', async () => await headings());
+
+test('table heading', async () => await table_heading());
+
+test('table data', async () => await table_data());
+
+test('links', async () => await links());
+
+test('cites', async () => await cites());

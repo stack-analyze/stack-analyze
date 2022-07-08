@@ -1,6 +1,6 @@
 {
     "source": {
-        "include": ["./index.cjs", "./index.mjs", "functions", "./about.js", "hash", "./cli.js"],
+        "include": ["./index.cjs", "./index.mjs", "functions", "./about.js", "./cli.js"],
         "includePatter": ".js$",
         "excludePattern": "(node_modules|docs)"
     },

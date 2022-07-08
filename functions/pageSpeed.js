@@ -1,5 +1,5 @@
 // modules
-import axios from "axios";
+import { default as axios } from "axios";
 import { SingleBar } from "cli-progress";
 import colors from "colors";
 
