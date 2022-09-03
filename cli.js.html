@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#aboutOpts">aboutOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#aboutTool">aboutTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bitlyInfo">bitlyInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cryptoMarket">cryptoMarket</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#hardwareTools">hardwareTools</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#movieDB">movieDB</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pageSpeed">pageSpeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingLink">scrapingLink</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingOpts">scrapingOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#toolsOpts">toolsOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#twitchInfo">twitchInfo</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#aboutOpts">aboutOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#aboutTool">aboutTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bitlyInfo">bitlyInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cryptoMarket">cryptoMarket</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#genPassword">genPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#hardwareTools">hardwareTools</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#movieDB">movieDB</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pageSpeed">pageSpeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingLink">scrapingLink</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingOpts">scrapingOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#toolsOpts">toolsOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#twitchInfo">twitchInfo</a></span></li>
 </nav>
 
 <div id="main">
@@ -61,6 +61,7 @@ import bitlyInfo from "./functions/bitly.js";
 import movieDB from "./functions/moviesInfo.js";
 import twitchInfo from "./functions/twitch.js";
 import scrape from "./functions/scraping.js";
+import genPassword from "./functions/password.js";
 
 /**
  * @description web scraping menu
@@ -97,48 +98,42 @@ async function scrapingOpts (url) {
     table_data,
     table_heading
   } = scrape(url);
+  
+  const timeScrape = 2000;
 
   /** @type {Object.&lt;string, function(): void>} */
   const scrapeOpt = {
     pageTitle() {
       title();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageImages() {
       images();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageMetadata() {
       metadata();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageHeadings() {
       headings();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageTableHead() {
       table_heading();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageTableData() {
       table_data();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageLinks() {
       links();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageCites() {
       cites();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
   };
 
@@ -318,6 +313,11 @@ const toolsOpts = {
     cryptoMarket();
     setTimeout(returnQuestion, 5000);
   },
+  password() {
+    console.clear();
+    genPassword();
+    setTimeout(returnQuestion, 3000);
+  },
   bitly_info() {
     console.clear();
     inquirer.prompt([
@@ -443,6 +443,7 @@ async function question() {
       "twitch_info",
       "hardware tools",
       "scraping",
+      "password",
       "about",
       "exit"
     ]
@@ -482,7 +483,7 @@ question();
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Thu Jul 07 2022 21:17:00 GMT-0500 (hora estándar de Colombia) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Fri Sep 02 2022 22:58:14 GMT-0500 (hora estándar de Colombia) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
