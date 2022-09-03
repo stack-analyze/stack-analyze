@@ -20,6 +20,7 @@ import bitlyInfo from "./functions/bitly.js";
 import movieDB from "./functions/moviesInfo.js";
 import twitchInfo from "./functions/twitch.js";
 import scrape from "./functions/scraping.js";
+import genPassword from "./functions/password.js";
 
 /**
  * @description web scraping menu
@@ -56,48 +57,42 @@ async function scrapingOpts (url) {
     table_data,
     table_heading
   } = scrape(url);
+  
+  const timeScrape = 2000;
 
   /** @type {Object.<string, function(): void>} */
   const scrapeOpt = {
     pageTitle() {
       title();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageImages() {
       images();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageMetadata() {
       metadata();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageHeadings() {
       headings();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageTableHead() {
       table_heading();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageTableData() {
       table_data();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageLinks() {
       links();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
     pageCites() {
       cites();
-      const timeScrape = performance.now();
-      setTimeout(question, timeScrape);
+      setTimeout(returnQuestion, timeScrape);
     },
   };
 
@@ -277,6 +272,11 @@ const toolsOpts = {
     cryptoMarket();
     setTimeout(returnQuestion, 5000);
   },
+  password() {
+    console.clear();
+    genPassword();
+    setTimeout(returnQuestion, 3000);
+  },
   bitly_info() {
     console.clear();
     inquirer.prompt([
@@ -402,6 +402,7 @@ async function question() {
       "twitch_info",
       "hardware tools",
       "scraping",
+      "password",
       "about",
       "exit"
     ]

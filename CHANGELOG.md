@@ -2,6 +2,15 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.2.0
+### Added
+- new tool password generator
+### fixed
+- update anime search tool
+- the files modules now using callbacks and remove no using vars
+### change
+- the web scraping tool decided to use the question returns to the main menu instead of going to the main menu
+
 ## version 1.1.9
 ### Added
 - new module cheerio

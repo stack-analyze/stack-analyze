@@ -12,25 +12,25 @@ import colors from "colors";
  */
 export default async function githubInfo(user) {
   try {
-    const res = await axios.get(`https://api.github.com/users/${user}`);
+    const { data, status } = await axios.get(`https://api.github.com/users/${user}`);
 
-    if (res.status !== 404){
+    if (status !== 404){
       const info = {
-        username: res.data.login,
-        fullName: res.data.name === null ? "no info": res.data.name,
-        Email: res.data.email === null ? "no info": res.data.email,
-        userFollowers: res.data.followers,
-        userFollowing: res.data.following,
-        accountAge: format(res.data.created_at),
-        updated_info: format(res.data.updated_at),
-        twitter: res.data.twitter_username === null ? "no info": res.data.twitter_username,
-        repos: res.data.public_repos,
-        gists: res.data.public_gists
+        username: data.login,
+        fullName: data.name === null ? "no info": data.name,
+        Email: data.email === null ? "no info": data.email,
+        userFollowers: data.followers,
+        userFollowing: data.following,
+        accountAge: format(data.created_at),
+        updated_info: format(data.updated_at),
+        twitter: data.twitter_username === null ? "no info": data.twitter_username,
+        repos: data.public_repos,
+        gists: data.public_gists
       };
 
       console.table(info);
     } else {
-      console.info(colors.yellow(res.status.toString()));
+      console.info(colors.yellow(""+status));
     }
   } catch(err) {
     console.error(colors.red(err.message));

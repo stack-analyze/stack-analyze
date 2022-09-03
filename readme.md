@@ -12,19 +12,42 @@
 
 cli tech stack analyze with **node.js** using the wappalyzer and google pagespeed api the module this node external module or install.
 
-use the cli program install
+## use the cli program install
 
-## example module
+## cli module
 ``` sh
-# global old npm versions
+# old npm mode
 npm i -g stack-analyze
 
-# global new module
+# new npm mode
 npm i --location=global
+
+# if using global install
+stack-analyze
 
 # portable
 npx stack-analyze
 ```
+
+## module
+
+``` sh
+npm i stack-analyze
+```
+
+``` js
+// cjs
+const stackAnalyze = require('stack-analyze') // full
+const { password } = require('stack-analyze') // destructuring
+
+// esm
+import stackAnalyze from 'stack-analyze' // full
+import { password } from 'stack-analyze' // destructuring
+
+// examples
+password()
+```
+
 >note: if global install fail using npx
 
 [github repo](https://github.com/stack-analyze/stack-analyze.git)

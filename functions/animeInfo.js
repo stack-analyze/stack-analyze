@@ -15,26 +15,26 @@ const animeSearch = async (query) => {
   /* error manager */
   try {
     // call api
-    const { data } = await axios.get("https://api.jikan.moe/v3/search/anime", {
+    const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
       params: {
         q: query,
         limit: 10
       }
     });
 
-    const animeData = data.results.map(({
+    const animeData = data.data.map(({
       title,
       episodes,
-      start_date,
-      end_date,
+      aired,
+      status,
       type }) => ({
       title,
       type,
-      episodes,
-      debutDate: format(start_date),
-      finalDate: end_date !== null
-        ? format(end_date)
-        : "current date"
+      totalEpisodes: episodes ?? 1,
+      debutDate: format(aired.from),
+      finalDate: aired.to !== null
+        ? format(aired.to)
+        : status
     }));
 
 

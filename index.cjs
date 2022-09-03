@@ -9,13 +9,13 @@ const {
   bios
 } = require("systeminformation");
 const Wappalyzer = require("wappalyzer");
-const { load } = require("cheerio");
+const cheerio = require("cheerio");
 
-const animeSearch = async ({ query, results }) => {
+const animeSearch = async ({ query, results, failed }) => {
   /* error manager */
   try {
     // call api
-    const { data } = await axios.get("https://api.jikan.moe/v3/search/anime", {
+    const { data } = await axios.get("https://api.jikan.moe/v/anime", {
       params: {
         q: query,
         limit: 10
@@ -24,10 +24,10 @@ const animeSearch = async ({ query, results }) => {
 
     results(data.results);
 
-  } catch (err) { results(err); }
+  } catch (err) { failed(err); }
 };
 
-const bitlyInfo = async ({ link, token, results }) => {
+const bitlyInfo = async ({ link, token, results, failed }) => {
   try {
     const { data } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
@@ -43,38 +43,32 @@ const bitlyInfo = async ({ link, token, results }) => {
     );
 
     results(data);
-  } catch (err) { results(err); }
+  } catch (err) { failed(err); }
 };
 
-/**
- *
- * @descripiton call the crypto market list
- * @param {function(any): void} callback
- * @returns { Promise<void> } - return results search
- */
-const cryptoMarket = async (callback) => {
+const cryptoMarket = async ({results, failed}) => {
   try {
     // start crypto
     const { data } = await axios.get(
       "https://api.coingecko.com/api/v3/coins/markets", {
-      params: {
-        vs_currency: "usd",
-        per_page: 10
+        params: {
+          vs_currency: "usd",
+          per_page: 10
+        }
       }
-    }
     );
 
     // map coinData
-    callback(data);
-  } catch (err) { callback(err); }
+    results(data);
+  } catch (err) { failed(err); }
 };
 
-async function githubInfo({ user, results }) {
+async function githubInfo({ user, results, failed }) {
   try {
     const { data } = await axios.get(`https://api.github.com/users/${user}`);
 
     results(data);
-  } catch (err) { results(err); }
+  } catch (err) { failed(err); }
 }
 
 async function cpuInfo(callback) {
@@ -232,7 +226,7 @@ async function biosInfo(callback) {
   } catch (err) { callback(err); }
 }
 
-const movieDB = async ({ api_key, query, results }) => {
+const movieDB = async ({ api_key, query, results, failed }) => {
   try {
     const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
       params: {
@@ -266,10 +260,10 @@ const movieDB = async ({ api_key, query, results }) => {
       .filter(({ release_date }) => release_date !== undefined && release_date !== "");
 
     results(movieData);
-  } catch (err) { results(err); }
+  } catch (err) { failed(err); }
 };
 
-async function multipleStack({ urls, results }) {
+async function multipleStack({ urls, results, failed }) {
   let result;
   const wappalyzer = new Wappalyzer();
   try {
@@ -283,12 +277,12 @@ async function multipleStack({ urls, results }) {
         };
       })
     );
-  } catch (err) { result = err; }
+    results(result);
+  } catch (err) { failed(err); }
   await wappalyzer.destroy();
-  results(result);
 }
 
-const pageSpeed = async ({ url, results }) => {
+const pageSpeed = async ({ url, results, failed }) => {
   try {
     const resMobile = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
       params: {
@@ -311,10 +305,10 @@ const pageSpeed = async ({ url, results }) => {
     const desktop = Math.round(resDesktop.data.lighthouseResult.categories.performance.score * 100);
 
     results({ mobile, desktop });
-  } catch (err) { results(err); }
+  } catch (err) { failed(err); }
 };
 
-async function singleStack({ url, results }) {
+async function singleStack({ url, results, failed }) {
   const wappalyzer = await new Wappalyzer;
 
   let result;
@@ -332,13 +326,13 @@ async function singleStack({ url, results }) {
       techWebsite: website,
       techCategories: categories.map(({ name }) => name).join(", ")
     }));
-  } catch (err) { results(err); }
+    results(result);
+  } catch (err) { failed(err); }
 
   await wappalyzer.destroy();
-  results(result);
 }
 
-async function twitchInfo({ query, token, clientID, results }) {
+async function twitchInfo({ query, token, clientID, results, failed }) {
   try {
     const { data: twitchData } = await axios.get(`https://api.twitch.tv/helix/users?login=${query}`,
       {
@@ -349,7 +343,7 @@ async function twitchInfo({ query, token, clientID, results }) {
       });
 
     results(twitchData.data);
-  } catch (err) { results(err); }
+  } catch (err) { failed(err); }
 }
 
 function scrape(url) {
@@ -359,33 +353,33 @@ function scrape(url) {
     baseURL: url
   });
 
-  const title = async (callback) => {
+  const title = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
-      callback($("title").text());
-    } catch (err) { console.error(colors.red(err.message)); }
+      results($("title").text());
+    } catch (err) { failed(err); }
   };
 
-  const images = async (callback) => {
+  const images = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const imgs = $("img").map((i, el) => ({
         imagePath: $(el).attr("src"),
         imageTitle: $(el).attr("alt")
       })).toArray();
 
-      callback(imgs);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(imgs);
+    } catch (err) { failed(err); }
   };
 
-  const metadata = async (callback) => {
+  const metadata = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const metadataList = $("meta").map((i, el) => ({
         metaInfo: $(el).attr("name"),
@@ -393,54 +387,54 @@ function scrape(url) {
       })).toArray()
         .filter(({ metaInfo }) => metaInfo !== undefined);
 
-      callback(metadataList);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(metadataList);
+    } catch (err) { failed(err); }
   };
 
-  const headings = async (callback) => {
+  const headings = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const headingList = $("h1, h2, h3, h4, h5, h6").map((i, el) => ({
         headingTag: $(el).prop("tagName"),
         headingText: $(el).text()
       })).toArray();
 
-      callback(headingList);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(headingList);
+    } catch (err) { failed(err); }
   };
 
-  const table_heading = async (callback) => {
+  const table_heading = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const tableHeadList = $("th").map((i, el) => ({
         headingRow: i,
         text: $(el).text()
       })).toArray();
 
-      callback(tableHeadList);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(tableHeadList);
+    } catch (err) { failed(err); }
   };
 
-  const table_data = async (callback) => {
+  const table_data = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const tableColumnList = $("td").map((i, el) => $(el).text()).toArray();
 
-      callback(tableColumnList);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(tableColumnList);
+    } catch (err) { failed(err); }
   };
 
 
-  const links = async (callback) => {
+  const links = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const linkList = $("a").map((i, el) => ({
         url: $(el).attr("href"),
@@ -448,14 +442,14 @@ function scrape(url) {
       })).toArray()
         .filter(({ url }) => url.indexOf("#") !== 0);
 
-      callback(linkList);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(linkList);
+    } catch (err) { failed(err); }
   };
 
-  const cites = async (callback) => {
+  const cites = async ({results, failed}) => {
     try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+      const { data } = await scraping.get(url);
+      $ = cheerio.load(data);
 
       const citeList = $("q, blockquote").map((i, el) => ({
         citeTag: $(el).prop("tagName"),
@@ -463,8 +457,8 @@ function scrape(url) {
         citeText: $(el).text()
       })).toArray();
       
-      callback(citeList);
-    } catch (err) { console.error(colors.red(err.message)); }
+      results(citeList);
+    } catch (err) { failed(err); }
   };
 
   return {
@@ -478,6 +472,22 @@ function scrape(url) {
     cites
   };
 }
+
+const password = () => {
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  // blank password var
+  let password = "";
+
+  // loop generate chars
+  for(let i = 0; i < 12; i++) {
+    const randomNumber = Math.floor(Math.random() * chars.length);
+
+    password += chars.substring(randomNumber, randomNumber + 1);
+  }
+
+  return password;
+};
 
 // exports
 module.exports = {
@@ -497,5 +507,6 @@ module.exports = {
   pageSpeed,
   singleStack,
   twitchInfo,
-  scrape
+  scrape,
+  password
 };
