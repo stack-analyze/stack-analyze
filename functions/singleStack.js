@@ -1,22 +1,19 @@
 // module
-import Wappalyzer from "wappalyzer";
-import figlet from "figlet";
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
 // list format
 import { listFormat } from "../utils.js";
+import { wappalyzer } from "../api/webApis.js";
 
 /**
  * 
  * @description call single website tech stack analyze
+ * @async
  * @param { string } url - analyze single website stack
  * @returns { Promise<void> } - return async results single web
- * 
  */
 export default async function singleStack(url) {
-  const wappalyzer = await new Wappalyzer;
-
   try {
     await wappalyzer.init();
 
@@ -36,7 +33,7 @@ export default async function singleStack(url) {
       };
     });
 
-    console.info(colors.green(figlet.textSync(url)));
+    console.info(url.green);
 
     printTable(stackResult);
   } catch (err) {

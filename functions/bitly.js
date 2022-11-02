@@ -6,17 +6,17 @@ import colors from "colors";
 /**
  *
  * @description call the bitly info data
+ * @async
  * @param { string } link - link for search info
+ * @param { string } token - bitly api token is required
  * @returns { Promise<void> } - return results serach
  *
  */
-const bitlyInfo = async (link, token) => {
+export default async function bitlyInfo(link, token) {
   try {
-    const { data, status } = await axios.post(
+    const { data } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
-      {
-        bitlink_id: link
-      },
+      { bitlink_id: link },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -25,17 +25,12 @@ const bitlyInfo = async (link, token) => {
       }
     );
 
-    status === 404
-      ? console.info("no found link".green)
-      : console.table({
-        created_link: format(data.created_at),
-        bitly_link: data.link,
-        link: data.long_url
-      });
+    console.table({
+      created_link: format(data.created_at),
+      bitly_link: data.link,
+      link: data.long_url
+    });
   } catch (err) {
     console.error(colors.red(err.message));
   }
-};
-
-// export
-export default bitlyInfo;
+}

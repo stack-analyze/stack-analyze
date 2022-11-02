@@ -6,9 +6,7 @@ const bitlyInfo = async (link, token) => {
   try {
     const { data, status } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
-      {
-        bitlink_id: link
-      },
+      { bitlink_id: link },
       {
         headers: {
           Authorization: `Bearer ${token}`,

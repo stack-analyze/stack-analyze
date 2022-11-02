@@ -1,7 +1,7 @@
 // test modules
 const single = require("./single");
 const multiple = require("./multiple");
-const pageSpeed = require("./pageSpeed");
+const pagespeed = require("./pageSpeed");
 const githubInfo = require("./githubinfo");
 const animeSearch = require("./githubinfo");
 const {
@@ -23,7 +23,7 @@ test('single stack', async () => await single("http://example.com"), 34000);
 
 test('multiple stack', async () => await multiple(["http://example.com", "https://www.wappalyzer.com/"]), 40000);
 
-test('desktop speed', async () => await pageSpeed("http://example.com"), 30000);
+test('desktop speed', async () => await pagespeed("http://example.com"), 30000);
 
 test('github info', async () => await githubInfo("faztweb"));
 
@@ -54,30 +54,18 @@ test('movies info', async () => await movieDB('AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAAC
 // fake twitch token
 test('twitch info', async () => await twitchInfo('example', 'AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAACOxyz'))
 
-/* web scraping */
-const {
-  title,
-  images,
-  metadata,
-  headings,
-  table_heading,
-  table_data,
-  links,
-  cites
-} = scrape('https://example.com');
+test('title', async () => await scrape('https://example.com', 'title'));
 
-test('title', async () => await title());
+test('images', async () => await scrape('https://example.com', 'images'));
 
-test('images', async () => await images());
+test('metadata', async () => await scrape('https://example.com', 'metadata'));
 
-test('metadata', async () => await metadata());
+test('headings', async () => await scrape('https://example.com', 'headings'));
 
-test('headings', async () => await headings());
+test('table heading', async () => await scrape('https://example.com', 'table_heading'));
 
-test('table heading', async () => await table_heading());
+test('table data', async () => await scrape('https://example.com', 'table_data'));
 
-test('table data', async () => await table_data());
+test('links', async () => await scrape('https://example.com', 'links'));
 
-test('links', async () => await links());
-
-test('cites', async () => await cites());
+test('cites', async () => await scrape('https://example.com', 'cites'));

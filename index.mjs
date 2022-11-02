@@ -9,17 +9,26 @@ import {
   bios
 } from "systeminformation";
 import Wappalyzer from "wappalyzer";
-import cheerio from "cheerio";
+import { load } from "cheerio";
+
+const gigabyteConvert = (size, base=1073741824) => (size / base).toFixed(2);
+
+const wappalyzer = new Wappalyzer();
+
+const pagespeedApi = async (url, strategy) => await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
+  params: {
+    url,
+    key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
+    strategy
+  }
+});
 
 const animeSearch = async ({ query, results, failed }) => {
   /* error manager */
   try {
     // call api
     const { data } = await axios.get("https://api.jikan.moe/v/anime", {
-      params: {
-        q: query,
-        limit: 10
-      }
+      params: { q: query }
     });
 
     results(data.results);
@@ -31,9 +40,7 @@ const bitlyInfo = async ({ link, token, results, failed }) => {
   try {
     const { data } = await axios.post(
       "https://api-ssl.bitly.com/v4/expand",
-      {
-        bitlink_id: link
-      },
+      { bitlink_id: link },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -51,10 +58,7 @@ const cryptoMarket = async ({results, failed}) => {
     // start crypto
     const { data } = await axios.get(
       "https://api.coingecko.com/api/v3/coins/markets", {
-        params: {
-          vs_currency: "usd",
-          per_page: 10
-        }
+        params: { vs_currency: "usd" }
       }
     );
 
@@ -112,11 +116,11 @@ async function ramMemInfo(callback) {
 
     // show results
     callback({
-      total_mem: `${(total / 1073741824).toFixed(2)} GB`,
-      free_mem: `${(free / 1073741824).toFixed(2)} GB`,
-      used_mem: `${(used / 1073741824).toFixed(2)} GB`,
-      active_mem: `${(active / 1073741824).toFixed(2)} GB`,
-      available_mem: `${(available / 1073741824).toFixed(2)} GB`
+      total_mem: `${gigabyteConvert(total)} GB`,
+      free_mem: `${gigabyteConvert(free)} GB`,
+      used_mem: `${gigabyteConvert(used)} GB`,
+      active_mem: `${gigabyteConvert(active)} GB`,
+      available_mem: `${gigabyteConvert(available)} GB`
     });
   } catch (err) { callback(err); }
 }
@@ -162,7 +166,7 @@ async function diskInfo(callback) {
       type,
       name,
       vendor,
-      diskSize: `${(size / 1073741824).toFixed(2)} GB`,
+      diskSize: `${gigabyteConvert(size)} GB`,
       interfaceType
     }));
 
@@ -184,7 +188,7 @@ async function controllerInfo(callback) {
       vendor,
       vramSize: vram < 1024
         ? `${vram} MB`
-        : `${(vram / 1024).toFixed(2)} GB`
+        : `${gigabyteConvert(vram, 1024)} GB`
     }));
 
     callback(controllersList);
@@ -229,11 +233,7 @@ async function biosInfo(callback) {
 const movieDB = async ({ api_key, query, results, failed }) => {
   try {
     const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
-      params: {
-        api_key,
-        query,
-        page: 1
-      }
+      params: { api_key, query, }
     });
 
     const movieData = data.results
@@ -257,7 +257,7 @@ const movieDB = async ({ api_key, query, results, failed }) => {
 
         return primaryDate.getTime() - secondaryDate.getTime();
       })
-      .filter(({ release_date }) => release_date !== undefined && release_date !== "");
+      .filter((data) => data?.release_date);
 
     results(movieData);
   } catch (err) { failed(err); }
@@ -265,7 +265,7 @@ const movieDB = async ({ api_key, query, results, failed }) => {
 
 async function multipleStack({ urls, results, failed }) {
   let result;
-  const wappalyzer = new Wappalyzer();
+
   try {
     await wappalyzer.init();
     result = await Promise.all(
@@ -284,21 +284,9 @@ async function multipleStack({ urls, results, failed }) {
 
 const pageSpeed = async ({ url, results, failed }) => {
   try {
-    const resMobile = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
-      params: {
-        url,
-        key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
-        strategy: "mobile"
-      }
-    });
+    const resMobile = await pagespeedApi(url, "mobile");
 
-    const resDesktop = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
-      params: {
-        url,
-        key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
-        strategy: "desktop"
-      }
-    });
+    const resDesktop = await pagespeedApi(url, "desktop");
 
     // extract results
     const mobile = Math.round(resMobile.data.lighthouseResult.categories.performance.score * 100);
@@ -309,9 +297,8 @@ const pageSpeed = async ({ url, results, failed }) => {
 };
 
 async function singleStack({ url, results, failed }) {
-  const wappalyzer = await new Wappalyzer;
-
   let result;
+
   try {
     await wappalyzer.init();
 
@@ -334,8 +321,9 @@ async function singleStack({ url, results, failed }) {
 
 async function twitchInfo({ query, token, clientID, results, failed }) {
   try {
-    const { data: twitchData } = await axios.get(`https://api.twitch.tv/helix/users?login=${query}`,
+    const { data: twitchData } = await axios.get("https://api.twitch.tv/helix/users",
       {
+        params: { login: query },
         headers: {
           Authorization: `Bearer ${token}`,
           "Client-Id": clientID
@@ -346,131 +334,95 @@ async function twitchInfo({ query, token, clientID, results, failed }) {
   } catch (err) { failed(err); }
 }
 
-function scrape(url) {
-  let $;
+async function scrape({url, options, results, failed}) {
+  let scrapingResult;
+  
+  try {
+    const { data } = await axios.get(url);
+    const $ = load(data);
 
-  const scraping = axios.create({
-    baseURL: url
-  });
+    const scraping = {
+      title() {
+        results($("title").text());
+      },
+      images() {
+        const imageList = $("img").map((i, el) => ({
+          imagePath: $(el).attr("src"),
+          imageTitle: $(el).attr("alt")
+        })).toArray();
 
-  const title = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
+        scrapingResult = imageList.length === 0
+          ? "no found images"
+          : imageList;
+        
+        results(scrapingResult);
+      },
+      metadata() {
+        const metadataList = $("meta").map((i, el) => ({
+          metaInfo: $(el).attr("name"),
+          metaContent: $(el).attr("content")
+        })).toArray()
+          .filter((data) => data?.metaInfo);
 
-      results($("title").text());
-    } catch (err) { failed(err); }
-  };
+        results(metadataList);
+      },
+      headings() {
+        const headingList = $("h1, h2, h3, h4, h5, h6").map((i, el) => ({
+          headingTag: $(el).prop("tagName"),
+          headingText: $(el).text()
+        })).toArray();
 
-  const images = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
+        results(headingList);
+      },
+      tableHead() {
+        const tableHeadList = $("th").map((i, el) => ({
+          headingRow: i,
+          text: $(el).text()
+        })).toArray();
 
-      const imgs = $("img").map((i, el) => ({
-        imagePath: $(el).attr("src"),
-        imageTitle: $(el).attr("alt")
-      })).toArray();
+        scrapingResult = tableHeadList.length === 0
+          ? "no found th tags" : tableHeadList;
 
-      results(imgs);
-    } catch (err) { failed(err); }
-  };
+        results(scrapingResult);
+      },
+      tableData() {
+        const tableColumnList = $("td").map((i, el) => ({
+          tableRow: i + 1,
+          tableData: $(el).text(),
+        })).toArray();
 
-  const metadata = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
+        scrapingResult = tableColumnList.length === 0
+          ? "no found td tags" : tableColumnList;
 
-      const metadataList = $("meta").map((i, el) => ({
-        metaInfo: $(el).attr("name"),
-        metaContent: $(el).attr("content")
-      })).toArray()
-        .filter(({ metaInfo }) => metaInfo !== undefined);
+        results(scrapingResult);
+      },
+      links() {
+        const linkList = $("a").map((i, el) => ({
+          url: $(el).attr("href"),
+          text: $(el).text()
+        })).toArray()
+          .filter(({ url }) => url.indexOf("#") !== 0);
 
-      results(metadataList);
-    } catch (err) { failed(err); }
-  };
+        results(linkList);
+      },
+      cites() {
+        const citeList = $("q, blockquote").map((i, el) => ({
+          citeTag: $(el).prop("tagName"),
+          citeLink: $(el).attr("cite"),
+          citeText: $(el).text()
+        })).toArray();
 
-  const headings = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
+        scrapingResult = citeList.length === 0
+          ? "no found q and/or blockquote tags" : citeList;
+        
+        results(scrapingResult); 
+      }
+    };
 
-      const headingList = $("h1, h2, h3, h4, h5, h6").map((i, el) => ({
-        headingTag: $(el).prop("tagName"),
-        headingText: $(el).text()
-      })).toArray();
-
-      results(headingList);
-    } catch (err) { failed(err); }
-  };
-
-  const table_heading = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
-
-      const tableHeadList = $("th").map((i, el) => ({
-        headingRow: i,
-        text: $(el).text()
-      })).toArray();
-
-      results(tableHeadList);
-    } catch (err) { failed(err); }
-  };
-
-  const table_data = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
-
-      const tableColumnList = $("td").map((i, el) => $(el).text()).toArray();
-
-      results(tableColumnList);
-    } catch (err) { failed(err); }
-  };
-
-
-  const links = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
-
-      const linkList = $("a").map((i, el) => ({
-        url: $(el).attr("href"),
-        text: $(el).text()
-      })).toArray()
-        .filter(({ url }) => url.indexOf("#") !== 0);
-
-      results(linkList);
-    } catch (err) { failed(err); }
-  };
-
-  const cites = async ({results, failed}) => {
-    try {
-      const { data } = await scraping.get(url);
-      $ = cheerio.load(data);
-
-      const citeList = $("q, blockquote").map((i, el) => ({
-        citeTag: $(el).prop("tagName"),
-        citeLink: $(el).attr("cite"),
-        citeText: $(el).text()
-      })).toArray();
-      
-      results(citeList);
-    } catch (err) { failed(err); }
-  };
-
-  return {
-    title,
-    images,
-    metadata,
-    headings,
-    table_heading,
-    table_data,
-    links,
-    cites
-  };
+    scraping[options]();
+  } catch (err) {
+    failed(err.message);
+  }
 }
 
 const password = () => {

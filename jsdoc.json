@@ -1,6 +1,6 @@
 {
     "source": {
-        "include": ["./index.cjs", "./index.mjs", "functions", "./about.js", "./cli.js"],
+        "include": ["functions", "./about.js", "./cli.js"],
         "includePatter": ".js$",
         "excludePattern": "(node_modules|docs)"
     },
@@ -14,7 +14,6 @@
     }
 },
     "opts": {
-        "template": "node_modules/minami",
         "recurse": false,
         "destination": "./docs",
         "readme": "./readme.md"

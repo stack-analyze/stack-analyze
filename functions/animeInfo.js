@@ -7,19 +7,16 @@ import { printTable } from "console-table-printer";
 /**
  *
  * @description call the anime serach info
- * @param { string } query - get query results
+ * @async
+ * @param { string } q - get query results
  * @returns { Promise<void> } - return results serach
  *
  */
-const animeSearch = async (query) => {
-  /* error manager */
+export default async function animeSearch(q) {
   try {
     // call api
     const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
-      params: {
-        q: query,
-        limit: 10
-      }
+      params: { q }
     });
 
     const animeData = data.data.map(({
@@ -30,17 +27,14 @@ const animeSearch = async (query) => {
       type }) => ({
       title,
       type,
-      totalEpisodes: episodes ?? 1,
+      totalEpisodes: episodes || "current",
       debutDate: format(aired.from),
-      finalDate: aired.to !== null
+      finalDate: aired?.to
         ? format(aired.to)
         : status
     }));
 
 
-    printTable(animeData);
+    printTable(animeData.slice(0, 10));
   } catch (err) { console.error(colors.red(err.message)); }
-};
-
-// exports module
-export default animeSearch;
+}

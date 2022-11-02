@@ -4,7 +4,8 @@ const twitchInfo = async (twitchUser, apiToken) => {
   let result;
 
   try {
-    const { data: twitchData } = await axios.get(`https://api.twitch.tv/helix/users?login=${twitchUser}`, {
+    const { data: twitchData } = await axios.get("https://api.twitch.tv/helix/users", {
+      params: { login: twitchUser },
       headers: {
         Authorization: `Bearer ${apiToken}`,
         "Client-Id": "5s4644564adsadasdsdasd"

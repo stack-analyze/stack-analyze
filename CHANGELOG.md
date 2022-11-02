@@ -2,6 +2,16 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.2.1
+### fixed
+- rewrite form arrow functions to named function with export default.
+- rewrite some test functions.
+- add regexp form bitly info tool
+### change
+- renove menu now using categories.
+- add api params.
+- comeback multibar from pagespeed tool
+
 ## version 1.2.0
 ### Added
 - new tool password generator

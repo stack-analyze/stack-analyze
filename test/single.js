@@ -3,7 +3,7 @@ const Wappalyzer = require("wappalyzer");
 
 async function single (url) {
   let testReturn;
-  const wappalyzer = await new Wappalyzer;
+  const wappalyzer = new Wappalyzer;
 
   try {
     await wappalyzer.init();

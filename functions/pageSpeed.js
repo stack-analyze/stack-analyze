@@ -1,116 +1,72 @@
 // modules
-import { default as axios } from "axios";
-import { SingleBar } from "cli-progress";
+import { MultiBar, Presets } from "cli-progress";
 import colors from "colors";
 
+// pagespeed api
+import { pagespeedApi } from "../api/webApis.js";
+
+const maxScore = 100;
+
 /**
- * @description async function mobile website pagespeed
- * @param { string } url - website from pagespeed mobile results
- * @returns { Promise<void> } - return async mobile results
- */
-const pageSpeed = async (url) => {
-  const resMobile = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
-    params: {
-      url,
-      key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
-      strategy: "mobile"
-    }
-  });
+  * It takes a score and a bar, and returns a color based on the score
+  * @param {number} score - The score of the current test.
+  * @returns {string} A function that takes two parameters, score and bar.
+*/
+const barColor = score => {
+  const bar = "{bar}";
 
-  const resDesktop = await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
-    params: {
-      url,
-      key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
-      strategy: "desktop"
-    }
-  });
-
-  // extract results
-  const mobile = Math.round(resMobile.data.lighthouseResult.categories.performance.score * 100);
-  const desktop = Math.round(resDesktop.data.lighthouseResult.categories.performance.score * 100);
-
-  // result pagespeed bar color
-  let b1;
-  let b2;
-
-  try {
-
-    // valid results
-    switch (true) {
-      case (mobile === 1 || mobile <= 49):
-      case (desktop === 1 || desktop <= 49):
-        b1 = new SingleBar({
-          format: "Mobile Result | {bar} || {value}/{total} || bad".red,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        b2 = new SingleBar({
-          format: "Desktop Result | {bar} || {value}/{total} || bad".red,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        break;
-      case (mobile === 50 || mobile <= 89):
-      case (desktop === 50 || desktop <= 89):
-        b1 = new SingleBar({
-          format: "Mobile Result | {bar} || {value}/{total} || decent".yellow,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        b2 = new SingleBar({
-          format: "Desktop Result | {bar} || {value}/{total} || decent".yellow,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        break;
-      case (mobile >= 90 || mobile === 100):
-      case (desktop >= 90 || desktop === 100):
-        b1 = new SingleBar({
-          format: "Mobile Result | {bar} || {value}/{total} || excelent".green,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        b2 = new SingleBar({
-          format: "Desktop Result | {bar} || {value}/{total} || excelent".green,
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        break;
-      default:
-        b1 = new SingleBar({
-          format: "Mobile Result | {bar} || {value}/{total} || undifined",
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        b2 = new SingleBar({
-          format: "Desktop Result | {bar} || {value}/{total} || undifined",
-          barCompleteChar: "\u2588",
-          barIncompleteChar: "\u2591",
-          hideCursor: true
-        });
-        break;
-    }
-    
-    // initials bars
-    b1.start(100, 0);
-    b2.start(100, 0);
-    
-    b1.update(mobile);
-    b2.update(desktop);
-
-    // stop all bars
-    b1.stop();
-    b2.stop();
-  } catch (err) {
-    console.error(colors.red(err.message));
+  switch (true) {
+    case score === 1 || score <= 49:
+      return bar.red;
+    case score === 50 || score <= 89:
+      return bar.yellow;
+    case score >= 90 || score === maxScore:
+      return bar.green;
+    default:
+      return bar.magenta;
   }
 };
 
-export default pageSpeed;
+/**
+ * @description async function mobile website pagespeed
+ * @async
+ * @param { string } url - website from pagespeed mobile results
+ * @returns { Promise<void> } - return async mobile results
+ */
+export default async function pagespeed(url) {
+  console.info(url.green);
+
+  const multibar = new MultiBar({
+    format: "{type} | {bar} | {value}/{total}",
+    hideCursor: true,
+    clearOnComplete: false
+  }, Presets.legacy);
+
+  try {
+    // start api
+    const { data: resMobile } = await pagespeedApi(url, "mobile");
+    const { data: resDesktop } = await pagespeedApi(url, "desktop");
+
+    // extract results
+    const mobile = Math.round(resMobile.lighthouseResult.categories.performance.score * 100);
+    const desktop = Math.round(resDesktop.lighthouseResult.categories.performance.score * 100);
+
+    // result pagespeed color bar
+    const b1 = multibar.create(maxScore, 0, { type: "mobile" }, {
+      format: `{type} | ${barColor(mobile)} | {value}/{total}`
+    });
+
+    const b2 = multibar.create(maxScore, 0, { type: "desktop" }, {
+      format: `{type} | ${barColor(desktop)} | {value}/{total}`
+    });
+
+    // initials bars
+    b1.update(mobile);
+    b2.update(desktop);
+
+    // stop multibar
+    multibar.stop();
+  } catch (err) {
+    console.error(colors.red(err.message));
+  }
+}

@@ -8,10 +8,10 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { license, version } = require("./package.json");
 
+const timeout = 1e3;
+
 /**
  * types for about tools
- * 
- * @typedef {Object.<string, function(): void>} aboutTable
  * 
  * @typedef {Object} info
  * @property {string} info.mainDeveloper
@@ -35,9 +35,8 @@ const { license, version } = require("./package.json");
  * @property {string} project.desc
  */
 
-/** @type {aboutTable} */
 const aboutTool = {
-  mainInfo() {
+  mainInfo(refreshCallback) {
     /** @type {info} */
     const aboutApp = {
       mainDeveloper: "omega5300",
@@ -47,8 +46,9 @@ const aboutTool = {
 
     console.clear();
     console.table(aboutApp);
+    setTimeout(refreshCallback, timeout);
   },
-  lineup() {
+  lineup(refreshCallback) {
     /** @type {developerList[]} */
     const developers = [
       {
@@ -59,8 +59,9 @@ const aboutTool = {
 
     console.clear();
     printTable(developers);
+    setTimeout(refreshCallback, timeout);
   },
-  youtubeRecomendation() {
+  youtubeRecomendation(refreshCallback) {
     /** @type {youtube[]} */
     const youtubeDev = [
       { youtubeChannel: "fazt", recomendation: "recommend" },
@@ -73,8 +74,9 @@ const aboutTool = {
 
     console.clear();
     printTable(youtubeDev);
+    setTimeout(refreshCallback, timeout);
   },
-  twitchRecomendation() { 
+  twitchRecomendation(refreshCallback) { 
     /** @type {twitch[]} */
     const twitchUsers = [
       {
@@ -82,14 +84,15 @@ const aboutTool = {
       },
       {
         user: "Lunanny",
-        details: "audiovisual student even though if has ADHD has a great variety regardless of whether or not he has ADHD."
+        details: "audiovisual student with ADHD."
       }
     ];
 
     console.clear();
     printTable(twitchUsers);
+    setTimeout(refreshCallback, timeout);
   },
-  projectsRecomendation() {
+  projectsRecomendation(refreshCallback) {
     /** @type {project[]} */
     const projects = [
       {
@@ -98,12 +101,13 @@ const aboutTool = {
       },
       {
         name: "black metal promotion",
-        desc: "upload new albums and sometimes tracks from upcoming albums with the permission of bands and/or labels"
+        desc: "promos albums and community"
       }
     ];
 
     console.clear();
     printTable(projects);
+    setTimeout(refreshCallback, timeout);
   }
 };
 

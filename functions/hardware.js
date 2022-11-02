@@ -10,9 +10,18 @@ import {
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
-/** @type {Object.<string, function(): Promise<void>>} */
+const timeout = 1e3;
+
+/**
+ * 
+ * @param {number} size 
+ * @param {number} [base = 1073741824] 
+ * @returns {string}
+ */
+const gigabyteConvert = (size, base=1073741824) => (size / base).toFixed(2);
+
 const hardwareTools = {
-  async cpuInfo() {
+  async cpuInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -43,8 +52,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async ramMemInfo() {
+  async ramMemInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -58,17 +68,18 @@ const hardwareTools = {
 
       // show results
       console.table({
-        total_mem: `${(total / 1073741824).toFixed(2)} GB`,
-        free_mem: `${(free / 1073741824).toFixed(2)} GB`,
-        used_mem: `${(used / 1073741824).toFixed(2)} GB`,
-        active_mem: `${(active / 1073741824).toFixed(2)} GB`,
-        available_mem: `${(available / 1073741824).toFixed(2)} GB`
+        total_mem: `${gigabyteConvert(total)} GB`,
+        free_mem: `${gigabyteConvert(free)} GB`,
+        used_mem: `${gigabyteConvert(used)} GB`,
+        active_mem: `${gigabyteConvert(active)} GB`,
+        available_mem: `${gigabyteConvert(available)} GB`
       });
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async osDetail() {
+  async osDetail(refreshCallback) {
     console.clear();
 
     try {
@@ -97,8 +108,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async diskInfo() {
+  async diskInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -114,7 +126,7 @@ const hardwareTools = {
         type,
         name,
         vendor,
-        diskSize: `${(size / 1073741824).toFixed(2)} GB`,
+        diskSize: `${gigabyteConvert(size)} GB`,
         interfaceType
       }));
   
@@ -123,8 +135,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async controllerInfo() {
+  async controllerInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -139,7 +152,7 @@ const hardwareTools = {
         vendor,
         vramSize: vram < 1024
           ? `${vram} MB`
-          : `${(vram / 1024).toFixed(2)} GB`
+          : `${gigabyteConvert(vram, 1024)} GB`
       }));
   
       // show results
@@ -147,8 +160,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async displayInfo() {
+  async displayInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -173,8 +187,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async biosInfo() {
+  async biosInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -188,12 +203,13 @@ const hardwareTools = {
       console.table({
         releaseDate,
         vendor,
-        bios_revision: revision === "" ? "no info" : revision,
+        bios_revision: revision || "no info",
         version
       });
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   }
 };
 

@@ -9,20 +9,16 @@ import { printTable } from "console-table-printer";
 import { currency } from "../utils.js";
 
 /**
- *
  * @descripiton call the crypto market list
+ * @async
  * @returns { Promise<void> } - return results search
- *
  */
-const cryptoMarket = async () => {
+export default async function cryptoMarket() {
   try {
     // start crypto
     const { data } = await axios.get(
       "https://api.coingecko.com/api/v3/coins/markets", {
-        params: {
-          vs_currency: "usd",
-          per_page: 10
-        }
+        params: { vs_currency: "usd" }
       }
     );
 
@@ -37,18 +33,14 @@ const cryptoMarket = async () => {
       symbol,
       name,
       price: currency.format(current_price),
-      priceChanged: price_change_percentage_24h > 0 
-        ? colors.green(price_change_percentage_24h) 
-        : colors.red(price_change_percentage_24h),
+      priceChanged: `${price_change_percentage_24h.toFixed(2)} %`,
       lastUpdated: format(last_updated)
     }));
 
     // print table
-    printTable(coinList);
+    printTable(coinList.slice(0, 10));
   } catch (err) {
     // print err message
     console.error(colors.red(err.message));
   }
-};
-
-export default cryptoMarket;
+}

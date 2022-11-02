@@ -1,11 +1,8 @@
-import colors from "colors";
-
-/** 
- *
- * @description generate a new password
- * @returns { void }
-*/
-const genPassword = () => {
+/**
+ * It generates a random password
+ * @returns {void}
+ */
+export default function genPassword() {
   const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   // blank password var
@@ -19,7 +16,5 @@ const genPassword = () => {
   }
 
   // print new passwors
-  console.info(colors.yellow("new password:"), password);
-};
-
-export default genPassword;
+  console.info("new password:", password);
+}

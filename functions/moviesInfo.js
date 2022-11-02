@@ -5,10 +5,12 @@ import { printTable } from "console-table-printer";
 
 /** 
  * @description movie info tool
+ * @async
  * @param { string } query - search any movie
+ * @param { string } token
  * @returns { Promise<void> } - return movie lisy
 */
-const movieDB = async (query, token) => {
+export default async function movieDB(query, token) {
   try {
     const { data } = await axios.get("https://api.themoviedb.org/3/search/movie", {
       params: {
@@ -39,13 +41,10 @@ const movieDB = async (query, token) => {
         
         return primaryDate.getTime() - secondaryDate.getTime();
       })
-      .filter(({ release_date }) => release_date !== undefined && release_date !== "");
+      .filter((data) => data?.release_date);
 
     printTable(movieData);
   } catch (err) {
     console.error(colors.red(err.message));
   }
-};
-
-// export
-export default movieDB;
+}

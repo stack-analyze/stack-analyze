@@ -8,7 +8,6 @@ const movieDB = async (api_key, query) => {
       params: {
         api_key,
         query,
-        page: 1
       }
     });
 
