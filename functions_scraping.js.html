@@ -2,35 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>functions/scraping.js - Documentation</title>
+    <title>JSDoc: Source: functions/scraping.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
+
 <body>
 
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
-
-<label for="nav-trigger" class="overlay"></label>
-
-<nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#aboutOpts">aboutOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#aboutTool">aboutTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bitlyInfo">bitlyInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cryptoMarket">cryptoMarket</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#genPassword">genPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#hardwareTools">hardwareTools</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#movieDB">movieDB</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pageSpeed">pageSpeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingLink">scrapingLink</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingOpts">scrapingOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#toolsOpts">toolsOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#twitchInfo">twitchInfo</a></span></li>
-</nav>
-
 <div id="main">
-    
-    <h1 class="page-title">functions/scraping.js</h1>
-    
+
+    <h1 class="page-title">Source: functions/scraping.js</h1>
 
     
 
@@ -45,152 +32,93 @@ import colors from "colors";
 import { printTable } from "console-table-printer";
 
 /**
- * @typedef {Object} options
- * @property {function(): Promise&lt;void>} options.title
- * @property {function(): Promise&lt;void>} options.images
- * @property {function(): Promise&lt;void>} options.metadata
- * @property {function(): Promise&lt;void>} options.headings
- * @property {function(): Promise&lt;void>} options.table_heading
- * @property {function(): Promise&lt;void>} options.table_data
- * @property {function(): Promise&lt;void>} options.links
- * @property {function(): Promise&lt;void>} options.cites
+ * @typedef {"title"|"images"|"metadata"|"headings"|"table_heading"|"table_data"|"links"|"cites"} Options
  * 
+ * It takes a URL and an option as arguments, and then it scrapes the page at the URL for the option
  * @param {string} url 
- * @returns {options}
+ * @param {Options} options
+ * @returns {Promise&lt;void>}
  */
-export default function scrape(url) {
-  let $;
+export default async function scrape(url, options) {
+  try {
+    const { data } = await axios.get(url);
+    const $ = load(data);
 
-  const scraping = axios.create({
-    baseURL: url
-  });
+    const scraping = {
+      title: () => console.info($("title").text()),
+      images() {
+        const imageList = $("img").map((i, el) => ({
+          imagePath: $(el).attr("src"),
+          imageTitle: $(el).attr("alt")
+        })).toArray();
 
-  const title = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+        imageList.length === 0
+          ? console.info("no found images")
+          : printTable(imageList);
+      },
+      metadata() {
+        const metadataList = $("meta").map((i, el) => ({
+          metaInfo: $(el).attr("name"),
+          metaContent: $(el).attr("content")
+        })).toArray()
+          .filter((data) => data?.metaInfo);
 
-      console.info("title page:", $("title").text());
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
+        printTable(metadataList);
+      },
+      headings() {
+        const headingList = $("h1, h2, h3, h4, h5, h6").map((i, el) => ({
+          headingTag: $(el).prop("tagName"),
+          headingText: $(el).text()
+        })).toArray();
 
-  const images = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+        printTable(headingList);
+      },
+      tableHead() {
+        const tableHeadList = $("th").map((i, el) => ({
+          headingRow: i,
+          text: $(el).text()
+        })).toArray();
 
-      const imgs = $("img").map((i, el) => ({
-        imagePath: $(el).attr("src"),
-        imageTitle: $(el).attr("alt")
-      })).toArray();
+        tableHeadList.length === 0
+          ? console.info("no found th tags")
+          : printTable(tableHeadList);
+      },
+      tableData() {
+        const tableColumnList = $("td").map((i, el) => ({
+          tableRow: i + 1,
+          tableData: $(el).text(),
+        })).toArray();
 
-      imgs.length === 0
-        ? console.info("no found images")
-        : printTable(imgs);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
+        tableColumnList.length === 0
+          ? console.info("no found td tags")
+          : console.table(tableColumnList.slice(0, 10), ["tableData"]);
+      },
+      links() {
+        const linkList = $("a").map((i, el) => ({
+          url: $(el).attr("href"),
+          text: $(el).text()
+        })).toArray()
+          .filter(({ url }) => url.indexOf("#") !== 0);
 
-  const metadata = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
+        printTable(linkList);
+      },
+      cites() {
+        const citeList = $("q, blockquote").map((i, el) => ({
+          citeTag: $(el).prop("tagName"),
+          citeLink: $(el).attr("cite"),
+          citeText: $(el).text()
+        })).toArray();
 
-      const metadataList = $("meta").map((i, el) => ({
-        metaInfo: $(el).attr("name"),
-        metaContent: $(el).attr("content")
-      })).toArray()
-        .filter(({ metaInfo }) => metaInfo !== undefined);
+        citeList.length === 0
+          ? console.info("no found q and/or blockquote tags")
+          : printTable(citeList);
+      }
+    };
 
-      printTable(metadataList);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
-
-  const headings = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
-
-      const headingList = $("h1, h2, h3, h4, h5, h6").map((i, el) => ({
-        headingTag: $(el).prop("tagName"),
-        headingText: $(el).text()
-      })).toArray();
-
-      printTable(headingList);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
-
-  const table_heading = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
-
-      const tableHeadList = $("th").map((i, el) => ({
-        headingRow: i,
-        text: $(el).text()
-      })).toArray();
-
-      tableHeadList.length === 0
-        ? console.info("no found th tags")
-        : printTable(tableHeadList);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
-
-  const table_data = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
-
-      const tableColumnList = $("td").map((i, el) => $(el).text()).toArray();
-
-      tableColumnList.length === 0
-        ? console.info("no found td tags")
-        : printTable(tableColumnList);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
-
-
-  const links = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
-
-      const linkList = $("a").map((i, el) => ({
-        url: $(el).attr("href"),
-        text: $(el).text()
-      })).toArray()
-        .filter(({ url }) => url.indexOf("#") !== 0);
-
-      printTable(linkList);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
-
-  const cites = async () => {
-    try {
-      const { data } = await scraping.get("");
-      $ = load(data);
-
-      const citeList = $("q, blockquote").map((i, el) => ({
-        citeTag: $(el).prop("tagName"),
-        citeLink: $(el).attr("cite"),
-        citeText: $(el).text()
-      })).toArray();
-
-      citeList.length === 0
-        ? console.info("no found q and/or blockquote tags")
-        : printTable(citeList);
-    } catch (err) { console.error(colors.red(err.message)); }
-  };
-
-  return {
-    title,
-    images,
-    metadata,
-    headings,
-    table_heading,
-    table_data,
-    links,
-    cites
-  };
+    scraping[options]();
+  } catch (err) {
+    console.error(colors.red(err.message));
+  }
 }
 </code></pre>
         </article>
@@ -201,13 +129,17 @@ export default function scrape(url) {
 
 </div>
 
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#aboutOpts">aboutOpts</a></li><li><a href="global.html#barColor">barColor</a></li><li><a href="global.html#exitCli">exitCli</a></li><li><a href="global.html#gigabyteConvert">gigabyteConvert</a></li><li><a href="global.html#hardwareOpts">hardwareOpts</a></li><li><a href="global.html#infoOpts">infoOpts</a></li><li><a href="global.html#mainMenu">mainMenu</a></li><li><a href="global.html#returnMain">returnMain</a></li><li><a href="global.html#webOpts">webOpts</a></li></ul>
+</nav>
+
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Fri Sep 02 2022 22:58:14 GMT-0500 (hora estándar de Colombia) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Nov 02 2022 11:54:02 GMT-0500 (hora estándar de Colombia)
 </footer>
 
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>

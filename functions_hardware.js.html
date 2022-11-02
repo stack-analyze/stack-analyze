@@ -2,35 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>functions/hardware.js - Documentation</title>
+    <title>JSDoc: Source: functions/hardware.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
+
 <body>
 
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
-
-<label for="nav-trigger" class="overlay"></label>
-
-<nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#aboutOpts">aboutOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#aboutTool">aboutTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bitlyInfo">bitlyInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cryptoMarket">cryptoMarket</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#genPassword">genPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#hardwareTools">hardwareTools</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#movieDB">movieDB</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pageSpeed">pageSpeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingLink">scrapingLink</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingOpts">scrapingOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#toolsOpts">toolsOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#twitchInfo">twitchInfo</a></span></li>
-</nav>
-
 <div id="main">
-    
-    <h1 class="page-title">functions/hardware.js</h1>
-    
+
+    <h1 class="page-title">Source: functions/hardware.js</h1>
 
     
 
@@ -51,9 +38,18 @@ import {
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
-/** @type {Object.&lt;string, function(): Promise&lt;void>>} */
+const timeout = 1e3;
+
+/**
+ * 
+ * @param {number} size 
+ * @param {number} [base = 1073741824] 
+ * @returns {string}
+ */
+const gigabyteConvert = (size, base=1073741824) => (size / base).toFixed(2);
+
 const hardwareTools = {
-  async cpuInfo() {
+  async cpuInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -84,8 +80,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async ramMemInfo() {
+  async ramMemInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -99,17 +96,18 @@ const hardwareTools = {
 
       // show results
       console.table({
-        total_mem: `${(total / 1073741824).toFixed(2)} GB`,
-        free_mem: `${(free / 1073741824).toFixed(2)} GB`,
-        used_mem: `${(used / 1073741824).toFixed(2)} GB`,
-        active_mem: `${(active / 1073741824).toFixed(2)} GB`,
-        available_mem: `${(available / 1073741824).toFixed(2)} GB`
+        total_mem: `${gigabyteConvert(total)} GB`,
+        free_mem: `${gigabyteConvert(free)} GB`,
+        used_mem: `${gigabyteConvert(used)} GB`,
+        active_mem: `${gigabyteConvert(active)} GB`,
+        available_mem: `${gigabyteConvert(available)} GB`
       });
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async osDetail() {
+  async osDetail(refreshCallback) {
     console.clear();
 
     try {
@@ -138,8 +136,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async diskInfo() {
+  async diskInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -155,7 +154,7 @@ const hardwareTools = {
         type,
         name,
         vendor,
-        diskSize: `${(size / 1073741824).toFixed(2)} GB`,
+        diskSize: `${gigabyteConvert(size)} GB`,
         interfaceType
       }));
   
@@ -164,8 +163,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async controllerInfo() {
+  async controllerInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -180,7 +180,7 @@ const hardwareTools = {
         vendor,
         vramSize: vram &lt; 1024
           ? `${vram} MB`
-          : `${(vram / 1024).toFixed(2)} GB`
+          : `${gigabyteConvert(vram, 1024)} GB`
       }));
   
       // show results
@@ -188,8 +188,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async displayInfo() {
+  async displayInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -214,8 +215,9 @@ const hardwareTools = {
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   },
-  async biosInfo() {
+  async biosInfo(refreshCallback) {
     console.clear();
 
     try {
@@ -229,12 +231,13 @@ const hardwareTools = {
       console.table({
         releaseDate,
         vendor,
-        bios_revision: revision === "" ? "no info" : revision,
+        bios_revision: revision || "no info",
         version
       });
     } catch (err) {
       console.error(colors.red(err.message));
     }
+    setTimeout(refreshCallback, timeout);
   }
 };
 
@@ -249,13 +252,17 @@ export default hardwareTools;
 
 </div>
 
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#aboutOpts">aboutOpts</a></li><li><a href="global.html#barColor">barColor</a></li><li><a href="global.html#exitCli">exitCli</a></li><li><a href="global.html#gigabyteConvert">gigabyteConvert</a></li><li><a href="global.html#hardwareOpts">hardwareOpts</a></li><li><a href="global.html#infoOpts">infoOpts</a></li><li><a href="global.html#mainMenu">mainMenu</a></li><li><a href="global.html#returnMain">returnMain</a></li><li><a href="global.html#webOpts">webOpts</a></li></ul>
+</nav>
+
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Fri Sep 02 2022 22:58:14 GMT-0500 (hora estándar de Colombia) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Nov 02 2022 11:54:02 GMT-0500 (hora estándar de Colombia)
 </footer>
 
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>

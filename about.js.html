@@ -2,35 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>about.js - Documentation</title>
+    <title>JSDoc: Source: about.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
+
 <body>
 
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
-
-<label for="nav-trigger" class="overlay"></label>
-
-<nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#aboutOpts">aboutOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#aboutTool">aboutTool</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#animeSearch">animeSearch</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bitlyInfo">bitlyInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#cryptoMarket">cryptoMarket</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#genPassword">genPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#hardwareOpts">hardwareOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#hardwareTools">hardwareTools</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#movieDB">movieDB</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#multipleStack">multipleStack</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#pageSpeed">pageSpeed</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#question">question</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#returnQuestion">returnQuestion</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingLink">scrapingLink</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#scrapingOpts">scrapingOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#toolsOpts">toolsOpts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#twitchInfo">twitchInfo</a></span></li>
-</nav>
-
 <div id="main">
-    
-    <h1 class="page-title">about.js</h1>
-    
+
+    <h1 class="page-title">Source: about.js</h1>
 
     
 
@@ -49,10 +36,10 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { license, version } = require("./package.json");
 
+const timeout = 1e3;
+
 /**
  * types for about tools
- * 
- * @typedef {Object.&lt;string, function(): void>} aboutTable
  * 
  * @typedef {Object} info
  * @property {string} info.mainDeveloper
@@ -76,9 +63,8 @@ const { license, version } = require("./package.json");
  * @property {string} project.desc
  */
 
-/** @type {aboutTable} */
 const aboutTool = {
-  mainInfo() {
+  mainInfo(refreshCallback) {
     /** @type {info} */
     const aboutApp = {
       mainDeveloper: "omega5300",
@@ -88,8 +74,9 @@ const aboutTool = {
 
     console.clear();
     console.table(aboutApp);
+    setTimeout(refreshCallback, timeout);
   },
-  lineup() {
+  lineup(refreshCallback) {
     /** @type {developerList[]} */
     const developers = [
       {
@@ -100,8 +87,9 @@ const aboutTool = {
 
     console.clear();
     printTable(developers);
+    setTimeout(refreshCallback, timeout);
   },
-  youtubeRecomendation() {
+  youtubeRecomendation(refreshCallback) {
     /** @type {youtube[]} */
     const youtubeDev = [
       { youtubeChannel: "fazt", recomendation: "recommend" },
@@ -114,8 +102,9 @@ const aboutTool = {
 
     console.clear();
     printTable(youtubeDev);
+    setTimeout(refreshCallback, timeout);
   },
-  twitchRecomendation() { 
+  twitchRecomendation(refreshCallback) { 
     /** @type {twitch[]} */
     const twitchUsers = [
       {
@@ -123,14 +112,15 @@ const aboutTool = {
       },
       {
         user: "Lunanny",
-        details: "audiovisual student even though if has ADHD has a great variety regardless of whether or not he has ADHD."
+        details: "audiovisual student with ADHD."
       }
     ];
 
     console.clear();
     printTable(twitchUsers);
+    setTimeout(refreshCallback, timeout);
   },
-  projectsRecomendation() {
+  projectsRecomendation(refreshCallback) {
     /** @type {project[]} */
     const projects = [
       {
@@ -139,12 +129,13 @@ const aboutTool = {
       },
       {
         name: "black metal promotion",
-        desc: "upload new albums and sometimes tracks from upcoming albums with the permission of bands and/or labels"
+        desc: "promos albums and community"
       }
     ];
 
     console.clear();
     printTable(projects);
+    setTimeout(refreshCallback, timeout);
   }
 };
 
@@ -158,13 +149,17 @@ export default aboutTool;
 
 </div>
 
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#aboutOpts">aboutOpts</a></li><li><a href="global.html#barColor">barColor</a></li><li><a href="global.html#exitCli">exitCli</a></li><li><a href="global.html#gigabyteConvert">gigabyteConvert</a></li><li><a href="global.html#hardwareOpts">hardwareOpts</a></li><li><a href="global.html#infoOpts">infoOpts</a></li><li><a href="global.html#mainMenu">mainMenu</a></li><li><a href="global.html#returnMain">returnMain</a></li><li><a href="global.html#webOpts">webOpts</a></li></ul>
+</nav>
+
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Fri Sep 02 2022 22:58:14 GMT-0500 (hora estándar de Colombia) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Nov 02 2022 11:54:02 GMT-0500 (hora estándar de Colombia)
 </footer>
 
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>
