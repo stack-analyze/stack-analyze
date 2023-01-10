@@ -1,6 +1,10 @@
 // modules
 import { MultiBar, Presets } from "cli-progress";
+import figlet from "figlet";
 import colors from "colors";
+
+// save file
+import { stackSave } from "../utils.js";
 
 // pagespeed api
 import { pagespeedApi } from "../api/webApis.js";
@@ -66,6 +70,14 @@ export default async function pagespeed(url) {
 
     // stop multibar
     multibar.stop();
+    
+    const resultTxt = `
+    ${figlet.textSync(url)} \n 
+    mobile: ${mobile}/100 \n 
+    desktop: ${desktop}/100
+    `;
+    
+    stackSave("pagespeed.txt", resultTxt);
   } catch (err) {
     console.error(colors.red(err.message));
   }

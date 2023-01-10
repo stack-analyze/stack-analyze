@@ -2,6 +2,14 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.2.2
+### Added
+- add save file function for the tools
+### change
+- change the hash table to unique function in hardware information
+### fixed
+- fixed to unique user to multiple users with split params
+
 ## version 1.2.1
 ### fixed
 - rewrite form arrow functions to named function with export default.

@@ -84,7 +84,7 @@ const aboutTool = {
       },
       {
         user: "Lunanny",
-        details: "audiovisual student with ADHD."
+        details: "art director with ADHD."
       }
     ];
 
@@ -102,7 +102,11 @@ const aboutTool = {
       {
         name: "black metal promotion",
         desc: "promos albums and community"
-      }
+      },
+      {
+        name: "black metal catalog",
+        desc: "promos albums and community"
+      },
     ];
 
     console.clear();

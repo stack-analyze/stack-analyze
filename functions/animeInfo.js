@@ -4,6 +4,9 @@ import { format } from "timeago.js";
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
+// save anime
+import { stackSave } from "../utils.js";
+
 /**
  *
  * @description call the anime serach info
@@ -36,5 +39,7 @@ export default async function animeSearch(q) {
 
 
     printTable(animeData.slice(0, 10));
+    
+    stackSave(`${q}-results.json`, JSON.stringify(animeData, null, 2));
   } catch (err) { console.error(colors.red(err.message)); }
 }

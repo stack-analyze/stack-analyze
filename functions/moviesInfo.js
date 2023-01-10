@@ -3,6 +3,9 @@ import { default as axios } from "axios";
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
+// save movies
+import { stackSave } from "../utils.js";
+
 /** 
  * @description movie info tool
  * @async
@@ -44,6 +47,8 @@ export default async function movieDB(query, token) {
       .filter((data) => data?.release_date);
 
     printTable(movieData);
+    
+    stackSave("movie-list.json", JSON.stringify(movieData, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }

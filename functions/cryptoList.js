@@ -6,7 +6,7 @@ import colors from "colors";
 import { printTable } from "console-table-printer";
 
 // currency format
-import { currency } from "../utils.js";
+import { currency, stackSave } from "../utils.js";
 
 /**
  * @descripiton call the crypto market list
@@ -39,6 +39,8 @@ export default async function cryptoMarket() {
 
     // print table
     printTable(coinList.slice(0, 10));
+    
+    stackSave("crypto-list.json", JSON.stringify(coinList, null, 2));
   } catch (err) {
     // print err message
     console.error(colors.red(err.message));

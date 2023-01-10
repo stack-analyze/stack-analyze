@@ -4,7 +4,7 @@ import { printTable } from "console-table-printer";
 import { wappalyzer } from "../api/webApis.js";
 
 // list format
-import { listFormat } from "../utils.js";
+import { listFormat, stackSave } from "../utils.js";
 
 /**
  *
@@ -18,6 +18,8 @@ export default async function multipleStack(urlList) {
     await wappalyzer.init();
 
     console.info("multiple websites tech stack \n");
+    
+    const stacks = {};
     
     for await (const url of urlList) {
       console.info(url.green);
@@ -37,8 +39,12 @@ export default async function multipleStack(urlList) {
         };
       });
 
-      printTable(stackResult);
+      printTable(stackResult.slice(0, 10));
+      
+      stacks[url] = stackResult;
     }
+    
+    stackSave("multiple-stack.json", JSON.stringify(stacks, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }

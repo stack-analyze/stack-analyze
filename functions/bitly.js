@@ -3,6 +3,9 @@ import { default as axios } from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
 
+// save bitly
+import { stackSave } from "../utils.js";
+
 /**
  *
  * @description call the bitly info data
@@ -30,6 +33,8 @@ export default async function bitlyInfo(link, token) {
       bitly_link: data.link,
       link: data.long_url
     });
+    
+    stackSave("bitly.json", JSON.stringify(data, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }

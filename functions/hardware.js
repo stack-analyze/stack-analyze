@@ -8,9 +8,8 @@ import {
   bios
 } from "systeminformation";
 import colors from "colors";
-import { printTable } from "console-table-printer";
 
-const timeout = 1e3;
+import { stackSave } from "../utils.js";
 
 /**
  * 
@@ -20,198 +19,102 @@ const timeout = 1e3;
  */
 const gigabyteConvert = (size, base=1073741824) => (size / base).toFixed(2);
 
-const hardwareTools = {
-  async cpuInfo(refreshCallback) {
-    console.clear();
+/**
+ * 
+ * @async
+ * @returns {Promise<void>}
+ */
+export default async function hardware() {
+  try {
+    // Map object
+    const hardware = new Map();
+    
+    // info
+    const biosInfo = await bios()
+    const cpuInfo = await cpu()
+    const ram = await mem()
+    const os = await osInfo()
+    const disks = await diskLayout()
+    const { displays, controllers } = await graphics();
 
-    try {
-      const {
-        manufacturer,
-        brand,
-        speed,
-        cores,
-        physicalCores,
-        processors,
-        vendor,
-        family,
-        model
-      } = await cpu();
-
-      // show results
-      console.table({
-        manufacturer,
-        brand,
-        speed,
-        cores,
-        physicalCores,
-        processors,
-        vendor,
-        family,
-        model
-      });
-    } catch (err) {
-      console.error(colors.red(err.message));
+    // omit falsy values
+    for(const key in biosInfo) {
+      if(!biosInfo[key]) {
+        delete biosInfo[key];
+      }
     }
-    setTimeout(refreshCallback, timeout);
-  },
-  async ramMemInfo(refreshCallback) {
-    console.clear();
 
-    try {
-      const {
-        total,
-        free,
-        used,
-        active,
-        available
-      } = await mem();
-
-      // show results
-      console.table({
-        total_mem: `${gigabyteConvert(total)} GB`,
-        free_mem: `${gigabyteConvert(free)} GB`,
-        used_mem: `${gigabyteConvert(used)} GB`,
-        active_mem: `${gigabyteConvert(active)} GB`,
-        available_mem: `${gigabyteConvert(available)} GB`
-      });
-    } catch (err) {
-      console.error(colors.red(err.message));
+    for(const key in cpuInfo) {
+      if(!cpuInfo[key]) {
+        delete cpuInfo[key];
+      }
     }
-    setTimeout(refreshCallback, timeout);
-  },
-  async osDetail(refreshCallback) {
-    console.clear();
-
-    try {
-      const {
-        hostname,
-        platform,
-        distro,
-        release,
-        kernel,
-        arch,
-        serial,
-        uefi
-      } = await osInfo();
-  
-      // show results
-      console.table({
-        hostname,
-        platform,
-        distro,
-        release,
-        kernel,
-        arch,
-        serial,
-        uefi
-      });
-    } catch (err) {
-      console.error(colors.red(err.message));
+    
+    for(const key in cpuInfo.cache) {
+      if(!cpuInfo.cache[key]) {
+        delete cpuInfo.cache[key];
+      }
     }
-    setTimeout(refreshCallback, timeout);
-  },
-  async diskInfo(refreshCallback) {
-    console.clear();
 
-    try {
-      const disks = await diskLayout();
-  
-      const disksList = disks.map(({
-        type,
-        name,
-        vendor,
-        size,
-        interfaceType
-      }) => ({
-        type,
-        name,
-        vendor,
-        diskSize: `${gigabyteConvert(size)} GB`,
-        interfaceType
-      }));
-  
-      printTable(disksList);
-  
-    } catch (err) {
-      console.error(colors.red(err.message));
+    for(const key in os) {
+      if(!os[key]) {
+        delete os[key];
+      }
     }
-    setTimeout(refreshCallback, timeout);
-  },
-  async controllerInfo(refreshCallback) {
-    console.clear();
 
-    try {
-      const { controllers } = await graphics();
-  
-      const controllersList = controllers.map(({
-        model,
-        vendor,
-        vram
-      }) => ({
-        model,
-        vendor,
-        vramSize: vram < 1024
-          ? `${vram} MB`
-          : `${gigabyteConvert(vram, 1024)} GB`
-      }));
-  
-      // show results
-      printTable(controllersList);
-    } catch (err) {
-      console.error(colors.red(err.message));
+    for(const key in ram) {
+      ram[key] = `${gigabyteConvert(ram[key])} GB`;
     }
-    setTimeout(refreshCallback, timeout);
-  },
-  async displayInfo(refreshCallback) {
-    console.clear();
+    
+    disks.forEach(disk => {
+      for(const key in disk) {
+        if(!disk[key]) {
+          delete disk[key];
+        }
+        
+        if(typeof disk[key] === "number") {
+          disk[key] = `${gigabyteConvert(ram[key])} GB`;
+        }
+      }
+    });
+    
+    controllers.forEach(controller => {
+      for(const key in controller) {
+        if(!controller[key]) {
+          delete controller[key];
+        }
+        
+        if(typeof controller[key] === "number") {
+          controller[key] = controller[key] < 1024
+            ? `${controller[key]} MB`
+            : `${gigabyteConvert(controller[key])} GB`;
+        }
+      }
+    });
+    
+    displays.forEach(display => {
+      for(const key in display) {
+        if(!display[key]) {
+          delete display[key];
+        }
+      }
+    });
+    
+    // add values
+    hardware.set("bios", biosInfo);
+    hardware.set("cpu", cpuInfo);
+    hardware.set("ram", ram);
+    hardware.set("os", os);
+    hardware.set("disks", disks);
+    hardware.set("graphics", controllers);
+    hardware.set("displays", displays);
 
-    try {
-      const { displays } = await graphics();
-  
-      const displayList = displays.map(({
-        model,
-        main,
-        connection,
-        resolutionX,
-        resolutionY
-      }) => ({
-        model,
-        main,
-        connection,
-        resolutionX,
-        resolutionY
-      }));
-  
-      // show results
-      printTable(displayList);
-    } catch (err) {
-      console.error(colors.red(err.message));
-    }
-    setTimeout(refreshCallback, timeout);
-  },
-  async biosInfo(refreshCallback) {
-    console.clear();
-
-    try {
-      const {
-        releaseDate,
-        vendor,
-        revision,
-        version
-      } = await bios();
-  
-      console.table({
-        releaseDate,
-        vendor,
-        bios_revision: revision || "no info",
-        version
-      });
-    } catch (err) {
-      console.error(colors.red(err.message));
-    }
-    setTimeout(refreshCallback, timeout);
+    // save file
+    stackSave("hardware.json", JSON.stringify(Object.fromEntries(hardware), null, 2));
+    
+    // finish
+    console.info("finish the hardware information file");
+  } catch (err) {
+    console.error(colors.red(err.message));
   }
-};
-
-// exports modules
-export default hardwareTools;
+}

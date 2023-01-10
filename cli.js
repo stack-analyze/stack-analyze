@@ -6,7 +6,8 @@ import figlet from "figlet";
 
 import webTools from "./hash/webTools.js";
 import queryTools from "./hash/queryTools.js";
-import hardwareTools from "./functions/hardware.js";
+import infoTools from "./hash/infoTools.js";
+import utilityTools from "./hash/utilityTools.js";
 import aboutTool from "./about.js";
 
 import {
@@ -14,10 +15,11 @@ import {
   menuQueryOpts,
   menuWebOpts,
   menuAboutOpts,
-  menuHardwareOpts
+  menuInfoOpts,
+  menuUtilityOpts
 } from "./utils.js";
 
-const [ gauge, totalTime, pageSize ] = [ new Gauge(), 1e4, 9 ];
+const [gauge, totalTime, pageSize] = [new Gauge(), 1e4, 9];
 
 /** @returns {void} */
 const exitCli = () => {
@@ -53,30 +55,48 @@ async function infoOpts() {
     pageSize,
     name: "info",
     message: "enter a info tool option",
-    choices: menuQueryOpts
+    choices: menuInfoOpts
   });
 
   info === "return main menu"
     ? mainMenu()
-    : queryTools[info](returnMain);
+    : infoTools[info](returnMain);
 }
 
 /**
  * @async
  * @returns {Promise<void>}
  */
-async function hardwareOpts() {
-  const { hardware } = await inquirer.prompt({
+async function queryOpts() {
+  const { query } = await inquirer.prompt({
     type: "list",
-    name: "hardware",
     pageSize,
-    message: "select a hardware-information option:",
-    choices: menuHardwareOpts
+    name: "query",
+    message: "enter a query tool option",
+    choices: menuQueryOpts
   });
 
-  hardware !== "return main menu"
-    ? hardwareTools[hardware](hardwareOpts)
-    : mainMenu();
+  query === "return main menu"
+    ? mainMenu()
+    : queryTools[query](returnMain);
+}
+
+/**
+ * @async
+ * @returns {Promise<void>}
+ */
+async function utilityOpts() {
+  const { utility } = await inquirer.prompt({
+    type: "list",
+    pageSize,
+    name: "utility",
+    message: "enter a utility tool option",
+    choices: menuUtilityOpts
+  });
+
+  utility === "return main menu"
+    ? mainMenu()
+    : utilityTools[utility](returnMain);
 }
 
 /**
@@ -117,13 +137,17 @@ async function mainMenu() {
       console.clear();
       webOpts();
     },
-    query() {
+    info() {
       console.clear();
       infoOpts();
     },
-    hardware() {
+    query() {
       console.clear();
-      hardwareOpts();
+      queryOpts();
+    },
+    utility() {
+      console.clear();
+      utilityOpts();
     },
     about() {
       console.clear();
@@ -131,7 +155,7 @@ async function mainMenu() {
     }
   };
 
-  option !== "exit" ?menuList[option]() : exitCli();
+  option !== "exit" ? menuList[option]() : exitCli();
 }
 
 /**
@@ -146,7 +170,7 @@ async function returnMain() {
       message: "do you want go to the main menu?",
     });
 
-    returnMain ? mainMenu(): exitCli();
+    returnMain ? mainMenu() : exitCli();
   } catch (err) {
     console.error(colors.bgRed(err.message));
   }

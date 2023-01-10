@@ -1,3 +1,5 @@
+import { writeFile } from "node:fs/promises";
+
 const listFormat = new Intl.ListFormat("en", {
   style: "short",
   type: "conjunction"
@@ -9,15 +11,24 @@ const currency = new Intl.NumberFormat("en-us", {
 
 const returnMainOpts = "return main menu";
 
-const menuOpts = ["web", "query", "hardware", "about", "exit"];
+const menuOpts = [
+  "web", "info", "query", "utility", "about", "exit"
+];
 
 const menuWebOpts = [
   "single", "multiple", "pagespeed", "scraping", returnMainOpts
 ];
 
+const menuInfoOpts = [
+  "github_info", "crypto_market", "bitly_info", returnMainOpts
+];
+
 const menuQueryOpts = [
-  "github_info", "anime_Search", "bitly_info", "movie_info",
-  "twitch_info", "crypto_market", "password", returnMainOpts
+  "anime_Search", "movie_info", "twitch_info", returnMainOpts
+];
+
+const menuUtilityOpts = [
+  "hardware", "password", returnMainOpts
 ];
 
 const menuHardwareOpts = [
@@ -35,6 +46,30 @@ const scrapingOpts = [
   "tableHead", "tableData", "links", "cites"
 ];
 
+/**
+ * 
+ * @param {string} filename 
+ * @param {any} data 
+ * @returns {Promise<void>}
+ */
+const stackSave = async (filename, data) => {
+  if (!data) {
+    console.error("stackSave no using falsy values");
+    return;
+  }
+  
+  if(typeof data === "boolean") {
+    console.info("stackSave no using boolean types");
+    return;
+  }
+
+  try {
+    await writeFile(filename, data);
+  } catch (err) {
+    console.info(err.message);
+  }
+};
+
 const exitCli = "thanks for use stack-analyze";
 
 export {
@@ -42,10 +77,13 @@ export {
   currency,
   menuOpts,
   menuWebOpts,
+  menuInfoOpts,
   menuQueryOpts,
+  menuUtilityOpts,
   menuHardwareOpts,
   menuAboutOpts,
   scrapingOpts,
+  stackSave,
   exitCli
 };
 

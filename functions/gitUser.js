@@ -3,6 +3,9 @@ import { default as axios } from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
 
+// save git user
+import { stackSave } from "../utils.js";
+
 /**
  *
  * @description call github info user
@@ -27,6 +30,8 @@ export default async function githubInfo(user) {
     };
 
     console.table(info);
+    
+    stackSave(`${user}-info.json`, JSON.stringify(info, null, 2))
   } catch(err) {
     console.error(colors.red(err.message));
   }

@@ -2,8 +2,10 @@
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
-// list format
-import { listFormat } from "../utils.js";
+// utils
+import { listFormat, stackSave } from "../utils.js";
+
+// wappalyzer
 import { wappalyzer } from "../api/webApis.js";
 
 /**
@@ -35,7 +37,9 @@ export default async function singleStack(url) {
 
     console.info(url.green);
 
-    printTable(stackResult);
+    printTable(stackResult.slice(0, 10));
+
+    stackSave("single-stack.json", JSON.stringify(stackResult, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }

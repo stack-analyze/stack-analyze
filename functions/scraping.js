@@ -3,6 +3,9 @@ import { load } from "cheerio";
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
+// stack save
+import { stackSave } from "../utils.js";
+
 /**
  * @typedef {"title"|"images"|"metadata"|"headings"|"table_heading"|"table_data"|"links"|"cites"} Options
  * 
@@ -15,18 +18,27 @@ export default async function scrape(url, options) {
   try {
     const { data } = await axios.get(url);
     const $ = load(data);
+    
+    let result;
 
     const scraping = {
-      title: () => console.info($("title").text()),
+      title() {
+        result = `url title: ${$("title").text()}`;
+        console.info($("title").text());
+      },
       images() {
         const imageList = $("img").map((i, el) => ({
           imagePath: $(el).attr("src"),
           imageTitle: $(el).attr("alt")
         })).toArray();
+        
+        result = imageList.length === 0
+          ? "no found images"
+          : imageList;
 
-        imageList.length === 0
-          ? console.info("no found images")
-          : printTable(imageList);
+        typeof result === "string"
+          ? console.info(result)
+          : printTable(result);
       },
       metadata() {
         const metadataList = $("meta").map((i, el) => ({
@@ -34,6 +46,8 @@ export default async function scrape(url, options) {
           metaContent: $(el).attr("content")
         })).toArray()
           .filter((data) => data?.metaInfo);
+          
+        result = metadataList;
 
         printTable(metadataList);
       },
@@ -42,28 +56,43 @@ export default async function scrape(url, options) {
           headingTag: $(el).prop("tagName"),
           headingText: $(el).text()
         })).toArray();
+        
+        result = headingList.length === 0 
+          ? "no found heading tags"
+          : headingList;
 
-        printTable(headingList);
+        typeof result === "string"
+          ? console.info("no found heading tags")
+          :printTable(headingList);
       },
       tableHead() {
         const tableHeadList = $("th").map((i, el) => ({
-          headingRow: i,
-          text: $(el).text()
+          thCol: $(el).index(),
+          thData: $(el).text()
         })).toArray();
+        
+        result = tableHeadList.length === 0
+          ? "no found th tags"
+          : tableHeadList;
 
-        tableHeadList.length === 0
+        typeof result === "string"
           ? console.info("no found th tags")
           : printTable(tableHeadList);
       },
       tableData() {
         const tableColumnList = $("td").map((i, el) => ({
-          tableRow: i + 1,
-          tableData: $(el).text(),
+          rowID: $(el).parent().index(),
+          colID: $(el).index(),
+          colData: $(el).text(),
         })).toArray();
+        
+        result = tableColumnList.length === 0
+          ? "no found td tags"
+          : tableColumnList;
 
-        tableColumnList.length === 0
-          ? console.info("no found td tags")
-          : console.table(tableColumnList.slice(0, 10), ["tableData"]);
+        typeof result === "string"
+          ? console.info(result)
+          : console.table(result.slice(0, 10));
       },
       links() {
         const linkList = $("a").map((i, el) => ({
@@ -72,6 +101,8 @@ export default async function scrape(url, options) {
         })).toArray()
           .filter(({ url }) => url.indexOf("#") !== 0);
 
+        result = linkList
+        
         printTable(linkList);
       },
       cites() {
@@ -80,14 +111,22 @@ export default async function scrape(url, options) {
           citeLink: $(el).attr("cite"),
           citeText: $(el).text()
         })).toArray();
+        
+        result = citeList.length === 0
+          ? "no found q and/or blockquote tags"
+          : citeList;
 
-        citeList.length === 0
+        typeof result === "string"
           ? console.info("no found q and/or blockquote tags")
           : printTable(citeList);
       }
     };
 
     scraping[options]();
+    
+    typeof result === "string" 
+      ? stackSave('scraping.txt', result)
+      : stackSave('scraping.json', JSON.stringify(result, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }

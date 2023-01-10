@@ -1,3 +1,6 @@
+// save password 
+import { stackSave } from "../utils.js";
+
 /**
  * It generates a random password
  * @returns {void}
@@ -17,4 +20,5 @@ export default function genPassword() {
 
   // print new passwors
   console.info("new password:", password);
+  stackSave("password.txt", `new password: ${password}`)
 }
