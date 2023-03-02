@@ -9,7 +9,7 @@
         "name": "stack-analyze docs",
         "footerText": "stack-analyze is created and maintainer for omega5300",
         "staticFiles": {
-            "include": ["./logo-module.png"]
+            "include": ["./logo-module.webp"]
         }
     }
 },

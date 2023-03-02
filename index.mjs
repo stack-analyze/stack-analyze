@@ -442,6 +442,26 @@ const password = () => {
   return password;
 };
 
+const bundlephobia = async (pkg) {
+  try {
+    const { data } = await axios.get("https://bundlephobia.com/api/size", {
+      params: { package: pkg }
+    });
+
+    console.table({
+      module_name: data.name,
+      module_version: data.version,
+      module_repo: data.repository,
+      module_size: kilobyteConvert(data.size),
+      module_gzip: kilobyteConvert(data.gzip),
+    });
+
+    stackSave(`${pkg}-pkg-info.json`, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error(colors.red(err.message));
+  }
+};
+
 // exports
 export {
   animeSearch,
@@ -461,5 +481,6 @@ export {
   singleStack,
   twitchInfo,
   scrape,
-  password
+  password,
+  bundlephobia
 };

@@ -20,7 +20,7 @@ const menuWebOpts = [
 ];
 
 const menuInfoOpts = [
-  "github_info", "crypto_market", "bitly_info", returnMainOpts
+  "github_info", "crypto_market", "bitly_info", "bundlephobia_info", returnMainOpts
 ];
 
 const menuQueryOpts = [

@@ -5,7 +5,7 @@ import inquirer from "inquirer";
 import bitlyInfo from "../functions/bitly.js";
 import cryptoMarket from "../functions/cryptoList.js";
 import githubInfo from "../functions/gitUser.js";
-
+import bundlephobia from "../functions/bundlephobia.js";
 
 // fields
 import {
@@ -40,6 +40,17 @@ const infoTools = {
     console.clear();
     cryptoMarket();
     setTimeout(refreshCallback, 5e3);
+  },
+  bundlephobia_info(refreshCallback) {
+    console.clear();
+    inquirer.prompt([
+      promptParams("pkgName", "enter a npm package name for search info size")
+    ])
+      .then(({ pkgName }) => {
+        console.info(pkgName)
+        bundlephobia(pkgName);
+        setTimeout(refreshCallback, 2e3);
+      });
   },
 };
 

@@ -2,20 +2,26 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.2.3
+### Added
+- bundlephobia info tool
+### Changed
+- change write json to csv in hardware information
+
 ## version 1.2.2
 ### Added
 - add save file function for the tools
-### change
+### Changed
 - change the hash table to unique function in hardware information
-### fixed
+### Fixed
 - fixed to unique user to multiple users with split params
 
 ## version 1.2.1
-### fixed
+### Fixed
 - rewrite form arrow functions to named function with export default.
 - rewrite some test functions.
 - add regexp form bitly info tool
-### change
+### Changed
 - renove menu now using categories.
 - add api params.
 - comeback multibar from pagespeed tool
@@ -23,10 +29,10 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 ## version 1.2.0
 ### Added
 - new tool password generator
-### fixed
+### Fixed
 - update anime search tool
 - the files modules now using callbacks and remove no using vars
-### change
+### Changed
 - the web scraping tool decided to use the question returns to the main menu instead of going to the main menu
 
 ## version 1.1.9
@@ -34,9 +40,9 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - new module cheerio
 - new tool webscraping
 - new test
-### fixed
+### Fixed
 - rewirte axios import
-### change
+### Changed
 - hardware information change from functions to hash table
 - about now is hash table
 - now using the function printTable avoid overwritting.
@@ -46,10 +52,10 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - remove hash tables
 
 ## version 1.1.8
-### fixed
+### Fixed
 - restructure all tools as a hash table with promises except the tool hardware information and about section
 - update all modules
-### change
+### Changed
 - remove the module coingecko-api
 - remove process.env variables to writting manual token for security 
 
@@ -57,11 +63,11 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 ### Added
 - twitch info tool
 - remove one js module for module to cjs and esm
-### fixed
+### Fixed
 - change write token to process.env varaibles own (not avalible values in github and gitlab)
 - migrate cjs to esm
 - rewrite module
-### change
+### Changed
 - except some hardware tools and github using models from console-table-printer
 - now using esm now about is js file not folder about with index.js
 - rewrite all tests functions
@@ -69,9 +75,9 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 ## version 1.1.6
 ### Added
 - module stack-analyze mode
-### fixed
+### Fixed
 - rewrite code
-### changed
+### Changed
 - menu renove
 - renove jsdocs in some function or variables
 - remove nonolive recommends soon in versions desktop 7 and pwa 1.5.0
@@ -81,10 +87,10 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - add new tool: movie info
 - add new test
 - renove menu
-### fixed
+### Fixed
 - rewrite in some functions and about
 - remove some dependencies not using project
-### changed
+### Changed
 - change multibar to 2 single bars
 - change switch in all tools for hash functions tables
 - renove nonolive recommends
@@ -93,7 +99,7 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 ### Added
 - add new tool: bitly info
 - add new test
-### fixed
+### Fixed
 - rewrite some functions
 - update npm modules via manual
 
@@ -103,31 +109,31 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - add new tool: crypto market
 - add new recomends
 - add new test
-### fixed
+### Fixed
 - rewrite some functions
 - update npm modules via manual
-### changed
+### Changed
 - add new const variables for map array functions
 
 ## version 1.1.2
 ### Added
 - add new nonolive streamers Recomend
-### fixed
+### Fixed
 - rewrite multiple techstack
 - rewrite test files
-### changed
+### Changed
 - changed the for loop to foreach loop
 
 ## version 1.1.1
 ### Added
 - using console.table only in objects variables
-- using the console-table-printer in arrays in some functions and the about sectiond
+- using the console-table-printer in arrays in some functions and the about section
 - add the new module: console-table-printer
 - add the new nonolive streamers and youtube dev recommedation
-### fixed
+### Fixed
 - rewrite some funcions
 - fragment about section
-### changed
+### Changed
 - using console.table only in objects variables
 - using the console-table-printer in arrays in some functions and the about section
 
@@ -138,7 +144,7 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
     - jsdoc + the template minami the dev modules
 - add the hardware information
 - add new recomendations for about section
-### fixed
+### Fixed
 - rewrite the code the functions singlestack and multiple
 - add the name app to question function
 ### Changed
@@ -160,7 +166,7 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - add the new modules:
     - colors
     - cli-progress
-### fixed
+### Fixed
 change json print to table print version
 ### Changed
 - change console.dir about to console.table

@@ -1,4 +1,5 @@
 // modules
+import { createWriteStream } from "node:fs";
 import {
   cpu,
   mem,
@@ -11,13 +12,18 @@ import colors from "colors";
 
 import { stackSave } from "../utils.js";
 
+const hardwareinfo = createWriteStream("hardware.csv");
+
+const csvHeader = (obj) => `${Object.keys(obj).join(";")}\n`;
+const csvData = (obj, spaces) => `${Object.values(obj).join(";")}${spaces}`;
+
 /**
  * 
  * @param {number} size 
  * @param {number} [base = 1073741824] 
  * @returns {string}
  */
-const gigabyteConvert = (size, base=1073741824) => (size / base).toFixed(2);
+const gigabyteConvert = (size, base = 1073741824) => (size / base).toFixed(2);
 
 /**
  * 
@@ -26,91 +32,115 @@ const gigabyteConvert = (size, base=1073741824) => (size / base).toFixed(2);
  */
 export default async function hardware() {
   try {
-    // Map object
-    const hardware = new Map();
+    // bios info
+    const biosInfo = await bios();
     
-    // info
-    const biosInfo = await bios()
-    const cpuInfo = await cpu()
-    const ram = await mem()
-    const os = await osInfo()
-    const disks = await diskLayout()
-    const { displays, controllers } = await graphics();
-
-    // omit falsy values
-    for(const key in biosInfo) {
-      if(!biosInfo[key]) {
+    for (const key in biosInfo) {
+      if (!biosInfo[key]) {
         delete biosInfo[key];
       }
     }
+    
+    hardwareinfo.write(csvHeader(biosInfo));
+    hardwareinfo.write(csvData(biosInfo, "\n\n"));
 
-    for(const key in cpuInfo) {
-      if(!cpuInfo[key]) {
+    // cpu info
+    const cpuInfo = await cpu();
+    
+    for (const key in cpuInfo) {
+      if (!cpuInfo[key]) {
         delete cpuInfo[key];
       }
     }
-    
-    for(const key in cpuInfo.cache) {
-      if(!cpuInfo.cache[key]) {
+
+    for (const key in cpuInfo.cache) {
+      if (!cpuInfo.cache[key]) {
         delete cpuInfo.cache[key];
       }
     }
+    
+    cpuInfo.cache = Object.entries(cpuInfo.cache)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(" ");
+    
+    hardwareinfo.write(csvHeader(cpuInfo));
+    hardwareinfo.write(csvData(cpuInfo, "\n\n"));
 
-    for(const key in os) {
-      if(!os[key]) {
+    // os info
+    const os = await osInfo();
+    
+    for (const key in os) {
+      if (!os[key]) {
         delete os[key];
       }
     }
+    
+    hardwareinfo.write(csvHeader(os));
+    hardwareinfo.write(csvData(os, "\n\n"));
+    
 
-    for(const key in ram) {
+    // ram memory info
+    const ram = await mem();
+    
+    for (const key in ram) {
       ram[key] = `${gigabyteConvert(ram[key])} GB`;
     }
     
+    hardwareinfo.write(csvHeader(ram));
+    hardwareinfo.write(csvData(ram));
+
+    // disks
+    const disks = await diskLayout();
+    
     disks.forEach(disk => {
-      for(const key in disk) {
-        if(!disk[key]) {
+      for (const key in disk) {
+        if (!disk[key]) {
           delete disk[key];
         }
-        
-        if(typeof disk[key] === "number") {
+
+        if (typeof disk[key] === "number") {
           disk[key] = `${gigabyteConvert(ram[key])} GB`;
         }
       }
+      
+      hardwareinfo.write(csvHeader(disk));
+      hardwareinfo.write(csvData(disk, "\n"));
     });
+    hardwareinfo.write("\n");
+
+    /* displays & controllers */
+    const { displays, controllers } = await graphics();
     
+    // controllers
     controllers.forEach(controller => {
-      for(const key in controller) {
-        if(!controller[key]) {
+      for (const key in controller) {
+        if (!controller[key]) {
           delete controller[key];
         }
-        
-        if(typeof controller[key] === "number") {
+
+        if (typeof controller[key] === "number") {
           controller[key] = controller[key] < 1024
             ? `${controller[key]} MB`
             : `${gigabyteConvert(controller[key])} GB`;
         }
       }
+      
+      hardwareinfo.write(csvHeader(controller));
+      hardwareinfo.write(csvData(controller, "\n"));
     });
     
+    hardwareinfo.write("\n");
+
     displays.forEach(display => {
-      for(const key in display) {
-        if(!display[key]) {
+      for (const key in display) {
+        if (!display[key]) {
           delete display[key];
         }
       }
+      
+      hardwareinfo.write(csvHeader(display));
+      hardwareinfo.write(csvData(display, "\n"));
     });
-    
-    // add values
-    hardware.set("bios", biosInfo);
-    hardware.set("cpu", cpuInfo);
-    hardware.set("ram", ram);
-    hardware.set("os", os);
-    hardware.set("disks", disks);
-    hardware.set("graphics", controllers);
-    hardware.set("displays", displays);
-
-    // save file
-    stackSave("hardware.json", JSON.stringify(Object.fromEntries(hardware), null, 2));
     
     // finish
     console.info("finish the hardware information file");

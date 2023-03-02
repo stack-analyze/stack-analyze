@@ -5,19 +5,15 @@ const pagespeed = require("./pageSpeed");
 const githubInfo = require("./githubinfo");
 const animeSearch = require("./githubinfo");
 const {
-  cpuInfo,
-  ramMemInfo,
-  osDetail,
-  diskInfo,
-  controllerInfo,
-  displayInfo,
-  biosInfo
+  cpuInfo, ramMemInfo, osDetail, diskInfo,
+  controllerInfo, displayInfo, biosInfo
 } = require("./hardware");
 const cryptoMarket = require("./crypto");
 const bitlyInfo = require("./bitly");
 const movieDB = require("./moviesInfo");
 const twitchInfo = require("./twitch");
 const scrape = require("./scraping");
+const bundlephobia = require("./bundlephobia");
 
 test('single stack', async () => await single("http://example.com"), 34000);
 
@@ -54,6 +50,7 @@ test('movies info', async () => await movieDB('AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAAC
 // fake twitch token
 test('twitch info', async () => await twitchInfo('example', 'AAAAAAAAAAAAAAAAAAAAAFnz2wAAAAAACOxyz'))
 
+// web scraping
 test('title', async () => await scrape('https://example.com', 'title'));
 
 test('images', async () => await scrape('https://example.com', 'images'));
@@ -69,3 +66,6 @@ test('table data', async () => await scrape('https://example.com', 'table_data')
 test('links', async () => await scrape('https://example.com', 'links'));
 
 test('cites', async () => await scrape('https://example.com', 'cites'));
+
+// bundlephobia
+test('npm pkg info', async () => await bundlephobia('react'));

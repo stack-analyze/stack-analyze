@@ -1,5 +1,5 @@
 // modules
-import { default as axios } from "axios";
+import axios from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
 
@@ -31,7 +31,7 @@ export default async function githubInfo(user) {
 
     console.table(info);
     
-    stackSave(`${user}-info.json`, JSON.stringify(info, null, 2))
+    stackSave(`${user}-info.json`, JSON.stringify(info, null, 2));
   } catch(err) {
     console.error(colors.red(err.message));
   }

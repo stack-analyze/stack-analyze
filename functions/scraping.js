@@ -1,4 +1,4 @@
-import { default as axios } from "axios";
+import axios from "axios";
 import { load } from "cheerio";
 import colors from "colors";
 import { printTable } from "console-table-printer";

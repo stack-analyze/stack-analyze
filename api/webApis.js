@@ -1,5 +1,5 @@
 import Wappalyzer from "wappalyzer";
-import { default as axios } from "axios";
+import axios from "axios";
 
 const wappalyzer = new Wappalyzer();
 

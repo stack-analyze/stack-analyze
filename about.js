@@ -80,7 +80,7 @@ const aboutTool = {
     /** @type {twitch[]} */
     const twitchUsers = [
       {
-        user: "dannyaegyo",
+        user: "DannyAgii",
       },
       {
         user: "Lunanny",

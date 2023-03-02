@@ -1,5 +1,5 @@
 // modules
-import { default as axios } from "axios";
+import axios from "axios";
 import { format } from "timeago.js";
 import { printTable } from "console-table-printer";
 import colors from "colors";

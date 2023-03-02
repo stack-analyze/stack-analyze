@@ -1,5 +1,5 @@
 // modules
-import { default as axios } from "axios";
+import axios from "axios";
 import colors from "colors";
 import { printTable } from "console-table-printer";
 
