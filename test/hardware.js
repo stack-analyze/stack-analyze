@@ -1,11 +1,11 @@
-const { 
+import { 
   cpu, 
   mem, 
   osInfo, 
   diskLayout, 
   graphics, 
   bios 
-} = require("systeminformation");
+} from "systeminformation";
 
 const hardwareTools = {
   async cpuInfo() {
@@ -160,4 +160,4 @@ const hardwareTools = {
 }
 
 // exports modules
-module.exports = hardwareTools;
+export default hardwareTools;

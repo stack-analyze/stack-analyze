@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+import axios from "axios";
 
 const twitchInfo = async (twitchUser, apiToken) => {
   let result;
@@ -28,4 +28,4 @@ const twitchInfo = async (twitchUser, apiToken) => {
   }
 };
 
-module.exports = twitchInfo;
+export default twitchInfo;

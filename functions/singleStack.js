@@ -19,7 +19,7 @@ export default async function singleStack(url) {
   try {
     await wappalyzer.init();
 
-    const { technologies } = await wappalyzer.open(url).analyze();
+    const { technologies } = await (await wappalyzer.open(url)).analyze();
 
     const stackResult = technologies.map(({
       name,

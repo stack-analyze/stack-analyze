@@ -1,5 +1,5 @@
 // modules
-const axios = require("axios").default;
+import axios from "axios";
 
 const bitlyInfo = async (link, token) => {
   let run;
@@ -27,4 +27,4 @@ const bitlyInfo = async (link, token) => {
   }
 };
 
-module.exports = bitlyInfo;
+export default bitlyInfo;

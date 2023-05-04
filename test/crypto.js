@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+import axios from "axios";
 
 const cryptoMarket = async () => {
   let run;
@@ -16,4 +16,4 @@ const cryptoMarket = async () => {
   }
 };
 
-module.exports = cryptoMarket;
+export default cryptoMarket;

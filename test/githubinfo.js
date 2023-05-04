@@ -1,6 +1,6 @@
-const axios = require("axios").default;
+import axios from "axios";
 
-async function githubInfo(user) {
+export default async function githubInfo(user) {
     let run;
     try {
         const res = await axios.get(`https://api.github.com/users/${user}`);
@@ -11,6 +11,3 @@ async function githubInfo(user) {
     }
     return run;
 }
-
-module.exports = githubInfo;
-

@@ -1,10 +1,11 @@
-const [axios, cheerio] = [require("axios").default, require("cheerio")];
+import axios from "axios";
+import { load } from "cheerio";
 
-async function scrape(url, option) {
+export default async function scrape(url, option) {
     let result;
     try {
         const { data } = await axios.get(url);
-        const $ = cheerio.load(data);
+        const $ = load(data);
 
         const scraping = {
             title() { 
@@ -64,5 +65,3 @@ async function scrape(url, option) {
     
     return result;
 }
-
-module.exports = scrape;

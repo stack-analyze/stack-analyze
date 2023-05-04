@@ -1,4 +1,4 @@
-const Wappalyzer = require("wappalyzer");
+import Wappalyzer from "wappalyzer";
 
 const multiple = async (urls) => {
   let testReturn;
@@ -9,7 +9,7 @@ const multiple = async (urls) => {
 
     testReturn = await Promise.all(
       urls.map(async (url) => {
-        const { technologies } = await wappalyzer.open(url).analyze();
+        const { technologies } = await (await wappalyzer.open(url)).analyze();
 
         return {
           url,
@@ -24,4 +24,4 @@ const multiple = async (urls) => {
   return testReturn;
 }
 
-module.exports = multiple;
+export default multiple;

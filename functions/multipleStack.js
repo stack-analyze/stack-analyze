@@ -24,7 +24,7 @@ export default async function multipleStack(urlList) {
     for await (const url of urlList) {
       console.info(url.green);
       
-      const { technologies } = await wappalyzer.open(url).analyze();
+      const { technologies } = await (await wappalyzer.open(url)).analyze();
 
       const stackResult = technologies.map(({ 
         name,

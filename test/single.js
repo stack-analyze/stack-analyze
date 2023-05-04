@@ -1,14 +1,14 @@
 // module
-const Wappalyzer = require("wappalyzer");
+import Wappalyzer from "wappalyzer";
 
-async function single (url) {
+export default async function single (url) {
   let testReturn;
   const wappalyzer = new Wappalyzer;
 
   try {
     await wappalyzer.init();
 
-    const { technologies } = await wappalyzer.open(url).analyze()
+    const { technologies } = await (await wappalyzer.open(url)).analyze()
 
     testReturn = technologies;
   } catch (err) {
@@ -18,5 +18,3 @@ async function single (url) {
   await wappalyzer.destroy();
   return testReturn;
 }
-
-module.exports = single;

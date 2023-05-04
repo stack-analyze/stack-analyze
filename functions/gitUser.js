@@ -16,7 +16,7 @@ import { stackSave } from "../utils.js";
  */
 export default async function githubInfo(user) {
   try {
-    const { data } = await axios.get(`https://api.github.com/users/${user}`);
+    const data = await (await fetch(`https://api.github.com/users/${user}`)).json();
 
     const info = {
       username: data.login,

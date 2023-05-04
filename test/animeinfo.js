@@ -1,6 +1,6 @@
-const axios = require("axios").default;
+import axios from "axios";
 
-async function animeSearch(q) {
+export default async function animeSearch(q) {
     let run;
     try {
         const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
@@ -13,5 +13,3 @@ async function animeSearch(q) {
     }
     return run;
 }
-
-module.exports = animeSearch;

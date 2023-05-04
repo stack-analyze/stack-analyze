@@ -1,44 +1,42 @@
-// test modules
-const single = require("./single");
-const multiple = require("./multiple");
-const pagespeed = require("./pageSpeed");
-const githubInfo = require("./githubinfo");
-const animeSearch = require("./githubinfo");
-const {
-  cpuInfo, ramMemInfo, osDetail, diskInfo,
-  controllerInfo, displayInfo, biosInfo
-} = require("./hardware");
-const cryptoMarket = require("./crypto");
-const bitlyInfo = require("./bitly");
-const movieDB = require("./moviesInfo");
-const twitchInfo = require("./twitch");
-const scrape = require("./scraping");
-const bundlephobia = require("./bundlephobia");
+// test module
+import test from "node:test";
 
-test('single stack', async () => await single("http://example.com"), 34000);
+// function test modules
+import single from "./single.js";
+import multiple from "./multiple.js";
+import pagespeed from "./pageSpeed.js";
+import githubInfo from "./githubinfo.js";
+import animeSearch from "./githubinfo.js";
+import hardwareTools from "./hardware.js";
+import cryptoMarket from "./crypto.js";
+import bitlyInfo from "./bitly.js";
+import movieDB from "./moviesInfo.js";
+import twitchInfo from "./twitch.js";
+import scrape from "./scraping.js";
+import bundlephobia from "./bundlephobia.js";
 
-test('multiple stack', async () => await multiple(["http://example.com", "https://www.wappalyzer.com/"]), 40000);
-
-test('desktop speed', async () => await pagespeed("http://example.com"), 30000);
-
+// github info
 test('github info', async () => await githubInfo("faztweb"));
 
+// anime search
 test('anime search', async () => await animeSearch("naruto"));
 
-test('cpuInfo', async () => await cpuInfo());
+// hardware
+test('cpuInfo', async () => await hardwareTools.cpuInfo());
 
-test('ramMemInfo', async () => await ramMemInfo());
+test('ramMemInfo', async () => await hardwareTools.ramMemInfo());
 
-test('osDetail', async () => await osDetail());
+test('osDetail', async () => await hardwareTools.osDetail());
 
-test('diskInfo', async () => await diskInfo());
+test('diskInfo', async () => await hardwareTools.diskInfo());
 
-test('displayInfo', async () => await displayInfo());
+test('displayInfo', async () => await hardwareTools.displayInfo());
 
-test('controllerInfo', async () => await controllerInfo());
+test('controllerInfo', async () => await hardwareTools.controllerInfo());
 
-test('biosInfo', async () => await biosInfo());
+test('biosInfo', async () => await hardwareTools.biosInfo());
 
+// crypto market
 test('crypto market', async () => await cryptoMarket());
 
 // using fake token
@@ -69,3 +67,12 @@ test('cites', async () => await scrape('https://example.com', 'cites'));
 
 // bundlephobia
 test('npm pkg info', async () => await bundlephobia('react'));
+
+// single stack
+test('single stack', async () => await single("http://example.com"));
+
+// multiple stack
+test('multiple stack', async () => await multiple(["http://example.com", "https://www.wappalyzer.com/"]));
+
+// pagespeed
+test('desktop speed', async () => await pagespeed("http://example.com"));

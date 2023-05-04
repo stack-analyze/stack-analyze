@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios"
 
 const bundlephobia = async (pkg) => {
   let run;
@@ -15,4 +15,4 @@ const bundlephobia = async (pkg) => {
   return run;
 };
 
-module.exports = bundlephobia;
+export default bundlephobia;

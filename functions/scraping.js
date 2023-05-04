@@ -1,4 +1,3 @@
-import axios from "axios";
 import { load } from "cheerio";
 import colors from "colors";
 import { printTable } from "console-table-printer";
@@ -16,7 +15,7 @@ import { stackSave } from "../utils.js";
  */
 export default async function scrape(url, options) {
   try {
-    const { data } = await axios.get(url);
+    const data = await (await fetch(url)).text();
     const $ = load(data);
     
     let result;

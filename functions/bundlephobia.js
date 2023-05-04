@@ -10,7 +10,7 @@ import { stackSave } from "../utils.js";
 const kilobyteConvert = (size) => (size < 1024 ? `${size} B` : `${size / 1024} KB`);
 
 /**
- * @description 
+ * @description get info of npm package
  * @param {string} pkg
  * @async
  * @returns { Promise<void> } - return result bundlephobia info

@@ -1,5 +1,5 @@
 // axios module
-const axios = require("axios").default;
+import axios from "axios";
 
 const movieDB = async (api_key, query) => {
   let run;
@@ -31,4 +31,4 @@ const movieDB = async (api_key, query) => {
 };
 
 // export
-module.exports = movieDB;
+export default movieDB;

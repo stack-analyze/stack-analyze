@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+import axios from "axios";
 
 const apiQuery = async (url, strategy) => await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
   params: {
@@ -24,4 +24,4 @@ const pagespeed = async (url) => {
   return testReturn;
 };
 
-module.exports = pagespeed;
+export default pagespeed;

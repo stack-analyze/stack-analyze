@@ -35,29 +35,11 @@ export default async function hardware() {
     // bios info
     const biosInfo = await bios();
     
-    for (const key in biosInfo) {
-      if (!biosInfo[key]) {
-        delete biosInfo[key];
-      }
-    }
-    
     hardwareinfo.write(csvHeader(biosInfo));
     hardwareinfo.write(csvData(biosInfo, "\n\n"));
 
     // cpu info
     const cpuInfo = await cpu();
-    
-    for (const key in cpuInfo) {
-      if (!cpuInfo[key]) {
-        delete cpuInfo[key];
-      }
-    }
-
-    for (const key in cpuInfo.cache) {
-      if (!cpuInfo.cache[key]) {
-        delete cpuInfo.cache[key];
-      }
-    }
     
     cpuInfo.cache = Object.entries(cpuInfo.cache)
       .map(([key, value]) => `${key}: ${value}`)
@@ -68,12 +50,6 @@ export default async function hardware() {
 
     // os info
     const os = await osInfo();
-    
-    for (const key in os) {
-      if (!os[key]) {
-        delete os[key];
-      }
-    }
     
     hardwareinfo.write(csvHeader(os));
     hardwareinfo.write(csvData(os, "\n\n"));
@@ -87,26 +63,21 @@ export default async function hardware() {
     }
     
     hardwareinfo.write(csvHeader(ram));
-    hardwareinfo.write(csvData(ram));
+    hardwareinfo.write(csvData(ram, "\n\n"));
 
     // disks
     const disks = await diskLayout();
     
     disks.forEach(disk => {
       for (const key in disk) {
-        if (!disk[key]) {
-          delete disk[key];
-        }
-
         if (typeof disk[key] === "number") {
-          disk[key] = `${gigabyteConvert(ram[key])} GB`;
+          disk[key] = `${gigabyteConvert(disk[key])} GB`;
         }
       }
       
       hardwareinfo.write(csvHeader(disk));
-      hardwareinfo.write(csvData(disk, "\n"));
+      hardwareinfo.write(csvData(disk, "\n\n"));
     });
-    hardwareinfo.write("\n");
 
     /* displays & controllers */
     const { displays, controllers } = await graphics();
@@ -114,10 +85,6 @@ export default async function hardware() {
     // controllers
     controllers.forEach(controller => {
       for (const key in controller) {
-        if (!controller[key]) {
-          delete controller[key];
-        }
-
         if (typeof controller[key] === "number") {
           controller[key] = controller[key] < 1024
             ? `${controller[key]} MB`
@@ -132,12 +99,6 @@ export default async function hardware() {
     hardwareinfo.write("\n");
 
     displays.forEach(display => {
-      for (const key in display) {
-        if (!display[key]) {
-          delete display[key];
-        }
-      }
-      
       hardwareinfo.write(csvHeader(display));
       hardwareinfo.write(csvData(display, "\n"));
     });
