@@ -2,6 +2,17 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
+## version 1.2.4
+### Changed
+- remove jest module by node:test
+- web scraping & github info using native fetch api & not axios
+### fixed
+- fixed errors in:
+  - single stack
+  - multiple
+  - hardware information
+- single & multiple stack using sub await mode
+
 ## version 1.2.3
 ### Added
 - bundlephobia info tool
