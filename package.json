@@ -1,6 +1,6 @@
 {
   "name": "stack-analyze",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "type": "module",
   "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api, hardware and crypto market",
   "main": "index.mjs",

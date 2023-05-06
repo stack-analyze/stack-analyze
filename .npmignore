@@ -12,3 +12,4 @@
 .eslintignore
 jsconfig.json
 jsdoc.json
+deploy.js
