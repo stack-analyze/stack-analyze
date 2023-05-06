@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: functions/singleStack.js</title>
+    <title>JSDoc: Source: functions/bundlephobia.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: functions/singleStack.js</h1>
+    <h1 class="page-title">Source: functions/bundlephobia.js</h1>
 
     
 
@@ -26,53 +26,41 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// module
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
 import colors from "colors";
-import { printTable } from "console-table-printer";
-
-// utils
-import { listFormat, stackSave } from "../utils.js";
-
-// wappalyzer
-import { wappalyzer } from "../api/webApis.js";
+import { stackSave } from "../utils.js";
 
 /**
- * 
- * @description call single website tech stack analyze
- * @async
- * @param { string } url - analyze single website stack
- * @returns { Promise&lt;void> } - return async results single web
+ * @description kilobyte convert for bundlephobia pkg info
+ * @param {number} size - pkg sixe
+ * @returns {string} - result converter
  */
-export default async function singleStack(url) {
+const kilobyteConvert = (size) => (size &lt; 1024 ? `${size} B` : `${size / 1024} KB`);
+
+/**
+ * @description get info of npm package
+ * @param {string} pkg
+ * @async
+ * @returns { Promise&lt;void> } - return result bundlephobia info
+ */
+export default async function bundlephobia (pkg) {
   try {
-    await wappalyzer.init();
-
-    const { technologies } = await (await wappalyzer.open(url)).analyze();
-
-    const stackResult = technologies.map(({
-      name,
-      website,
-      categories
-    }) => {
-      const stackCategories = categories.map(({ name }) => name);
-
-      return {
-        techName: name,
-        techWebsite: website,
-        techCategories: listFormat.format(stackCategories)
-      };
+    const { data } = await axios.get("https://bundlephobia.com/api/size", {
+      params: { package: pkg }
     });
 
-    console.info(url.green);
+    console.table({
+      module_name: data.name,
+      module_version: data.version,
+      module_repo: data.repository,
+      module_size: kilobyteConvert(data.size),
+      module_gzip: kilobyteConvert(data.gzip),
+    });
 
-    printTable(stackResult.slice(0, 10));
-
-    stackSave("single-stack.json", JSON.stringify(stackResult, null, 2));
+    stackSave(`${pkg}-pkg-info.json`, JSON.stringify(data, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }
-
-  await wappalyzer.destroy();
 }
 </code></pre>
         </article>
