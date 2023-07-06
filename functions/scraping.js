@@ -100,7 +100,7 @@ export default async function scrape(url, options) {
         })).toArray()
           .filter(({ url }) => url.indexOf("#") !== 0);
 
-        result = linkList
+        result = linkList;
         
         printTable(linkList);
       },
@@ -124,8 +124,8 @@ export default async function scrape(url, options) {
     scraping[options]();
     
     typeof result === "string" 
-      ? stackSave('scraping.txt', result)
-      : stackSave('scraping.json', JSON.stringify(result, null, 2));
+      ? stackSave("scraping.txt", result)
+      : stackSave("scraping.json", JSON.stringify(result, null, 2));
   } catch (err) {
     console.error(colors.red(err.message));
   }

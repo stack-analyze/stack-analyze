@@ -46,6 +46,7 @@ const aboutTool = {
 
     console.clear();
     console.table(aboutApp);
+    
     setTimeout(refreshCallback, timeout);
   },
   lineup(refreshCallback) {
@@ -85,6 +86,10 @@ const aboutTool = {
       {
         user: "Lunanny",
         details: "art director with ADHD."
+      },
+      {
+        user: "Japon_HR",
+        details: "cosplayer, gamer, dance & halo machinima creator"
       }
     ];
 

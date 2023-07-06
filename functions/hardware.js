@@ -10,10 +10,6 @@ import {
 } from "systeminformation";
 import colors from "colors";
 
-import { stackSave } from "../utils.js";
-
-const hardwareinfo = createWriteStream("hardware.csv");
-
 const csvHeader = (obj) => `${Object.keys(obj).join(";")}\n`;
 const csvData = (obj, spaces) => `${Object.values(obj).join(";")}${spaces}`;
 
@@ -32,6 +28,8 @@ const gigabyteConvert = (size, base = 1073741824) => (size / base).toFixed(2);
  */
 export default async function hardware() {
   try {
+    const hardwareinfo = createWriteStream("hardware.csv");
+    
     // bios info
     const biosInfo = await bios();
     

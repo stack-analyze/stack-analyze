@@ -20,5 +20,5 @@ export default function genPassword() {
 
   // print new passwors
   console.info("new password:", password);
-  stackSave("password.txt", `new password: ${password}`)
+  stackSave("password.txt", `new password: ${password}`);
 }

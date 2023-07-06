@@ -47,7 +47,7 @@ const infoTools = {
       promptParams("pkgName", "enter a npm package name for search info size")
     ])
       .then(({ pkgName }) => {
-        console.info(pkgName)
+        console.info(pkgName);
         bundlephobia(pkgName);
         setTimeout(refreshCallback, 2e3);
       });

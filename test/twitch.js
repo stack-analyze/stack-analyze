@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const twitchInfo = async (twitchUser, apiToken) => {
+export default async function (twitchUser, apiToken) {
   let result;
 
   try {
@@ -26,6 +26,4 @@ const twitchInfo = async (twitchUser, apiToken) => {
   } catch (err) {
     result = err;
   }
-};
-
-export default twitchInfo;
+}

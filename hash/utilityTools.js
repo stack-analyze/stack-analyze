@@ -2,8 +2,6 @@
 import genPassword from "../functions/password.js";
 import hardware from "../functions/hardware.js";
 
-// opts
-import { menuHardwareOpts } from "../utils.js";
 
 const utilityTools = {
   password(refreshCallback) {

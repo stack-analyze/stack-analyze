@@ -4,6 +4,7 @@ import inquirer from "inquirer";
 // functions
 import animeSearch from "../functions/animeInfo.js";
 import movieDB from "../functions/moviesInfo.js";
+import pokemonInfo from "../functions/pokemon.js";
 import twitchInfo from "../functions/twitch.js";
 
 // fields
@@ -14,7 +15,6 @@ import {
 
 /** query tools */
 const queryTools = {
-
   anime_Search(refreshCallback) {
     console.clear();
     inquirer.prompt([promptParams("query", "")])
@@ -34,11 +34,53 @@ const queryTools = {
         setTimeout(refreshCallback, 2e3);
       });
   },
+  pokemon_info(refreshCallback) {
+    console.clear();
+    inquirer.prompt([
+      {
+        type: "list",
+        name: "pokeOpt",
+        message: "enter a opt for start search",
+        choices: ["ID", "Name"],
+      },
+      {
+        type: "number",
+        name: "pokeId",
+        message: "enter a poekmon ID:",
+        validate: value => value > 0 || "this field not allowed empty values, NaN or number less or equal to 0",
+        filter(value) {
+          if(!value) return "";
+      
+          const int = parseInt(value);
+      
+          if(isNaN(int)) return "";
+      
+          return int <= 0 ? "" : int;
+        },
+        when: ({pokeOpt}) => pokeOpt === "ID",
+      },
+      {
+        type: "input",
+        name: "pokeName",
+        message: "enter a poekmon name:",
+        validate(input) {
+          const excludeNumbers = /[^0-9]/;    
+      
+          return excludeNumbers.test(input) || "the pokemon name is required";
+        },
+        when: ({pokeOpt}) => pokeOpt === "Name",
+      },
+    ])
+      .then(anw => {
+        pokemonInfo(anw?.pokeName || anw?.pokeId);
+        setTimeout(refreshCallback, 2e3);
+      });
+  },
   twitch_info(refreshCallback) {
     console.clear();
     inquirer.prompt([
-      promptParams("twitchSeparator", "enter a separator for split"),
-      promptParams("twitchUsers", "enter a twitch user"),
+      promptParams("twitchSeparator", "enter a separator for split example ',':"),
+      promptParams("twitchUsers", "enter a twitch users example 'a,b,c'"),
       promptKey("twitchClient", "enter a twitch client ID"),
       promptKey("twitchToken", "enter a twitch token"),
     ])

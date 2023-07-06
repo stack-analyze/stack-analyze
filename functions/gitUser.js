@@ -1,5 +1,4 @@
 // modules
-import axios from "axios";
 import { format } from "timeago.js";
 import colors from "colors";
 

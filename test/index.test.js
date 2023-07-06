@@ -2,18 +2,20 @@
 import test from "node:test";
 
 // function test modules
-import single from "./single.js";
+import animeSearch from "./animeinfo.js";
+import bitlyInfo from "./bitly.js";
+import bundlephobia from "./bundlephobia.js";
+import cryptoMarket from "./crypto.js";
+import githubInfo from "./githubinfo.js";
+import hardwareTools from "./hardware.js";
+import movieDB from "./moviesInfo.js";
 import multiple from "./multiple.js";
 import pagespeed from "./pageSpeed.js";
-import githubInfo from "./githubinfo.js";
-import animeSearch from "./githubinfo.js";
-import hardwareTools from "./hardware.js";
-import cryptoMarket from "./crypto.js";
-import bitlyInfo from "./bitly.js";
-import movieDB from "./moviesInfo.js";
-import twitchInfo from "./twitch.js";
+import pokemonInfo from "./pokemon.js";
+import single from "./single.js";
 import scrape from "./scraping.js";
-import bundlephobia from "./bundlephobia.js";
+import twitchInfo from "./twitch.js";
+
 
 // github info
 test('github info', async () => await githubInfo("faztweb"));
@@ -76,3 +78,8 @@ test('multiple stack', async () => await multiple(["http://example.com", "https:
 
 // pagespeed
 test('desktop speed', async () => await pagespeed("http://example.com"));
+
+
+/* pokemon info */
+test('pokemon-id', async () => pokemonInfo(55)) // based in pokeID
+test('pokemon-name', async () => pokemonInfo('pikachu')) // based in pokename
