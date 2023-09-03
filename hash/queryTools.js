@@ -73,7 +73,7 @@ const queryTools = {
     ])
       .then(anw => {
         pokemonInfo(anw?.pokeName || anw?.pokeId);
-        setTimeout(refreshCallback, 2e3);
+        setTimeout(refreshCallback, 6e3);
       });
   },
   twitch_info(refreshCallback) {

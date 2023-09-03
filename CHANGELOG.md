@@ -4,6 +4,11 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 3 (ver. 1.2.0 -)
 
+### version 1.2.6
+#### Changed
+- redesign poke info tool
+- remove module info in readme
+
 ### version 1.2.5
 #### Added
 - pokemon info tool.

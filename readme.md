@@ -16,36 +16,17 @@ cli tech stack analyze with **node.js** using the wappalyzer and google pagespee
 
 ## cli module
 ``` sh
-# old npm mode
+# npm mode a
 npm i -g stack-analyze
 
-# new npm mode
-npm i --location=global
+# npm mode b
+npm i --location=global stack-analyze
 
 # if using global install
 stack-analyze
 
 # portable
 npx stack-analyze
-```
-
-## module
-
-``` sh
-npm i stack-analyze
-```
-
-``` js
-// cjs
-const stackAnalyze = require('stack-analyze') // full
-const { password } = require('stack-analyze') // destructuring
-
-// esm
-import stackAnalyze from 'stack-analyze' // full
-import { password } from 'stack-analyze' // destructuring
-
-// examples
-password()
 ```
 
 >note: if global install fail using npx
