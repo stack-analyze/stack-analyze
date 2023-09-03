@@ -6,7 +6,6 @@ import CliProgress from "cli-progress";
 // utils
 import { listFormat, stackSave } from "../utils.js";
 
-/** @type {{ [key: string]: number}} */
 const pokeStats = {
   hp: 255,
   attack: 194,
