@@ -13,31 +13,31 @@ const timeout = 1e3;
 /**
  * types for about tools
  * 
- * @typedef {Object} info
- * @property {string} info.mainDeveloper
- * @property {string} info.version
- * @property {string} info.license
+ * @typedef {Object} Info
+ * @property {string} Info.mainDeveloper
+ * @property {string} Info.version
+ * @property {string} Info.license
  * 
- * @typedef {Object} developerList
- * @property {string} developerList.name
- * @property {string} developerList.roles
+ * @typedef {Object} DeveloperList
+ * @property {string} DeveloperList.name
+ * @property {string} DeveloperList.roles
  * 
- * @typedef {Object} youtube
- * @property {string} youtubeChannel
- * @property {string} recomendation
+ * @typedef {Object} Youtube
+ * @property {string} Youtube.youtubeChannel
+ * @property {string} Youtube.recomendation
  * 
- * @typedef {Object} twitch
- * @property {string} twitch.user
- * @property {string} [twitch.details]
+ * @typedef {Object} Twitch
+ * @property {string} Twitch.user
+ * @property {string} [Twitch.details]
  * 
- * @typedef {Object} project
- * @property {string} project.name
- * @property {string} project.desc
+ * @typedef {Object} Project
+ * @property {string} Project.name
+ * @property {string} Project.desc
  */
 
 const aboutTool = {
   mainInfo(refreshCallback) {
-    /** @type {info} */
+    /** @type {Info} */
     const aboutApp = {
       mainDeveloper: "omega5300",
       license,
@@ -50,7 +50,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   lineup(refreshCallback) {
-    /** @type {developerList[]} */
+    /** @type {DeveloperList[]} */
     const developers = [
       {
         name: "omega5300",
@@ -63,7 +63,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   youtubeRecomendation(refreshCallback) {
-    /** @type {youtube[]} */
+    /** @type {Youtube[]} */
     const youtubeDev = [
       { youtubeChannel: "fazt", recomendation: "recommend" },
       { youtubeChannel: "doriandesings", recomendation: "recommend" },
@@ -78,7 +78,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   twitchRecomendation(refreshCallback) { 
-    /** @type {twitch[]} */
+    /** @type {Twitch[]} */
     const twitchUsers = [
       {
         user: "DannyAgii",
@@ -98,7 +98,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   projectsRecomendation(refreshCallback) {
-    /** @type {project[]} */
+    /** @type {Project[]} */
     const projects = [
       {
         name: "Doofy's Projects",

@@ -12,7 +12,7 @@ const currency = new Intl.NumberFormat("en-us", {
 const returnMainOpts = "return main menu";
 
 const menuOpts = [
-  "web", "info", "query", "utility", "about", "exit"
+  "web", "info", "query", "utility", "wallpapers", "about", "exit"
 ];
 
 const menuWebOpts = [
@@ -30,6 +30,8 @@ const menuQueryOpts = [
 const menuUtilityOpts = [
   "hardware", "password", returnMainOpts
 ];
+
+const menuWallpaperOpts = ["solMoon", returnMainOpts];
 
 const menuHardwareOpts = [
   "cpuInfo", "ramMemInfo", "osDetail", "diskInfo",
@@ -81,6 +83,7 @@ export {
   menuQueryOpts,
   menuUtilityOpts,
   menuHardwareOpts,
+  menuWallpaperOpts,	
   menuAboutOpts,
   scrapingOpts,
   stackSave,

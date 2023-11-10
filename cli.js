@@ -8,6 +8,7 @@ import webTools from "./hash/webTools.js";
 import queryTools from "./hash/queryTools.js";
 import infoTools from "./hash/infoTools.js";
 import utilityTools from "./hash/utilityTools.js";
+import wallpaperSelect from "./hash/wallpaperSelect.js";
 import aboutTool from "./about.js";
 
 import {
@@ -16,6 +17,7 @@ import {
   menuWebOpts,
   menuAboutOpts,
   menuInfoOpts,
+  menuWallpaperOpts,
   menuUtilityOpts
 } from "./utils.js";
 
@@ -85,6 +87,24 @@ async function queryOpts() {
  * @async
  * @returns {Promise<void>}
  */
+async function wallpapersOpts() {
+	const { wallpaper } = await inquirer.prompt({
+		type: "list",
+		pageSize,
+		name: "wallpaper",
+		message: "enter a wallpaper selector",
+		choices: menuWallpaperOpts
+	});
+	
+	wallpaper === "return main menu"
+	  ? mainMenu()
+	  : wallpaperSelect[wallpaper](returnMain, wallpapersOpts);
+}
+
+/**
+ * @async
+ * @returns {Promise<void>}
+ */
 async function utilityOpts() {
   const { utility } = await inquirer.prompt({
     type: "list",
@@ -148,6 +168,10 @@ async function mainMenu() {
     utility() {
       console.clear();
       utilityOpts();
+    },
+    wallpapers() {
+    	console.clear();
+    	wallpapersOpts();
     },
     about() {
       console.clear();

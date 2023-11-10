@@ -4,6 +4,12 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 3 (ver. 1.2.0 -)
 
+### version 1.2.7
+#### Added
+- wallpaper tool download (sol, moon)
+#### changed
+- default case in range color 91 to 100
+
 ### version 1.2.6
 #### Changed
 - redesign poke info tool

@@ -20,14 +20,12 @@ const barColor = score => {
   const bar = "{bar}";
 
   switch (true) {
-    case score === 1 || score <= 49:
+    case score === 0 || score <= 49:
       return bar.red;
     case score === 50 || score <= 89:
       return bar.yellow;
-    case score >= 90 || score === maxScore:
-      return bar.green;
     default:
-      return bar.magenta;
+      return bar.green;
   }
 };
 
