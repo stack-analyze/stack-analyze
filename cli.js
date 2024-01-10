@@ -9,7 +9,7 @@ import queryTools from "./hash/queryTools.js";
 import infoTools from "./hash/infoTools.js";
 import utilityTools from "./hash/utilityTools.js";
 import wallpaperSelect from "./hash/wallpaperSelect.js";
-import aboutTool from "./about.js";
+import aboutTool from "./about.cjs";
 
 import {
   menuOpts,
@@ -85,20 +85,20 @@ async function queryOpts() {
 
 /**
  * @async
- * @returns {Promise<void>}
+ * @returns {void}
  */
 async function wallpapersOpts() {
-	const { wallpaper } = await inquirer.prompt({
-		type: "list",
-		pageSize,
-		name: "wallpaper",
-		message: "enter a wallpaper selector",
-		choices: menuWallpaperOpts
-	});
+  const { wallpaper } = await inquirer.prompt({
+    type: "list",
+    pageSize,
+    name: "wallpaper",
+    message: "enter a wallpaper selector",
+    choices: menuWallpaperOpts
+  });
 	
-	wallpaper === "return main menu"
-	  ? mainMenu()
-	  : wallpaperSelect[wallpaper](returnMain, wallpapersOpts);
+  wallpaper === "return main menu"
+    ? mainMenu()
+    : wallpaperSelect[wallpaper](returnMain, wallpapersOpts);
 }
 
 /**
@@ -170,8 +170,8 @@ async function mainMenu() {
       utilityOpts();
     },
     wallpapers() {
-    	console.clear();
-    	wallpapersOpts();
+      console.clear();
+      wallpapersOpts();
     },
     about() {
       console.clear();

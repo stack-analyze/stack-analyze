@@ -1,11 +1,7 @@
 // print table
-import { printTable } from "console-table-printer";
-
-import { listFormat } from "./utils.js";
+const { printTable } = require("console-table-printer");
 
 // package.json
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
 const { license, version } = require("./package.json");
 
 const timeout = 1e3;
@@ -49,7 +45,9 @@ const aboutTool = {
     
     setTimeout(refreshCallback, timeout);
   },
-  lineup(refreshCallback) {
+  async lineup(refreshCallback) {
+    const { listFormat } = await import("./utils.js");
+    
     /** @type {DeveloperList[]} */
     const developers = [
       {
@@ -101,10 +99,6 @@ const aboutTool = {
     /** @type {Project[]} */
     const projects = [
       {
-        name: "Doofy's Projects",
-        desc: "tools and systems customs"
-      },
-      {
         name: "black metal promotion",
         desc: "promos albums and community"
       },
@@ -120,4 +114,4 @@ const aboutTool = {
   }
 };
 
-export default aboutTool;
+module.exports = aboutTool;

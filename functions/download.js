@@ -1,28 +1,24 @@
-// save password 
+// colors module
+import colors from "colors";
+
+// url api
+import { wallpapersURL } from "../api/wallpapersURL.js";
+
+// save file
 import { stackSave } from "../utils.js";
 
 /**
-	* sol, moon wallpapers downloader
-	* @async
-	* @param {string} filename
-	* @returns {Promise<void>}
- */
-export const solMoonDownload = async (filename) => {
-	console.info(filename);
-	
-	const url = `https://sol-moon-wallpapers.vercel.app/api/download/${filename}`;
-	
-	try {
-		const res = await fetch(url);
-		
-		if(!res.ok) {
-			throw new Error(`Error HTTP: ${res.status}`);
-		}
-		
-		const data = await res.blob();
-		
-		stackSave(filename, data.stream());
-	} catch(err) {
-		console.error(colors.red(err.message));
-	}
+  * sol, moon wallpapers downloader
+  * @async
+  * @param {"sol-moon" | "dimensions"} opt
+  * @param {string} filename
+  * @returns {Promise<void>}
+*/
+export const wallpaperDownload = async (opt, filename) => {	
+  try {
+    const { data } = await wallpapersURL.get(`/${opt}/download/${filename}`);
+    stackSave(filename, data);
+  } catch(err) {
+    console.error(colors.red(err.message));
+  }
 };

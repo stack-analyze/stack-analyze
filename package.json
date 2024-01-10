@@ -1,6 +1,6 @@
 {
   "name": "stack-analyze",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "type": "module",
   "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api, hardware and crypto market",
   "main": "index.mjs",
@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "eslint": "^8.53.0",
-    "gh-pages": "^6.0.0",
     "jsdoc": "^4.0.2"
   },
   "scripts": {
@@ -31,8 +30,7 @@
     "test": "node --test test/index.test.js",
     "lint:test": "eslint . --ext .js,.cjs,.mjs",
     "lint:fix": "eslint . --ext .js,.cjs,.mjs --fix",
-    "docs": "jsdoc -c jsdoc.json",
-    "docs:deploy": "npm run docs && gh-pages -d docs"
+    "docs": "jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",

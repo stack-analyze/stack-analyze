@@ -31,7 +31,7 @@ const menuUtilityOpts = [
   "hardware", "password", returnMainOpts
 ];
 
-const menuWallpaperOpts = ["solMoon", returnMainOpts];
+const menuWallpaperOpts = ["solMoon", "dimensions", returnMainOpts];
 
 const menuHardwareOpts = [
   "cpuInfo", "ramMemInfo", "osDetail", "diskInfo",

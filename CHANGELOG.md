@@ -4,6 +4,13 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 3 (ver. 1.2.0 -)
 
+### version 1.2.8
+#### Added
+- dimensions wallpaper download
+#### changed
+- renove download wallpaper function
+- about script using cjs
+
 ### version 1.2.7
 #### Added
 - wallpaper tool download (sol, moon)
