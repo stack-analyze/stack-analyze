@@ -1,4 +1,4 @@
-import Wappalyzer from "wappalyzer";
+import Wappalyzer from "wapalyzer";
 
 const multiple = async (urls) => {
   let testReturn;

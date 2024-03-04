@@ -2,7 +2,13 @@
 
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
-## generation 3 (ver. 1.2.0 -)
+## generation 3 (ver. 1.2.0 - 1.2.9)
+
+### version 1.2.9
+#### Added
+- css validate
+#### changed
+- changed wappalyzer module
 
 ### version 1.2.8
 #### Added

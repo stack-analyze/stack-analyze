@@ -1,4 +1,4 @@
-import Wappalyzer from "wappalyzer";
+import Wappalyzer from "wapalyzer";
 import axios from "axios";
 
 const wappalyzer = new Wappalyzer();

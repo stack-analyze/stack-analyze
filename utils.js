@@ -16,7 +16,8 @@ const menuOpts = [
 ];
 
 const menuWebOpts = [
-  "single", "multiple", "pagespeed", "scraping", returnMainOpts
+  "single", "multiple", "pagespeed", "scraping", "css_validate", 
+  returnMainOpts
 ];
 
 const menuInfoOpts = [

@@ -1,5 +1,5 @@
 // module
-import Wappalyzer from "wappalyzer";
+import Wappalyzer from "wapalyzer";
 
 export default async function single (url) {
   let testReturn;

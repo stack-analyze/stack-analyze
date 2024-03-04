@@ -15,7 +15,7 @@ import pokemonInfo from "./pokemon.js";
 import single from "./single.js";
 import scrape from "./scraping.js";
 import twitchInfo from "./twitch.js";
-
+import cssValidate from "./cssValidator.js";
 
 // github info
 test('github info', async () => await githubInfo("faztweb"));
@@ -66,6 +66,9 @@ test('table data', async () => await scrape('https://example.com', 'table_data')
 test('links', async () => await scrape('https://example.com', 'links'));
 
 test('cites', async () => await scrape('https://example.com', 'cites'));
+
+// css validate
+test('css validate', async () => await cssValidate("http://example.com"));
 
 // bundlephobia
 test('npm pkg info', async () => await bundlephobia('react'));

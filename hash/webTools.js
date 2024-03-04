@@ -9,6 +9,7 @@ import singleStack from "../functions/singleStack.js";
 import multipleStack from "../functions/multipleStack.js";
 import pageSpeed from "../functions/pageSpeed.js";
 import scrape from "../functions/scraping.js";
+import cssValidate from "../functions/cssValidator.js";
 
 // validations
 import { 
@@ -51,6 +52,15 @@ const webTools = {
       .then(({ url, option }) => {
         scrape(url, option);
         setTimeout(refreshCallback, 3000);
+      });
+  },
+  css_validate(refreshCallback) {
+    console.clear();
+    inquirer.prompt([singleWebQuery])
+      .then(({ url }) => {
+        cssValidate(url);
+        const timeEnd = performance.now();
+        setTimeout(refreshCallback, timeEnd);
       });
   }
 };

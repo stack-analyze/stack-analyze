@@ -1,7 +1,7 @@
 {
     "source": {
-        "include": ["functions", "./about.js", "./cli.js"],
-        "includePatter": ".js$",
+        "include": ["functions", "./about.cjs", "./cli.js"],
+        "includePattern": ".+\\.(c?js(doc|x)?)$",
         "excludePattern": "(node_modules|docs)"
     },
     "templates": {
