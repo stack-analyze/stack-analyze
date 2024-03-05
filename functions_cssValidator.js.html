@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: functions/password.js</title>
+    <title>JSDoc: Source: functions/cssValidator.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: functions/password.js</h1>
+    <h1 class="page-title">Source: functions/cssValidator.js</h1>
 
     
 
@@ -26,29 +26,30 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// save password 
+            <pre class="prettyprint source linenums"><code>// modules
+import colors from "colors";
+import cssValidator from "w3c-css-validator";
 import { stackSave } from "../utils.js";
 
-/**
- * It generates a random password
- * @returns {void}
- */
-export default function genPassword() {
-  const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&amp;*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  // blank password var
-  let password = "";
-
-  // loop generate chars
-  for(let i = 0; i &lt; 12; i++) {
-    const randomNumber = Math.floor(Math.random() * chars.length);
-
-    password += chars.substring(randomNumber, randomNumber + 1);
+/** 
+* @description css validator tool from w3c service
+* @param {string} url - url analyze all stylesheets
+* @async
+* @returns {Promise&lt;void>}
+*/
+export default async function cssValidate(url) {
+  try {
+    const cssResults = await cssValidator.validateURL(url, {
+      warningLevel: 1
+    });
+		
+    stackSave("cssErrors.json", JSON.stringify(cssResults.errors, null, 2));
+    stackSave("cssWarnings.json", JSON.stringify(cssResults.warnings, null, 2));
+		
+    console.info("finish css results printers".green);
+  } catch(err) {
+    console.error(colors.red(err.message));
   }
-
-  // print new passwors
-  console.info("new password:", password);
-  stackSave("password.txt", `new password: ${password}`);
 }
 </code></pre>
         </article>
