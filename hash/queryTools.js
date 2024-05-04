@@ -6,6 +6,7 @@ import animeSearch from "../functions/animeInfo.js";
 import movieDB from "../functions/moviesInfo.js";
 import pokemonInfo from "../functions/pokemon.js";
 import twitchInfo from "../functions/twitch.js";
+import deezer from "../functions/deezer.js";
 
 // fields
 import {
@@ -78,6 +79,7 @@ const queryTools = {
   },
   twitch_info(refreshCallback) {
     console.clear();
+    
     inquirer.prompt([
       promptParams("twitchSeparator", "enter a separator for split example ',':"),
       promptParams("twitchUsers", "enter a twitch users example 'a,b,c'"),
@@ -88,6 +90,17 @@ const queryTools = {
         twitchInfo({ twitchSeparator, twitchUsers, twitchClient, twitchToken });
         setTimeout(refreshCallback, 2e3);
       });
+  },
+  deezer(refreshCallback) {
+  	console.clear();
+  	
+  	inquirer.prompt([
+  		promptParams("query", "enter a query for search")
+  	])
+  		.then(({ query }) => {
+  			deezer(query)
+  			setTimeout(refreshCallback, 5e3);
+  		})
   }
 };
 

@@ -106,6 +106,10 @@ const aboutTool = {
         name: "black metal catalog",
         desc: "promos albums and community"
       },
+      {
+      	name: "slithering black records",
+      	desc: "record label & community"
+      }
     ];
 
     console.clear();

@@ -25,7 +25,8 @@ const menuInfoOpts = [
 ];
 
 const menuQueryOpts = [
-  "anime_Search", "movie_info", "pokemon_info", "twitch_info", returnMainOpts
+  "anime_Search", "movie_info", "pokemon_info", 
+  "twitch_info", "deezer", returnMainOpts
 ];
 
 const menuUtilityOpts = [

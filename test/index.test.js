@@ -16,6 +16,7 @@ import single from "./single.js";
 import scrape from "./scraping.js";
 import twitchInfo from "./twitch.js";
 import cssValidate from "./cssValidator.js";
+import deezer from from "./deezer.js"
 
 // github info
 test('github info', async () => await githubInfo("faztweb"));
@@ -82,7 +83,9 @@ test('multiple stack', async () => await multiple(["http://example.com", "https:
 // pagespeed
 test('desktop speed', async () => await pagespeed("http://example.com"));
 
-
 /* pokemon info */
 test('pokemon-id', async () => pokemonInfo(55)) // based in pokeID
 test('pokemon-name', async () => pokemonInfo('pikachu')) // based in pokename
+
+// deezer search
+test('deezer', async () => await deezer("eminem"));
