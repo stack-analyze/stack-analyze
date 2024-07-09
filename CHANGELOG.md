@@ -3,6 +3,13 @@
 stack-analyze all version and notable changes, fixed, remove and new additions in code.
 
 ## generation 4 (ver. 1.3.0 - )
+
+### version 1.3.1
+#### Added
+- seyyahi2 wallpapers (this pack is from album app)
+#### changed
+- add new view field is total track and id
+
 ### version 1.3.0
 #### Added
 - deezer search tool

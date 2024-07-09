@@ -12,11 +12,7 @@ const wappalyzer = new Wappalyzer();
  * @param {StrategyOpt} strategy
 */
 const pagespeedApi = async (url, strategy) => await axios.get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed", {
-  params: {
-    url,
-    key: "AIzaSyBEDaW4FxSZ2s1vz5CdD5Ai6PGZGdAzij0",
-    strategy
-  }
+  params: { url, strategy }
 });
 
 export {

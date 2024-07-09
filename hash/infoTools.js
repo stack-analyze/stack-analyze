@@ -49,7 +49,7 @@ const infoTools = {
       .then(({ pkgName }) => {
         console.info(pkgName);
         bundlephobia(pkgName);
-        setTimeout(refreshCallback, 2e3);
+        setTimeout(refreshCallback, 5e3);
       });
   },
 };

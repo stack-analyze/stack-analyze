@@ -33,7 +33,7 @@ const menuUtilityOpts = [
   "hardware", "password", returnMainOpts
 ];
 
-const menuWallpaperOpts = ["solMoon", "dimensions", returnMainOpts];
+const menuWallpaperOpts = ["solMoon", "dimensions", "seyyahi2", returnMainOpts];
 
 const menuHardwareOpts = [
   "cpuInfo", "ramMemInfo", "osDetail", "diskInfo",

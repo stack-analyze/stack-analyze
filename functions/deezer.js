@@ -19,11 +19,14 @@ export default async function deezer(q) {
 		);
 		
 		const results = data.data.map(({
-			title, record_type, explicit_lyrics, artist
+			id, title, record_type, 
+			explicit_lyrics, artist, nb_tracks
 		}) => ({
+			id,
 			artist: artist.name,
 			title,
-			record_type,
+			type: record_type,
+			num_tracks: nb_tracks,
 			lyrics_content: explicit_lyrics ? "explicit" : "clean"
 		}));
 		

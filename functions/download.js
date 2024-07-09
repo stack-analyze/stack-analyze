@@ -10,7 +10,7 @@ import { stackSave } from "../utils.js";
 /**
   * sol, moon wallpapers downloader
   * @async
-  * @param {"sol-moon" | "dimensions"} opt
+  * @param {"sol-moon" | "dimensions" | "seyyahi"} opt
   * @param {string} filename
   * @returns {Promise<void>}
 */

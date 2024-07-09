@@ -50,6 +50,26 @@ const wallpaperSelect = {
           setTimeout(refreshCallback, 5000);
         }
       });
+  },
+  seyyahi2(refreshCallback, alternativeCallback) {
+  	const seyyahiWallpapers = [...Array(14).keys()]
+  		.map(i => `seyyahi2-wallpaper${i + 1}.jpg`);
+  		
+  	inquirer.prompt([
+  		{
+  			type: "list",
+  			name: "seyyahi2",
+  			message,
+  			choices: [...seyyahiWallpapers, backMenu]
+  		}
+  	])
+  		.then(({ seyyahi2 }) => {
+  			if(seyyahi2 === backMenu) {
+  				alternativeCallback();
+  			} else {
+  				wallpaperDownload("seyyahi2", seyyahi2);
+  			}
+  		});
   }
 };
 
