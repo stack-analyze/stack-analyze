@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: functions/gitUser.js</title>
+    <title>JSDoc: Source: functions/deezer.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: functions/gitUser.js</h1>
+    <h1 class="page-title">Source: functions/deezer.js</h1>
 
     
 
@@ -26,42 +26,44 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// modules
-import { format } from "timeago.js";
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import { printTable } from "console-table-printer";
 import colors from "colors";
 
-// save git user
+// save data search
 import { stackSave } from "../utils.js";
 
 /**
- *
- * @description call github info user
- * @async
- * @param { string } user - get github user info
- * @returns { Promise&lt;void> } - return results info
- *
- */
-export default async function githubInfo(user) {
-  try {
-    const data = await (await fetch(`https://api.github.com/users/${user}`)).json();
-
-    const info = {
-      username: data.login,
-      fullName: data?.name ?? "no info",
-      userFollowers: data.followers,
-      userFollowing: data.following,
-      accountAge: format(data.created_at),
-      twitter: data?.twitter_username ?? "no info",
-      repos: data.public_repos,
-      gists: data.public_gists
-    };
-
-    console.table(info);
-    
-    stackSave(`${user}-info.json`, JSON.stringify(info, null, 2));
-  } catch(err) {
-    console.error(colors.red(err.message));
-  }
+	* @async
+	* @params { string } query
+	* @returns {Promise&lt;void>}
+*/
+export default async function deezer(q) {
+	try {
+		const { data } = await axios.get(
+			"https://api.deezer.com/search/album", {
+				params: { q }
+			}
+		);
+		
+		const results = data.data.map(({
+			id, title, record_type, 
+			explicit_lyrics, artist, nb_tracks
+		}) => ({
+			id,
+			artist: artist.name,
+			title,
+			type: record_type,
+			num_tracks: nb_tracks,
+			lyrics_content: explicit_lyrics ? "explicit" : "clean"
+		}));
+		
+		printTable(results.slice(0, 15));
+		
+		stackSave("album-search.json", JSON.stringify(data.data, null, 2));
+	} catch(err) {
+		console.error(colors.red(err.message));
+	}
 }
 </code></pre>
         </article>
