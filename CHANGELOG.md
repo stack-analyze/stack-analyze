@@ -4,6 +4,10 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.2
+#### Added
+- title for stack menu tools
+
 ### version 1.3.1
 #### Added
 - seyyahi2 wallpapers (this pack is from album app)

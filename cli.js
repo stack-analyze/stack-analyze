@@ -34,6 +34,8 @@ const exitCli = () => {
  * @returns {Promise<void>}
  */
 async function webOpts() {
+  console.info(colors.yellow(figlet.textSync("web options")));
+  
   const { web } = await inquirer.prompt({
     type: "list",
     pageSize,
@@ -52,6 +54,8 @@ async function webOpts() {
  * @returns {Promise<void>}
  */
 async function infoOpts() {
+  console.info(colors.yellow(figlet.textSync("info options")));
+  
   const { info } = await inquirer.prompt({
     type: "list",
     pageSize,
@@ -70,6 +74,8 @@ async function infoOpts() {
  * @returns {Promise<void>}
  */
 async function queryOpts() {
+  console.info(colors.yellow(figlet.textSync("query options")));
+  
   const { query } = await inquirer.prompt({
     type: "list",
     pageSize,
@@ -88,6 +94,8 @@ async function queryOpts() {
  * @returns {void}
  */
 async function wallpapersOpts() {
+  console.info(colors.yellow(figlet.textSync("wallpapers")));
+  
   const { wallpaper } = await inquirer.prompt({
     type: "list",
     pageSize,
@@ -106,6 +114,8 @@ async function wallpapersOpts() {
  * @returns {Promise<void>}
  */
 async function utilityOpts() {
+  console.info(colors.yellow(figlet.textSync("utility options")));
+  
   const { utility } = await inquirer.prompt({
     type: "list",
     pageSize,
@@ -124,6 +134,8 @@ async function utilityOpts() {
  * @returns {Promise<void>}
  */
 async function aboutOpts() {
+  console.info(colors.yellow(figlet.textSync("About Menu")));
+  
   const { about } = await inquirer.prompt({
     type: "list",
     pageSize,
