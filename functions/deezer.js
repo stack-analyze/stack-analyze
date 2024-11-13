@@ -11,29 +11,27 @@ import { stackSave } from "../utils.js";
 	* @returns {Promise<void>}
 */
 export default async function deezer(q) {
-	try {
-		const { data } = await axios.get(
-			"https://api.deezer.com/search/album", {
-				params: { q }
-			}
-		);
-		
-		const results = data.data.map(({
-			id, title, record_type, 
-			explicit_lyrics, artist, nb_tracks
-		}) => ({
-			id,
-			artist: artist.name,
-			title,
-			type: record_type,
-			num_tracks: nb_tracks,
-			lyrics_content: explicit_lyrics ? "explicit" : "clean"
-		}));
-		
-		printTable(results.slice(0, 15));
-		
-		stackSave("album-search.json", JSON.stringify(data.data, null, 2));
-	} catch(err) {
-		console.error(colors.red(err.message));
-	}
+  try {
+    const { data } = await axios.get("https://api.deezer.com/search/album", {
+      params: { q }
+    });
+
+    const results = data.data.map(({
+      id, title, record_type, 
+      explicit_lyrics, artist, nb_tracks
+    }) => ({
+      id,
+      artist: artist.name,
+      title,
+      type: record_type,
+      num_tracks: nb_tracks,
+      lyrics_content: explicit_lyrics ? "explicit" : "clean"
+    }));
+
+    printTable(results.slice(0, 15));
+
+    stackSave("album-search.json", JSON.stringify(data.data, null, 2));
+  } catch(err) {
+    console.error(colors.red(err.message));
+  }
 }

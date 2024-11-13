@@ -7,6 +7,7 @@ import movieDB from "../functions/moviesInfo.js";
 import pokemonInfo from "../functions/pokemon.js";
 import twitchInfo from "../functions/twitch.js";
 import deezer from "../functions/deezer.js";
+import potterSearch from "../functions/potterSearch.js";
 
 // fields
 import {
@@ -98,9 +99,20 @@ const queryTools = {
   		promptParams("query", "enter a query for search")
   	])
   		.then(({ query }) => {
-  			deezer(query)
+  			deezer(query);
   			setTimeout(refreshCallback, 5e3);
-  		})
+  		});
+  },
+  potter_search(refreshCallback) {
+    console.clear();
+    
+    inquirer.prompt([
+      promptParams("search", "enter a keyword or name for search")
+    ])
+      .then(({ search }) => {
+        potterSearch(search);
+        setTimeout(refreshCallback, 5e3);
+      });
   }
 };
 

@@ -16,7 +16,8 @@ import single from "./single.js";
 import scrape from "./scraping.js";
 import twitchInfo from "./twitch.js";
 import cssValidate from "./cssValidator.js";
-import deezer from from "./deezer.js"
+import deezer from "./deezer.js";
+import potterSearch from "./potterSearch.js"
 
 // github info
 test('github info', async () => await githubInfo("faztweb"));
@@ -89,3 +90,6 @@ test('pokemon-name', async () => pokemonInfo('pikachu')) // based in pokename
 
 // deezer search
 test('deezer', async () => await deezer("eminem"));
+
+// potter search
+test('potter search', async () => await potterSearch("potter"));

@@ -4,6 +4,12 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.3
+#### Added
+- add potter search (harry potter npx characters)
+#### changed
+- update linter
+
 ### version 1.3.2
 #### Added
 - title for stack menu tools
