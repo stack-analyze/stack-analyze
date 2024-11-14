@@ -2,7 +2,7 @@ import axios from "axios";
 import colors from "colors";
 
 /**
- * @description
+ * @description search harry potter characters using keyword or name
  * @async
  * @param { string } search - get results of harry potter characters
  * @returns { Promise<void>}
