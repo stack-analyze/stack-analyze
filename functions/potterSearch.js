@@ -1,5 +1,9 @@
 import axios from "axios";
 import colors from "colors";
+import { printTable } from "console-table-printer";
+
+// save search
+import { stackSave } from "../utils.js";
 
 /**
  * @description search harry potter characters using keyword or name
@@ -20,7 +24,8 @@ export default async function potterSearch(search) {
       house: hogwartsHouse,
     }));
     
-    console.table(characterList);
+    printTable(characterList);
+    stackSave("potter-results.json", JSON.stringify(characterList, null, 2));
   } catch(err) {
     console.error(colors.red(err.message));
   }

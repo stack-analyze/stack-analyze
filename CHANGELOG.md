@@ -4,6 +4,10 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.4
+#### changed
+- new ui cli for potter search tool & save file.
+
 ### version 1.3.3
 #### Added
 - add potter search (harry potter npx characters)
