@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: functions/gitUser.js</title>
+    <title>JSDoc: Source: functions/potterSearch.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: functions/gitUser.js</h1>
+    <h1 class="page-title">Source: functions/potterSearch.js</h1>
 
     
 
@@ -26,39 +26,34 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// modules
-import { format } from "timeago.js";
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
 import colors from "colors";
+import { printTable } from "console-table-printer";
 
-// save git user
+// save search
 import { stackSave } from "../utils.js";
 
 /**
- *
- * @description call github info user
+ * @description search harry potter characters using keyword or name
  * @async
- * @param { string } user - get github user info
- * @returns { Promise&lt;void> } - return results info
- *
+ * @param { string } search - get results of harry potter characters
+ * @returns { Promise&lt;void>}
  */
-export default async function githubInfo(user) {
+export default async function potterSearch(search) {
   try {
-    const data = await (await fetch(`https://api.github.com/users/${user}`)).json();
-
-    const info = {
-      username: data.login,
-      fullName: data?.name ?? "no info",
-      userFollowers: data.followers,
-      userFollowing: data.following,
-      accountAge: format(data.created_at),
-      twitter: data?.twitter_username ?? "no info",
-      repos: data.public_repos,
-      gists: data.public_gists
-    };
-
-    console.table(info);
+    const { data } = await axios.get("https://potterapi-fedeperin.vercel.app/en/characters", {
+      params: { search }
+    });
     
-    stackSave(`${user}-info.json`, JSON.stringify(info, null, 2));
+    const characterList = data.map(({
+      nickname, fullName, hogwartsHouse, birthdate
+    }) => ({
+      nickname, fullName, birthdate,
+      house: hogwartsHouse,
+    }));
+    
+    printTable(characterList);
+    stackSave("potter-results.json", JSON.stringify(characterList, null, 2));
   } catch(err) {
     console.error(colors.red(err.message));
   }
