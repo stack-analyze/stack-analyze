@@ -1,8 +1,8 @@
 // print table
-const { printTable } = require("console-table-printer");
+import { printTable } from "console-table-printer";
 
 // package.json
-const { license, version } = require("./package.json");
+const { default: { license, version}} = await import("./package.json", {with: {type: "json" }});
 
 const timeout = 1e3;
 
@@ -118,4 +118,4 @@ const aboutTool = {
   }
 };
 
-module.exports = aboutTool;
+export default aboutTool;

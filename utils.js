@@ -12,7 +12,8 @@ const currency = new Intl.NumberFormat("en-us", {
 const returnMainOpts = "return main menu";
 
 const menuOpts = [
-  "web", "info", "query", "utility", "wallpapers", "about", "exit"
+  "web", "info", "query", "utility", "wallpapers", 
+  "about", "exit"
 ];
 
 const menuWebOpts = [
@@ -30,7 +31,7 @@ const menuQueryOpts = [
 ];
 
 const menuUtilityOpts = [
-  "hardware", "password", returnMainOpts
+  "hardware", "password", "poker_game", returnMainOpts
 ];
 
 const menuWallpaperOpts = ["solMoon", "dimensions", "seyyahi2", returnMainOpts];
@@ -48,6 +49,11 @@ const menuAboutOpts = [
 const scrapingOpts = [
   "title", "images", "metadata", "headings",
   "tableHead", "tableData", "links", "cites"
+];
+
+const pokerGameOpts = [
+  "go-fish", "gin-rummy", "blackjack", "slapjack",
+  "basics-of-poker", "texas-holdem-poker"
 ];
 
 /**
@@ -89,6 +95,7 @@ export {
   menuAboutOpts,
   scrapingOpts,
   stackSave,
+  pokerGameOpts,
   exitCli
 };
 

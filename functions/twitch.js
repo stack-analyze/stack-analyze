@@ -67,6 +67,6 @@ export default async function twitchInfo({
     printTable(result);
     stackSave("twitch-users.json", JSON.stringify(result, null, 2));
   } catch (err) {
-    console.error(colors.red(err));
+    console.error(colors.red(err.message));
   }
 }

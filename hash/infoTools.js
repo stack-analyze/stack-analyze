@@ -1,5 +1,5 @@
 // inquirer
-import inquirer from "inquirer";
+import { input, password } from "@inquirer/prompts";
 
 // functions
 import bitlyInfo from "../functions/bitly.js";
@@ -7,50 +7,54 @@ import cryptoMarket from "../functions/cryptoList.js";
 import githubInfo from "../functions/gitUser.js";
 import bundlephobia from "../functions/bundlephobia.js";
 
-// fields
-import {
-  bitlyQuery,
-  promptParams,
-  promptKey
-} from "../validations/infoValidations.js";
+// bitly regexp
+const bitlyRegexp = /bit\.ly\//g;
 
 const infoTools = {
-  github_info(refreshCallback) {
+  async github_info(refreshCallback) {
     console.clear();
-    inquirer.prompt([
-      promptParams("gitUser", "enter a github user for search")
-    ])
-      .then(({ gitUser }) => {
-        githubInfo(gitUser);
-        setTimeout(refreshCallback, 2e3);
-      });
+    
+    const gitUser = await input({
+    	message: "enter a github user for search",
+    	required: true
+    });
+    
+    githubInfo(gitUser);
+    setTimeout(refreshCallback, 2e3);
   },
-  bitly_info(refreshCallback) {
+  async bitly_info(refreshCallback) {
     console.clear();
-    inquirer.prompt([
-      bitlyQuery, 
-      promptKey("token", "enter a bitly token")
-    ])
-      .then(({ bitlyLink, token }) => {
-        bitlyInfo(bitlyLink, token);
-        setTimeout(refreshCallback, 2e3);
-      });
+    
+    const { bitlyLink, token } = {
+    	bitlyLink: await input({
+    		message: "enter a short link:",
+    		validate: input => bitlyRegexp.test(input) || "only bitly link".yellow
+    	}),
+    	token: await password({
+    		message: "enter a bitly token",
+    		required: true,
+    		mask: true
+    	})
+    };
+    
+    bitlyInfo(bitlyLink, token);
+    setTimeout(refreshCallback, 2e3);
   },
   crypto_market(refreshCallback) {
     console.clear();
     cryptoMarket();
     setTimeout(refreshCallback, 5e3);
   },
-  bundlephobia_info(refreshCallback) {
+  async bundlephobia_info(refreshCallback) {
     console.clear();
-    inquirer.prompt([
-      promptParams("pkgName", "enter a npm package name for search info size")
-    ])
-      .then(({ pkgName }) => {
-        console.info(pkgName);
-        bundlephobia(pkgName);
-        setTimeout(refreshCallback, 5e3);
-      });
+    
+    const pkgName = await input({
+    	message: "enter a npm package name for search info size"
+    });
+    
+    console.info(pkgName);
+    bundlephobia(pkgName);
+    setTimeout(refreshCallback, 5e3);
   },
 };
 

@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 import Gauge from "gauge";
 import colors from "colors";
-import inquirer from "inquirer";
+import { confirm } from "@inquirer/prompts";
 import figlet from "figlet";
+
+import { stackMenu } from "./menu.js";
 
 import webTools from "./hash/webTools.js";
 import queryTools from "./hash/queryTools.js";
 import infoTools from "./hash/infoTools.js";
 import utilityTools from "./hash/utilityTools.js";
 import wallpaperSelect from "./hash/wallpaperSelect.js";
-import aboutTool from "./about.cjs";
+import aboutTool from "./about.js";
 
 import {
   menuOpts,
@@ -36,10 +38,8 @@ const exitCli = () => {
 async function webOpts() {
   console.info(colors.yellow(figlet.textSync("web options")));
   
-  const { web } = await inquirer.prompt({
-    type: "list",
+  const web = await stackMenu({
     pageSize,
-    name: "web",
     message: "enter a web tool option",
     choices: menuWebOpts
   });
@@ -56,10 +56,8 @@ async function webOpts() {
 async function infoOpts() {
   console.info(colors.yellow(figlet.textSync("info options")));
   
-  const { info } = await inquirer.prompt({
-    type: "list",
+  const info = await stackMenu({
     pageSize,
-    name: "info",
     message: "enter a info tool option",
     choices: menuInfoOpts
   });
@@ -76,10 +74,8 @@ async function infoOpts() {
 async function queryOpts() {
   console.info(colors.yellow(figlet.textSync("query options")));
   
-  const { query } = await inquirer.prompt({
-    type: "list",
+  const query = await stackMenu({
     pageSize,
-    name: "query",
     message: "enter a query tool option",
     choices: menuQueryOpts
   });
@@ -96,10 +92,8 @@ async function queryOpts() {
 async function wallpapersOpts() {
   console.info(colors.yellow(figlet.textSync("wallpapers")));
   
-  const { wallpaper } = await inquirer.prompt({
-    type: "list",
+  const wallpaper = await stackMenu({
     pageSize,
-    name: "wallpaper",
     message: "enter a wallpaper selector",
     choices: menuWallpaperOpts
   });
@@ -116,10 +110,8 @@ async function wallpapersOpts() {
 async function utilityOpts() {
   console.info(colors.yellow(figlet.textSync("utility options")));
   
-  const { utility } = await inquirer.prompt({
-    type: "list",
+  const utility = await stackMenu({
     pageSize,
-    name: "utility",
     message: "enter a utility tool option",
     choices: menuUtilityOpts
   });
@@ -136,10 +128,8 @@ async function utilityOpts() {
 async function aboutOpts() {
   console.info(colors.yellow(figlet.textSync("About Menu")));
   
-  const { about } = await inquirer.prompt({
-    type: "list",
+  const about = await stackMenu({
     pageSize,
-    name: "about",
     message: "select about option info",
     choices: menuAboutOpts
   });
@@ -157,11 +147,9 @@ async function mainMenu() {
   console.clear();
   console.info(colors.yellow(figlet.textSync("stack-analyze")));
 
-  const { option } = await inquirer.prompt({
-    type: "list",
-    name: "option",
-    message: "what option do you want to analyze stack",
-    choices: menuOpts
+  const option = await stackMenu({
+  	message: "what option do you want to analyze stack",
+  	choices: menuOpts
   });
 
   const menuList = {
@@ -200,9 +188,7 @@ async function mainMenu() {
  */
 async function returnMain() {
   try {
-    const { returnMain } = await inquirer.prompt({
-      type: "confirm",
-      name: "returnMain",
+    const returnMain = await confirm({
       message: "do you want go to the main menu?",
     });
 

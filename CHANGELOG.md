@@ -4,6 +4,21 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.5
+#### Added
+- new tool poker game rule selector "poker rule".
+
+#### changed
+- change inquirer to @inquirer/prompts.
+- about.js file now using esm with json modules.
+- all tools now using new inquirer methods.
+
+#### fixed
+- add question for anime search tool.
+
+#### remove
+- remove validations folder.
+
 ### version 1.3.4
 #### changed
 - new ui cli for potter search tool & save file.

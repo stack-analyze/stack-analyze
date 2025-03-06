@@ -18,6 +18,7 @@ import twitchInfo from "./twitch.js";
 import cssValidate from "./cssValidator.js";
 import deezer from "./deezer.js";
 import potterSearch from "./potterSearch.js"
+import pokerGame from "./poker.js";
 
 // github info
 test('github info', async () => await githubInfo("faztweb"));
@@ -93,3 +94,11 @@ test('deezer', async () => await deezer("eminem"));
 
 // potter search
 test('potter search', async () => await potterSearch("potter"));
+
+// poker game
+test("go-fish", async () => await pokerGame("go-fish"));
+test("gin-rummy", async () => await pokerGame("gin-rummy"));
+test("blackjack", async () => await pokerGame("blackjack"));
+test("slapjack", async () => await pokerGame("slapjack"));
+test("basics-of-poker", async () => await pokerGame("basics-of-poker"));
+test("texas-holdem-poker", async () => await pokerGame("texas-holdem-poker"));
