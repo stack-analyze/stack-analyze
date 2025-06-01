@@ -87,7 +87,7 @@ async function queryOpts() {
 
 /**
  * @async
- * @returns {void}
+ * @returns {Promise<void>}
  */
 async function wallpapersOpts() {
   console.info(colors.yellow(figlet.textSync("wallpapers")));

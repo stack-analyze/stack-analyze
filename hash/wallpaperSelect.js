@@ -53,7 +53,37 @@ const wallpaperSelect = {
   		wallpaperDownload("seyyahi2", seyyahi2);
   		setTimeout(refreshCallback, 5000);
   	}
-  }
+  },
+  async ancientMistery(refreshCallback, alternativeCallback) {
+    const ancientMisteryWallpapers = [...Array(6).keys()]
+  		.map(i => `ancient-mistery${i + 1}.jpeg`);
+
+    const ancientMistery = await select({
+  		message, choices: [...ancientMisteryWallpapers, backMenu]
+  	});
+
+    if(ancientMistery === backMenu) {
+  		alternativeCallback();
+  	} else {
+  		wallpaperDownload("ancient-mistery", ancientMistery);
+  		setTimeout(refreshCallback, 5000);
+  	}
+  },
+  async tsukyNoEmily(refreshCallback, alternativeCallback) {
+    const tsukyNoEmilyWallpapers = [...Array(6).keys()]
+  		.map(i => `tsuky-no-emily${i + 1}.jpeg`);
+
+    const tsukyNoEmily = await select({
+  		message, choices: [...tsukyNoEmilyWallpapers, backMenu]
+  	});
+
+    if(tsukyNoEmily === backMenu) {
+  		alternativeCallback();
+  	} else {
+  		wallpaperDownload("tsuky-no-emily", tsukyNoEmily);
+  		setTimeout(refreshCallback, 5000);
+  	}
+  },
 };
 
 export default wallpaperSelect;

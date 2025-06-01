@@ -34,7 +34,10 @@ const menuUtilityOpts = [
   "hardware", "password", "poker_game", returnMainOpts
 ];
 
-const menuWallpaperOpts = ["solMoon", "dimensions", "seyyahi2", returnMainOpts];
+const menuWallpaperOpts = [
+  "solMoon", "dimensions", "seyyahi2", "ancientMistery", 
+  "tsukyNoEmily", returnMainOpts
+];
 
 const menuHardwareOpts = [
   "cpuInfo", "ramMemInfo", "osDetail", "diskInfo",

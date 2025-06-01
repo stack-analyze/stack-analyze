@@ -4,6 +4,21 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.6 (5th aniversary)
+
+#### Added
+- new wallpaers pack:
+    - tsuky no emily.
+    - ancient mistery.
+
+#### Changed
+- simplify in how play for poker rule tool.
+
+#### fixed
+- fixed download wallpapers.
+- cli.js fixed jsdoc.
+
+
 ### version 1.3.5
 #### Added
 - new tool poker game rule selector "poker rule".

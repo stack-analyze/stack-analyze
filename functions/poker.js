@@ -2,6 +2,7 @@ import { load } from "cheerio";
 import colors from "colors";
 
 import { pokerApi } from "../api/pokerApi.js";
+import { stackSave } from "../utils.js";
 
 /**
  * @typedef {"go-fish"|"gin-rummy"|"blackjack"|"slapjack"|"basics-of-poker"|"texas-holdem-poker"} Options
@@ -14,28 +15,25 @@ export default async function pokerGame(game) {
     
     // extract rules
     const $ = load(data);
+
+    const title = $("title").text();
     
     const [age, players] = $(".border-brand-blue-pale div:not(.text-brand-blue)").map(
       (i, el) => $(el).text()
     ).get().slice(1);
 		
-    const howPlayTitle = $("h3.text-2xl").map(
+    const howPLay = $("h3.text-2xl+p.mb-5").map(
       (i, el) => $(el).text()
-    ).get();
-		
-    const howPlayDesc = $("h3.text-2xl+p.mb-5").map(
-      (i, el) => $(el).text()
-    ).toArray();
+    ).get().slice(0, 5);
     
     // poker game
-    const pokerGame = {
-      title: $("title").text(),
-      age, players,
-      ...(Object.fromEntries(
-        howPlayTitle.map((item, i) => [item, howPlayDesc[i]])
-      ))
-    };
-    console.table(pokerGame);
+    const pokerGame = { title, age, players, howPLay };
+    const pokerTable = { ...pokerGame };
+    delete pokerTable.howPLay;
+    console.table(pokerTable);
+    
+    stackSave(`${title}.json`, JSON.stringify(pokerGame, null, 2));
+    console.info("poker rule file is created".green);
   } catch(err) {
     console.info(colors.red(err.message));
   }
