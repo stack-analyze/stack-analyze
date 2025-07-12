@@ -6,8 +6,9 @@ import { wallpaperDownload } from "../functions/download.js";
 const message = "select a wallpaper for download:";
 const backMenu = "back to menu";
 
+/** @type {import("../types.js").Select}*/
 const wallpaperSelect = {
-  async solMoon(refreshCallback, alternativeCallback) {
+  solMoon: async (refreshCallback, alternativeCallback) => {
     const solMoonWallpapers = [...Array(20).keys()]
       .map(i => `sol-moon${i + 1}.jpeg`);	
 
@@ -23,7 +24,7 @@ const wallpaperSelect = {
     	setTimeout(refreshCallback, 5000);
     }
   },
-  async dimensions(refreshCallback, alternativeCallback) {
+  dimensions: async (refreshCallback, alternativeCallback) => {
     const dimensionsWallpapers = [...Array(12).keys()]
       .map(i => `dimensions-${i + 1}.jpeg`);
 
@@ -39,7 +40,7 @@ const wallpaperSelect = {
     	setTimeout(refreshCallback, 5000);
     }
   },
-  async seyyahi2(refreshCallback, alternativeCallback) {
+  seyyahi2: async (refreshCallback, alternativeCallback) => {
   	const seyyahiWallpapers = [...Array(14).keys()]
   		.map(i => `seyyahi2-wallpaper${i + 1}.jpg`);
   	
@@ -54,7 +55,7 @@ const wallpaperSelect = {
   		setTimeout(refreshCallback, 5000);
   	}
   },
-  async ancientMistery(refreshCallback, alternativeCallback) {
+  ancientMistery: async (refreshCallback, alternativeCallback) => {
     const ancientMisteryWallpapers = [...Array(6).keys()]
   		.map(i => `ancient-mistery${i + 1}.jpeg`);
 
@@ -69,7 +70,7 @@ const wallpaperSelect = {
   		setTimeout(refreshCallback, 5000);
   	}
   },
-  async tsukyNoEmily(refreshCallback, alternativeCallback) {
+  tsukyNoEmily: async (refreshCallback, alternativeCallback) => {
     const tsukyNoEmilyWallpapers = [...Array(6).keys()]
   		.map(i => `tsuky-no-emily${i + 1}.jpeg`);
 

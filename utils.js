@@ -12,7 +12,7 @@ const currency = new Intl.NumberFormat("en-us", {
 const returnMainOpts = "return main menu";
 
 const menuOpts = [
-  "web", "info", "query", "utility", "wallpapers", 
+  "web", "info", "query", "utility", "wallpapers", "quotes",
   "about", "exit"
 ];
 
@@ -38,6 +38,8 @@ const menuWallpaperOpts = [
   "solMoon", "dimensions", "seyyahi2", "ancientMistery", 
   "tsukyNoEmily", returnMainOpts
 ];
+
+const menuQuoteOpts = ["animeQuote", returnMainOpts];
 
 const menuHardwareOpts = [
   "cpuInfo", "ramMemInfo", "osDetail", "diskInfo",
@@ -86,19 +88,9 @@ const stackSave = async (filename, data) => {
 const exitCli = "thanks for use stack-analyze";
 
 export {
-  listFormat,
-  currency,
-  menuOpts,
-  menuWebOpts,
-  menuInfoOpts,
-  menuQueryOpts,
-  menuUtilityOpts,
-  menuHardwareOpts,
-  menuWallpaperOpts,	
-  menuAboutOpts,
-  scrapingOpts,
-  stackSave,
-  pokerGameOpts,
-  exitCli
+  listFormat, currency, menuOpts, menuWebOpts,
+  menuInfoOpts, menuQueryOpts, menuUtilityOpts, menuHardwareOpts,
+  menuWallpaperOpts, menuAboutOpts, scrapingOpts, menuQuoteOpts,
+  stackSave, pokerGameOpts, exitCli
 };
 

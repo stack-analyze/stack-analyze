@@ -4,6 +4,15 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.7
+
+#### Added
+- quotes new tool
+
+#### Changed
+- some files using new types jsdocs via import
+- cpuinfo using separetd of cache
+
 ### version 1.3.6 (5th aniversary)
 
 #### Added

@@ -14,14 +14,10 @@ import wallpaperSelect from "./hash/wallpaperSelect.js";
 import aboutTool from "./about.js";
 
 import {
-  menuOpts,
-  menuQueryOpts,
-  menuWebOpts,
-  menuAboutOpts,
-  menuInfoOpts,
-  menuWallpaperOpts,
-  menuUtilityOpts
+  menuOpts, menuQueryOpts, menuWebOpts, menuAboutOpts,
+  menuInfoOpts, menuWallpaperOpts, menuUtilityOpts, menuQuoteOpts
 } from "./utils.js";
+import quoteSelect from "./hash/quotesSelect.js";
 
 const [gauge, totalTime, pageSize] = [new Gauge(), 1e4, 9];
 
@@ -31,13 +27,9 @@ const exitCli = () => {
   console.info("thanks for use stack-analyze".green);
 };
 
-/**
- * @async
- * @returns {Promise<void>}
- */
-async function webOpts() {
+/** @type {import('./types.js').Menu} */async function webOpts() {
   console.info(colors.yellow(figlet.textSync("web options")));
-  
+
   const web = await stackMenu({
     pageSize,
     message: "enter a web tool option",
@@ -49,13 +41,10 @@ async function webOpts() {
     : mainMenu();
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
 async function infoOpts() {
   console.info(colors.yellow(figlet.textSync("info options")));
-  
+
   const info = await stackMenu({
     pageSize,
     message: "enter a info tool option",
@@ -67,13 +56,10 @@ async function infoOpts() {
     : infoTools[info](returnMain);
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
 async function queryOpts() {
   console.info(colors.yellow(figlet.textSync("query options")));
-  
+
   const query = await stackMenu({
     pageSize,
     message: "enter a query tool option",
@@ -85,31 +71,40 @@ async function queryOpts() {
     : queryTools[query](returnMain);
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
 async function wallpapersOpts() {
   console.info(colors.yellow(figlet.textSync("wallpapers")));
-  
+
   const wallpaper = await stackMenu({
     pageSize,
     message: "enter a wallpaper selector",
     choices: menuWallpaperOpts
   });
-	
+
   wallpaper === "return main menu"
     ? mainMenu()
     : wallpaperSelect[wallpaper](returnMain, wallpapersOpts);
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
+async function quotesOpts() {
+  console.info(colors.yellow(figlet.textSync("")));
+
+  const quotes = await stackMenu({
+    pageSize,
+    choices: menuQuoteOpts,
+    message: "enter a quote option"
+  });
+
+  quotes === "return main menu"
+    ? mainMenu()
+    : quoteSelect[quotes](returnMain);
+}
+
+/** @type {import('./types.js').Menu} */
 async function utilityOpts() {
   console.info(colors.yellow(figlet.textSync("utility options")));
-  
+
   const utility = await stackMenu({
     pageSize,
     message: "enter a utility tool option",
@@ -121,13 +116,10 @@ async function utilityOpts() {
     : utilityTools[utility](returnMain);
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
 async function aboutOpts() {
   console.info(colors.yellow(figlet.textSync("About Menu")));
-  
+
   const about = await stackMenu({
     pageSize,
     message: "select about option info",
@@ -139,17 +131,15 @@ async function aboutOpts() {
     : mainMenu();
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
 async function mainMenu() {
   console.clear();
   console.info(colors.yellow(figlet.textSync("stack-analyze")));
 
   const option = await stackMenu({
-  	message: "what option do you want to analyze stack",
-  	choices: menuOpts
+    message: "what option do you want to analyze stack",
+    choices: menuOpts,
+    pageSize: 10
   });
 
   const menuList = {
@@ -173,6 +163,10 @@ async function mainMenu() {
       console.clear();
       wallpapersOpts();
     },
+    quotes() {
+      console.clear();
+      quotesOpts();
+    },
     about() {
       console.clear();
       aboutOpts();
@@ -182,10 +176,7 @@ async function mainMenu() {
   option !== "exit" ? menuList[option]() : exitCli();
 }
 
-/**
- * @async
- * @returns {Promise<void>}
- */
+/** @type {import('./types.js').Menu} */
 async function returnMain() {
   try {
     const returnMain = await confirm({

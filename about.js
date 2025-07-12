@@ -4,36 +4,13 @@ import { printTable } from "console-table-printer";
 // package.json
 const { default: { license, version}} = await import("./package.json", {with: {type: "json" }});
 
+/** @type {number} */
 const timeout = 1e3;
 
-/**
- * types for about tools
- * 
- * @typedef {Object} Info
- * @property {string} Info.mainDeveloper
- * @property {string} Info.version
- * @property {string} Info.license
- * 
- * @typedef {Object} DeveloperList
- * @property {string} DeveloperList.name
- * @property {string} DeveloperList.roles
- * 
- * @typedef {Object} Youtube
- * @property {string} Youtube.youtubeChannel
- * @property {string} Youtube.recomendation
- * 
- * @typedef {Object} Twitch
- * @property {string} Twitch.user
- * @property {string} [Twitch.details]
- * 
- * @typedef {Object} Project
- * @property {string} Project.name
- * @property {string} Project.desc
- */
-
+/** @type {import("./types.js").Select}*/
 const aboutTool = {
   mainInfo(refreshCallback) {
-    /** @type {Info} */
+    /** @type {import("./types.js").Info} */
     const aboutApp = {
       mainDeveloper: "omega5300",
       license,
@@ -48,7 +25,7 @@ const aboutTool = {
   async lineup(refreshCallback) {
     const { listFormat } = await import("./utils.js");
     
-    /** @type {DeveloperList[]} */
+    /** @type {import("./types.js").DeveloperList[]} */
     const developers = [
       {
         name: "omega5300",
@@ -61,7 +38,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   youtubeRecomendation(refreshCallback) {
-    /** @type {Youtube[]} */
+    /** @type {import("./types.js").Youtube[]} */
     const youtubeDev = [
       { youtubeChannel: "fazt", recomendation: "recommend" },
       { youtubeChannel: "doriandesings", recomendation: "recommend" },
@@ -76,7 +53,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   twitchRecomendation(refreshCallback) { 
-    /** @type {Twitch[]} */
+    /** @type {import("./types.js").Twitch[]} */
     const twitchUsers = [
       {
         user: "DannyAgii",
@@ -96,7 +73,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   projectsRecomendation(refreshCallback) {
-    /** @type {Project[]} */
+    /** @type {import("./types.js").Project[]} */
     const projects = [
       {
         name: "black metal promotion",

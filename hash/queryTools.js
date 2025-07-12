@@ -9,7 +9,7 @@ import twitchInfo from "../functions/twitch.js";
 import deezer from "../functions/deezer.js";
 import potterSearch from "../functions/potterSearch.js";
 
-/** query tools */
+/** @type {import("../types.js").Select}*/
 const queryTools = {
   async anime_Search(refreshCallback) {
     console.clear();
@@ -32,7 +32,6 @@ const queryTools = {
       }),
       token: await password({
       	message: "enter a token key",
-      	required: true,
       	mask: true
       })
     };
@@ -76,12 +75,10 @@ const queryTools = {
     	}),
     	twitchClient: await password({
     		message: "enter a twitch client ID:",
-    		required: true,
       	mask: true
     	}),
     	twitchToken: await password({
       	message: "enter a twitch token:",
-      	required: true,
       	mask: true
     	})
     };

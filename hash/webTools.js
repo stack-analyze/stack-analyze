@@ -17,6 +17,7 @@ import { scrapingOpts } from "../utils.js";
 // regex
 const webRegex = /https?:\/\//g;
 
+/** @type {import("../types.js").Select}*/
 const webTools = {
   async single(refreshCallback) {
     console.clear();

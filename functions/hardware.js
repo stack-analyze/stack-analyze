@@ -37,14 +37,14 @@ export default async function hardware() {
     hardwareinfo.write(csvData(biosInfo, "\n\n"));
 
     // cpu info
-    const cpuInfo = await cpu();
-    
-    cpuInfo.cache = Object.entries(cpuInfo.cache)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join(" ");
+    const { cache: cpuCache, ...cpuInfo } = await cpu();
     
     hardwareinfo.write(csvHeader(cpuInfo));
     hardwareinfo.write(csvData(cpuInfo, "\n\n"));
+
+    hardwareinfo.write("cpu cache\n");
+    hardwareinfo.write(csvHeader(cpuCache));
+    hardwareinfo.write(csvData(cpuCache, "\n\n"));
 
     // os info
     const os = await osInfo();

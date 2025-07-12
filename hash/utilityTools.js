@@ -7,6 +7,7 @@ import genPassword from "../functions/password.js";
 import hardware from "../functions/hardware.js";
 import pokerGame from "../functions/poker.js";
 
+/** @type {import("../types.js").Select}*/
 const utilityTools = {
   password(refreshCallback) {
     console.clear();
@@ -16,7 +17,7 @@ const utilityTools = {
   async hardware(refreshCallback) {
     console.clear();
     hardware();
-    setTimeout(refreshCallback, 3e3);
+    setTimeout(refreshCallback, 12e3);
   },
   async poker_game(refreshCallback) {
   	const pokeOpt = await stackMenu({

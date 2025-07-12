@@ -9,7 +9,7 @@ import { stackSave } from "../utils.js";
 
 /**
  *
- * @description call the anime serach info
+ * @description call the anime serach info.
  * @async
  * @param { string } q - get query results
  * @returns { Promise<void> } - return results serach

@@ -10,6 +10,7 @@ import bundlephobia from "../functions/bundlephobia.js";
 // bitly regexp
 const bitlyRegexp = /bit\.ly\//g;
 
+/** @type {import("../types.js").Select}*/
 const infoTools = {
   async github_info(refreshCallback) {
     console.clear();
@@ -32,7 +33,6 @@ const infoTools = {
     	}),
     	token: await password({
     		message: "enter a bitly token",
-    		required: true,
     		mask: true
     	})
     };
