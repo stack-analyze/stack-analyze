@@ -6,7 +6,7 @@ import { stackSave } from "../utils.js";
 
 /**
  * @typedef {"go-fish"|"gin-rummy"|"blackjack"|"slapjack"|"basics-of-poker"|"texas-holdem-poker"} Options
- * @params {Options} game
+ * @param {Options} game
  * @returns {Promise<void>}
  */
 export default async function pokerGame(game) {

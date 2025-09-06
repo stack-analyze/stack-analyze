@@ -1,33 +1,34 @@
 #!/usr/bin/env node
-import Gauge from "gauge";
+import ora from "ora";
 import colors from "colors";
 import { confirm } from "@inquirer/prompts";
 import figlet from "figlet";
 
 import { stackMenu } from "./menu.js";
 
-import webTools from "./hash/webTools.js";
-import queryTools from "./hash/queryTools.js";
-import infoTools from "./hash/infoTools.js";
-import utilityTools from "./hash/utilityTools.js";
-import wallpaperSelect from "./hash/wallpaperSelect.js";
-import aboutTool from "./about.js";
+import {menuWebOpts, webTools} from "./hash/webTools.js";
+import {menuQueryOpts, queryTools} from "./hash/queryTools.js";
+import {infoTools, menuInfoOpts} from "./hash/infoTools.js";
+import {menuUtilityOpts, utilityTools} from "./hash/utilityTools.js";
+import {menuWallpaperOpts, wallpaperSelect} from "./hash/wallpaperSelect.js";
+import {aboutTool, menuAboutOpts} from "./about.js";
 
-import {
-  menuOpts, menuQueryOpts, menuWebOpts, menuAboutOpts,
-  menuInfoOpts, menuWallpaperOpts, menuUtilityOpts, menuQuoteOpts
-} from "./utils.js";
-import quoteSelect from "./hash/quotesSelect.js";
+import { exitMsg } from "./utils.js";
+import { quoteSelect, menuQuoteOpts } from "./hash/quotesSelect.js";
 
-const [gauge, totalTime, pageSize] = [new Gauge(), 1e4, 9];
+const [spinner, totalTime, pageSize] = [
+  ora({spinner: "dots11", color: "white" }), 
+  1e4, 9
+];
 
 /** @returns {void} */
 const exitCli = () => {
   console.clear();
-  console.info("thanks for use stack-analyze".green);
+  console.info(exitMsg);
 };
 
-/** @type {import('./types.js').Menu} */async function webOpts() {
+/** @returns {Promise<void>} */
+async function webOpts() {
   console.info(colors.yellow(figlet.textSync("web options")));
 
   const web = await stackMenu({
@@ -41,7 +42,7 @@ const exitCli = () => {
     : mainMenu();
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function infoOpts() {
   console.info(colors.yellow(figlet.textSync("info options")));
 
@@ -56,7 +57,7 @@ async function infoOpts() {
     : infoTools[info](returnMain);
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function queryOpts() {
   console.info(colors.yellow(figlet.textSync("query options")));
 
@@ -71,7 +72,7 @@ async function queryOpts() {
     : queryTools[query](returnMain);
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function wallpapersOpts() {
   console.info(colors.yellow(figlet.textSync("wallpapers")));
 
@@ -86,9 +87,9 @@ async function wallpapersOpts() {
     : wallpaperSelect[wallpaper](returnMain, wallpapersOpts);
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function quotesOpts() {
-  console.info(colors.yellow(figlet.textSync("")));
+  console.info(colors.yellow(figlet.textSync("quotes")));
 
   const quotes = await stackMenu({
     pageSize,
@@ -101,7 +102,7 @@ async function quotesOpts() {
     : quoteSelect[quotes](returnMain);
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function utilityOpts() {
   console.info(colors.yellow(figlet.textSync("utility options")));
 
@@ -116,7 +117,7 @@ async function utilityOpts() {
     : utilityTools[utility](returnMain);
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function aboutOpts() {
   console.info(colors.yellow(figlet.textSync("About Menu")));
 
@@ -131,16 +132,10 @@ async function aboutOpts() {
     : mainMenu();
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function mainMenu() {
   console.clear();
   console.info(colors.yellow(figlet.textSync("stack-analyze")));
-
-  const option = await stackMenu({
-    message: "what option do you want to analyze stack",
-    choices: menuOpts,
-    pageSize: 10
-  });
 
   const menuList = {
     web() {
@@ -173,15 +168,21 @@ async function mainMenu() {
     }
   };
 
+  const option = await stackMenu({
+    message: "what option do you want to analyze stack",
+    choices: [...Object.keys(menuList), "exit"],
+    pageSize: 10
+  });
+
   option !== "exit" ? menuList[option]() : exitCli();
 }
 
-/** @type {import('./types.js').Menu} */
+/** @returns {Promise<void>} */
 async function returnMain() {
   try {
     const returnMain = await confirm({
       message: "do you want go to the main menu?",
-    });
+    }).catch();
 
     returnMain ? mainMenu() : exitCli();
   } catch (err) {
@@ -190,15 +191,17 @@ async function returnMain() {
 }
 
 for (let i = 50; i < totalTime; i += 50) {
-  const percentage = i / totalTime;
+  const percentage = i / totalTime * 100;
 
   setTimeout(() => {
-    gauge.pulse();
-    gauge.show(`Loading app... ${percentage * 100}%`.random, percentage);
+    /* gauge.pulse();
+    gauge.show(`Loading app... ${percentage * 100}%`.random, percentage); */
+    spinner.text = `Loading app... ${Math.ceil(percentage)}%`.random;
+    spinner.start();
   }, i);
 }
 
 setTimeout(() => {
-  gauge.hide();
+  spinner.stop();
   mainMenu();
 }, totalTime);

@@ -26,8 +26,4 @@ const webScrapingQuery = {
   choices: scrapingOpts
 };
 
-export {
-  singleWebQuery,
-  multipleWebQuery,
-  webScrapingQuery
-};
+export { singleWebQuery, multipleWebQuery, webScrapingQuery };

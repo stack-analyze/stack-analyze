@@ -1,16 +1,49 @@
 // print table
 import { printTable } from "console-table-printer";
+import { returnMainOpts } from "./utils.js";
 
 // package.json
-const { default: { license, version}} = await import("./package.json", {with: {type: "json" }});
+const { default: { license, version } } = await import("./package.json", { with: { type: "json" } });
+
+/**
+ * @typedef {Object} Info
+ * @property {string} Info.mainDeveloper
+ * @property {string} Info.version
+ * @property {string} Info.license
+ * 
+ * @typedef {Object} DeveloperList
+ * @property {string} DeveloperList.name
+ * @property {string} DeveloperList.roles
+ * 
+ * @typedef {Object} Youtube
+ * @property {string} Youtube.youtubeChannel
+ * @property {string} Youtube.recomendation
+ * 
+ * @typedef {Object} Twitch
+ * @property {string} Twitch.user
+ * @property {string} [Twitch.details]
+ * 
+ * @typedef {Object} Project
+ * @property {string} Project.name
+ * @property {string} Project.desc
+ * 
+ * select types
+ * @typedef {({
+ *   [x: string]: (
+ *     refreshCallback: () => Promise<void>, 
+ *     alternativeCallback?: () => Promise<void>
+ *   ) => Promise<void> | void
+ * })} Select
+ */
+
 
 /** @type {number} */
 const timeout = 1e3;
 
-/** @type {import("./types.js").Select}*/
+/** @type {Select}*/
 const aboutTool = {
   mainInfo(refreshCallback) {
-    /** @type {import("./types.js").Info} */
+    /** @type {Info} */
     const aboutApp = {
       mainDeveloper: "omega5300",
       license,
@@ -19,13 +52,13 @@ const aboutTool = {
 
     console.clear();
     console.table(aboutApp);
-    
+
     setTimeout(refreshCallback, timeout);
   },
   async lineup(refreshCallback) {
     const { listFormat } = await import("./utils.js");
-    
-    /** @type {import("./types.js").DeveloperList[]} */
+
+    /** @type {DeveloperList[]} */
     const developers = [
       {
         name: "omega5300",
@@ -38,7 +71,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   youtubeRecomendation(refreshCallback) {
-    /** @type {import("./types.js").Youtube[]} */
+    /** @type {Youtube[]} */
     const youtubeDev = [
       { youtubeChannel: "fazt", recomendation: "recommend" },
       { youtubeChannel: "doriandesings", recomendation: "recommend" },
@@ -52,8 +85,8 @@ const aboutTool = {
     printTable(youtubeDev);
     setTimeout(refreshCallback, timeout);
   },
-  twitchRecomendation(refreshCallback) { 
-    /** @type {import("./types.js").Twitch[]} */
+  twitchRecomendation(refreshCallback) {
+    /** @type {Twitch[]} */
     const twitchUsers = [
       {
         user: "DannyAgii",
@@ -73,7 +106,7 @@ const aboutTool = {
     setTimeout(refreshCallback, timeout);
   },
   projectsRecomendation(refreshCallback) {
-    /** @type {import("./types.js").Project[]} */
+    /** @type {Project[]} */
     const projects = [
       {
         name: "black metal promotion",
@@ -84,8 +117,8 @@ const aboutTool = {
         desc: "promos albums and community"
       },
       {
-      	name: "slithering black records",
-      	desc: "record label & community"
+        name: "slithering black records",
+        desc: "record label & community"
       }
     ];
 
@@ -95,4 +128,6 @@ const aboutTool = {
   }
 };
 
-export default aboutTool;
+const menuAboutOpts = [...Object.keys(aboutTool), returnMainOpts];
+
+export { aboutTool, menuAboutOpts };

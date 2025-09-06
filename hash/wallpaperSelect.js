@@ -2,11 +2,22 @@
 import { select } from "@inquirer/prompts";
 
 import { wallpaperDownload } from "../functions/download.js";
+import { returnMainOpts } from "../utils.js";
 
 const message = "select a wallpaper for download:";
 const backMenu = "back to menu";
 
-/** @type {import("../types.js").Select}*/
+/**
+* select types
+ * @typedef {({
+ *   [x: string]: (
+ *     refreshCallback: () => Promise<void>, 
+ *     alternativeCallback?: () => Promise<void>
+ *   ) => Promise<void> | void
+ * })} Select
+ * /
+
+/** @type {Select}*/
 const wallpaperSelect = {
   solMoon: async (refreshCallback, alternativeCallback) => {
     const solMoonWallpapers = [...Array(20).keys()]
@@ -87,4 +98,6 @@ const wallpaperSelect = {
   },
 };
 
-export default wallpaperSelect;
+const menuWallpaperOpts = [...Object.keys(wallpaperSelect), returnMainOpts];
+
+export {wallpaperSelect, menuWallpaperOpts};

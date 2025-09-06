@@ -8,8 +8,19 @@ import pokemonInfo from "../functions/pokemon.js";
 import twitchInfo from "../functions/twitch.js";
 import deezer from "../functions/deezer.js";
 import potterSearch from "../functions/potterSearch.js";
+import { returnMainOpts } from "../utils.js";
 
-/** @type {import("../types.js").Select}*/
+/**
+* select types
+ * @typedef {({
+ *   [x: string]: (
+ *     refreshCallback: () => Promise<void>, 
+ *     alternativeCallback?: () => Promise<void>
+ *   ) => Promise<void> | void
+ * })} Select
+ * /
+
+/** @type {Select}*/
 const queryTools = {
   async anime_Search(refreshCallback) {
     console.clear();
@@ -110,4 +121,6 @@ const queryTools = {
   }
 };
 
-export default queryTools;
+const menuQueryOpts = [...Object.keys(queryTools), returnMainOpts];
+
+export {queryTools, menuQueryOpts};

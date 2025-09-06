@@ -12,12 +12,22 @@ import scrape from "../functions/scraping.js";
 import cssValidate from "../functions/cssValidator.js";
 
 import { stackMenu } from "../menu.js";
-import { scrapingOpts } from "../utils.js";
+import { returnMainOpts, scrapingOpts } from "../utils.js";
 
 // regex
 const webRegex = /https?:\/\//g;
 
-/** @type {import("../types.js").Select}*/
+/**
+* select types
+ * @typedef {({
+ *   [x: string]: (
+ *     refreshCallback: () => Promise<void>, 
+ *     alternativeCallback?: () => Promise<void>
+ *   ) => Promise<void> | void
+ * })} Select
+ * /
+
+/** @type {Select}*/
 const webTools = {
   async single(refreshCallback) {
     console.clear();
@@ -90,4 +100,6 @@ const webTools = {
   }
 };
 
-export default webTools;
+const menuWebOpts = [...Object.keys(webTools), returnMainOpts];
+
+export {webTools, menuWebOpts};

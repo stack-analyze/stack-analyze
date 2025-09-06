@@ -25,16 +25,12 @@ export default async function movieDB(query, token) {
 
     const movieData = data.results
       .map(({
-        title,
-        original_language,
-        popularity,
-        vote_average,
+        title, original_language,
+        popularity, vote_average,
         release_date
       }) => ({
-        title,
-        original_language,
-        popularity,
-        vote_average,
+        title, original_language,
+        popularity, vote_average,
         release_date
       }))
       .sort((x, y) => {

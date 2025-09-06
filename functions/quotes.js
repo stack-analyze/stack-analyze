@@ -2,32 +2,18 @@ import axios from "axios";
 import colors from "colors";
 
 /**
- * @description get random quote from anime characters.
  * @async
- * @param {string} anime 
  * @returns {Promise<void>}
  */
-async function getAnimeQuote(anime) {
+async function getSwiftQuotes() {
   try {
-    /** @type {import('axios').AxiosResponse<import('../types.js').AnimeQuoute>} */
-    const { data } = await axios.get("https://api.animechan.io/v1/quotes/random", {
-      params: { anime }
-    });
+    const { data } = await axios.get("https://taylorswiftapi.onrender.com/get");
 
-    const {
-      content,
-      anime: { altName: animeAltName, name: animeName },
-      character: { name: characterName }
-    } = data.data;
+    console.info(`"${data.quote}" \n album: ${data.album} song: ${data.song}`);
 
-    console.info({
-      content, animeAltName, animeName, characterName
-    });
   } catch (err) {
-    console.error(colors.red(/** @type {import('axios').AxiosError} */(err).message));
+    console.error(colors.red(err.message));
   }
 }
 
-export {
-  getAnimeQuote
-};
+export { getSwiftQuotes };

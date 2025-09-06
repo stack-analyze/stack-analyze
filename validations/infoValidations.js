@@ -29,9 +29,4 @@ const promptKey = (name, message) => ({
   validate: input => input !== "" || "token field is required".yellow
 });
 
-export {
-  bitlyQuery,
-  promptParams,
-  promptKey
-};
-
+export { bitlyQuery, promptParams, promptKey };

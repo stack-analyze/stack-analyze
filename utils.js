@@ -1,4 +1,5 @@
 import { writeFile } from "node:fs/promises";
+import colors from "colors";
 
 const listFormat = new Intl.ListFormat("en", {
   style: "short",
@@ -9,47 +10,8 @@ const currency = new Intl.NumberFormat("en-us", {
   style: "currency", currency: "USD"
 });
 
+/** @type {string} */
 const returnMainOpts = "return main menu";
-
-const menuOpts = [
-  "web", "info", "query", "utility", "wallpapers", "quotes",
-  "about", "exit"
-];
-
-const menuWebOpts = [
-  "single", "multiple", "pagespeed", "scraping", "css_validate", 
-  returnMainOpts
-];
-
-const menuInfoOpts = [
-  "github_info", "crypto_market", "bitly_info", "bundlephobia_info", returnMainOpts
-];
-
-const menuQueryOpts = [
-  "anime_Search", "movie_info", "pokemon_info", 
-  "twitch_info", "deezer", "potter_search", returnMainOpts
-];
-
-const menuUtilityOpts = [
-  "hardware", "password", "poker_game", returnMainOpts
-];
-
-const menuWallpaperOpts = [
-  "solMoon", "dimensions", "seyyahi2", "ancientMistery", 
-  "tsukyNoEmily", returnMainOpts
-];
-
-const menuQuoteOpts = ["animeQuote", returnMainOpts];
-
-const menuHardwareOpts = [
-  "cpuInfo", "ramMemInfo", "osDetail", "diskInfo",
-  "controllerInfo", "displayInfo", "biosInfo", returnMainOpts
-];
-
-const menuAboutOpts = [
-  "mainInfo", "lineup", "youtubeRecomendation",
-  "twitchRecomendation", "projectsRecomendation", returnMainOpts
-];
 
 const scrapingOpts = [
   "title", "images", "metadata", "headings",
@@ -62,7 +24,6 @@ const pokerGameOpts = [
 ];
 
 /**
- * 
  * @param {string} filename 
  * @param {any} data 
  * @returns {Promise<void>}
@@ -78,19 +39,27 @@ const stackSave = async (filename, data) => {
     return;
   }
 
-  try {
-    await writeFile(filename, data);
+  try { await writeFile(filename, data);
   } catch (err) {
-    console.info(err.message);
+    console.info(colors.red(err.message));
   }
 };
 
-const exitCli = "thanks for use stack-analyze";
+const exitMsg = "thanks for use stack-analyze".green;
+
+/**
+ * @param {Error} err
+ * @returns {void}
+ */
+const forceExit = (err) => {
+  if(err.name === "ExitPromptError") {
+    console.info("👋 until next time!".green);
+    process.exit(1);
+  }
+};
 
 export {
-  listFormat, currency, menuOpts, menuWebOpts,
-  menuInfoOpts, menuQueryOpts, menuUtilityOpts, menuHardwareOpts,
-  menuWallpaperOpts, menuAboutOpts, scrapingOpts, menuQuoteOpts,
-  stackSave, pokerGameOpts, exitCli
+  listFormat, currency, scrapingOpts, forceExit, 
+  stackSave, pokerGameOpts, exitMsg, returnMainOpts
 };
 

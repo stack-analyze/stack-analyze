@@ -7,7 +7,7 @@ import { stackSave } from "../utils.js";
 
 /**
 	* @async
-	* @params { string } query
+	* @param {string} q
 	* @returns {Promise<void>}
 */
 export default async function deezer(q) {
@@ -20,9 +20,8 @@ export default async function deezer(q) {
       id, title, record_type, 
       explicit_lyrics, artist, nb_tracks
     }) => ({
-      id,
+      id, title,
       artist: artist.name,
-      title,
       type: record_type,
       num_tracks: nb_tracks,
       lyrics_content: explicit_lyrics ? "explicit" : "clean"

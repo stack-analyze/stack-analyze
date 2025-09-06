@@ -1,8 +1,8 @@
 {
     "source": {
-        "include": ["./functions/", "./*.js"],
+        "include": ["./functions/", "./cli.js", "./about.js", "./menu.js", "./utils.js" ],
         "includePattern": ".+\\.(c?js(doc|x)?)$",
-        "excludePattern": "(node_modules|docs)"
+        "excludePattern": "(node_modules|docs|test)"
     },
     "templates": {
     "default": {

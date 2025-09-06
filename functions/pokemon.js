@@ -6,6 +6,7 @@ import CliProgress from "cli-progress";
 // utils
 import { listFormat, stackSave } from "../utils.js";
 
+/** @type {Object<string, number>} */
 const pokeStats = {
   hp: 255,
   attack: 194,
@@ -17,7 +18,7 @@ const pokeStats = {
 };
 
 /** 
-*	@param {string}
+*	@param {string} stat
 * @returns {string}
 */
 const barColor = stat => {
@@ -27,7 +28,7 @@ const barColor = stat => {
     case "attack":
       return "{bar}".yellow;
     case "defense":
-      return "{bar}".brightYellow;
+      return "{bar}".white;
     case "special-attack":
       return "{bar}".blue;
     case "special-defense":
@@ -61,22 +62,13 @@ export default async function pokemonInfo(pokemon) {
     ).json();
     
     const {
-      id,
-      name,
-      height, 
-      base_experience, 
-      weight, 
-      stats, 
-      types
+      id, name, height, base_experience, weight, 
+      stats, types
     } = data;
     
     const info = {
-      id,
-      name,
-      height,
-      base_experience,
-      weight,
-      types: listFormat.format(types.map(({ type }) => type.name)),
+      id, name, height, base_experience,
+      weight, types: listFormat.format(types.map(({ type }) => type.name)),
     };
     
     const PokeInfo = boxen(info.types, {title: `${id} - ${name}`});
