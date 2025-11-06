@@ -1,16 +1,11 @@
 // print table
 import { printTable } from "console-table-printer";
-import { returnMainOpts } from "./utils.js";
+import { returnMainOpts, listFormat } from "./utils.js";
 
 // package.json
 const { default: { license, version } } = await import("./package.json", { with: { type: "json" } });
 
 /**
- * @typedef {Object} Info
- * @property {string} Info.mainDeveloper
- * @property {string} Info.version
- * @property {string} Info.license
- * 
  * @typedef {Object} DeveloperList
  * @property {string} DeveloperList.name
  * @property {string} DeveloperList.roles
@@ -27,12 +22,10 @@ const { default: { license, version } } = await import("./package.json", { with:
  * @property {string} Project.name
  * @property {string} Project.desc
  * 
- * select types
  * @typedef {({
  *   [x: string]: (
- *     refreshCallback: () => Promise<void>, 
- *     alternativeCallback?: () => Promise<void>
- *   ) => Promise<void> | void
+ *     refreshCallback: () => Promise<void>,
+ *   ) => void
  * })} Select
  */
 
@@ -43,11 +36,10 @@ const timeout = 1e3;
 /** @type {Select}*/
 const aboutTool = {
   mainInfo(refreshCallback) {
-    /** @type {Info} */
+    /** @type {Object<string, string>} */
     const aboutApp = {
       mainDeveloper: "omega5300",
-      license,
-      version
+      license, version
     };
 
     console.clear();
@@ -55,9 +47,7 @@ const aboutTool = {
 
     setTimeout(refreshCallback, timeout);
   },
-  async lineup(refreshCallback) {
-    const { listFormat } = await import("./utils.js");
-
+  lineup(refreshCallback) {
     /** @type {DeveloperList[]} */
     const developers = [
       {
@@ -91,14 +81,6 @@ const aboutTool = {
       {
         user: "DannyAgii",
       },
-      {
-        user: "Lunanny",
-        details: "art director with ADHD."
-      },
-      {
-        user: "Japon_HR",
-        details: "cosplayer, gamer, dance & halo machinima creator"
-      }
     ];
 
     console.clear();
@@ -116,10 +98,6 @@ const aboutTool = {
         name: "black metal catalog",
         desc: "promos albums and community"
       },
-      {
-        name: "slithering black records",
-        desc: "record label & community"
-      }
     ];
 
     console.clear();

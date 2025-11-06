@@ -1,12 +1,13 @@
 // inquirer
-import { input, password } from "@inquirer/prompts";
+import { input, password, number, select } from "@inquirer/prompts";
 
 // functions
 import bitlyInfo from "../functions/bitly.js";
 import cryptoMarket from "../functions/cryptoList.js";
 import githubInfo from "../functions/gitUser.js";
 import bundlephobia from "../functions/bundlephobia.js";
-import { returnMainOpts } from "../utils.js";
+import { returnMainOpts, TCGP_EXPANSIONS } from "../utils.js";
+import getTcgpCard from "../functions/tcgp.js";
 
 // bitly regexp
 const bitlyRegexp = /bit\.ly\//g;
@@ -15,8 +16,7 @@ const bitlyRegexp = /bit\.ly\//g;
 * select types
  * @typedef {({
  *   [x: string]: (
- *     refreshCallback: () => Promise<void>, 
- *     alternativeCallback?: () => Promise<void>
+ *     refreshCallback: () => Promise<void>,
  *   ) => Promise<void> | void
  * })} Select
  * /
@@ -67,6 +67,24 @@ const infoTools = {
     bundlephobia(pkgName);
     setTimeout(refreshCallback, 5e3);
   },
+  async tcgpCard(refreshCallback) {
+    console.clear();
+    
+    const setName = await select({
+      message: "Select a expansion set TCGP:",
+      choices: Object.keys(TCGP_EXPANSIONS),
+      loop: true,
+    });
+    
+    const cardID = await number({
+      message: `Enter a card id between 1 to ${TCGP_EXPANSIONS[setName]}:`,
+      min: 1, max: TCGP_EXPANSIONS[setName]
+    });
+
+    getTcgpCard(setName, cardID);
+
+    setTimeout(refreshCallback, 5e3);
+  }
 };
 
 const menuInfoOpts = [...Object.keys(infoTools), returnMainOpts];

@@ -1,20 +1,12 @@
 // modules
 import { createWriteStream } from "node:fs";
-import {
-  cpu,
-  mem,
-  osInfo,
-  diskLayout,
-  graphics,
-  bios
-} from "systeminformation";
+import { cpu, mem, osInfo, diskLayout, graphics, bios } from "systeminformation";
 import colors from "colors";
 
 const csvHeader = (obj) => `${Object.keys(obj).join(";")}\n`;
 const csvData = (obj, spaces) => `${Object.values(obj).join(";")}${spaces}`;
 
 /**
- * 
  * @param {number} size 
  * @param {number} [base = 1073741824] 
  * @returns {string}
@@ -22,7 +14,6 @@ const csvData = (obj, spaces) => `${Object.values(obj).join(";")}${spaces}`;
 const gigabyteConvert = (size, base = 1073741824) => (size / base).toFixed(2);
 
 /**
- * 
  * @async
  * @returns {Promise<void>}
  */

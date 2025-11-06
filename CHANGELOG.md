@@ -4,6 +4,18 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 
 ## generation 4 (ver. 1.3.0 - )
 
+### version 1.3.9
+
+#### Added
+- added new tool (tcg pocket card info):
+    - @tcgdex/sdk *new module*
+
+### version 1.3.8
+
+#### Changed
+- replace all arrays option instead using keys object for fast adaptible.
+- change anime quotes to taylor swift quotes (neo-jquery easter egg)
+
 ### version 1.3.7
 
 #### Added
