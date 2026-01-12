@@ -6,6 +6,8 @@ import { pokerGameOpts, returnMainOpts } from "../utils.js";
 import genPassword from "../functions/password.js";
 import hardware from "../functions/hardware.js";
 import pokerGame from "../functions/poker.js";
+import magicBall from "../functions/magicBall.js";
+import { input } from "@inquirer/prompts";
 
 /**
  * select types
@@ -36,6 +38,19 @@ const utilityTools = {
     });
 
     pokerGame(pokeOpt);
+    setTimeout(refreshCallback, 5e3);
+  },
+  async magic_ball(refreshCallback) {
+    const localeOpt = await stackMenu({
+      message: "select a magic ball locale:",
+      choices: ["en", "es"]
+    });
+
+    const magicBallQuestion = await input({
+      message: "enter a question to the selected language:"
+    });
+
+    magicBall(localeOpt, magicBallQuestion);
     setTimeout(refreshCallback, 5e3);
   }
 };
