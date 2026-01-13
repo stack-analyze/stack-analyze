@@ -22,18 +22,12 @@ const { default: { license, version } } = await import("./package.json", { with:
  * @property {string} Project.name
  * @property {string} Project.desc
  * 
- * @typedef {({
- *   [x: string]: (
- *     refreshCallback: () => Promise<void>,
- *   ) => void
- * })} Select
  */
 
 
 /** @type {number} */
 const timeout = 1e3;
 
-/** @type {Select}*/
 const aboutTool = {
   mainInfo(refreshCallback) {
     /** @type {Object<string, string>} */
@@ -79,7 +73,7 @@ const aboutTool = {
     /** @type {Twitch[]} */
     const twitchUsers = [
       {
-        user: "DannyAgii",
+        user: "DannyQuiin",
       },
     ];
 

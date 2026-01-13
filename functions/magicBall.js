@@ -2,17 +2,12 @@ import axios from "axios";
 import colors from "colors";
 
 /**
- * @typedef {'en' | 'es'} Locale
- * 
- * @typedef {{[x in Locale]: string}} LocaleKeyword
- * 
  * @async
- * @param { Locale } locale
+ * @param { 'en' | 'es' } locale
  * @param { string } question
  * @returns {Promise<void>}
  */
 export default async function magicBall(locale, question) {
-  /** @type {LocaleKeyword} */
   const localeKeyword = {
     en: "magic ball say:",
     es: "la bola magic te dice:"
