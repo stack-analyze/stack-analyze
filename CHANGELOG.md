@@ -6,6 +6,12 @@ stack-analyze all version and notable changes, fixed, remove and new additions i
 - version 1.4.0
     - Added:
         - new tool magic ball
+- version 1.4.1
+    - Added:
+        - stations info
+    - Changed:
+        - change from basic console.log for magic ball now using boxen
+        - update sets for tcgp info tool
 
 ## generation 4 (ver. 1.3.0 - 1.3.9)
 

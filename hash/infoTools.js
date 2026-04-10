@@ -8,6 +8,7 @@ import githubInfo from "../functions/gitUser.js";
 import bundlephobia from "../functions/bundlephobia.js";
 import { returnMainOpts, TCGP_EXPANSIONS } from "../utils.js";
 import getTcgpCard from "../functions/tcgp.js";
+import getStations from "../functions/getStations.js";
 
 // bitly regexp
 const bitlyRegexp = /bit\.ly\//g;
@@ -83,6 +84,16 @@ const infoTools = {
 
     getTcgpCard(setName, cardID);
 
+    setTimeout(refreshCallback, 5e3);
+  },
+  async getStations(refreshCallback) {
+    console.warn("some stations not visble only info".yellow);
+    
+    const country = await input({
+      message: "enter country"
+    });
+
+    getStations(country);
     setTimeout(refreshCallback, 5e3);
   }
 };

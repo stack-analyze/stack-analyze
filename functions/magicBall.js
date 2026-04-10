@@ -1,5 +1,6 @@
 import axios from "axios";
 import colors from "colors";
+import boxen from "boxen";
 
 /**
  * @async
@@ -12,15 +13,17 @@ export default async function magicBall(locale, question) {
     en: "magic ball say:",
     es: "la bola magic te dice:"
   };
-  
+
   try {
     const {data} = await axios.get("https://eightballapi.com/api/biased", {
       params: { question, locale }
     });
 
-    console.info(
-      localeKeyword[locale], data.reading
-    );
+    const anwser = boxen(data.reading, {
+      title: localeKeyword[locale],
+    });
+
+    console.info(anwser);
   } catch (err) {
     console.info(colors.red(err.message));
   }

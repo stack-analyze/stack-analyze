@@ -24,22 +24,16 @@ const pokerGameOpts = [
 ];
 
 /**
- * @readonly
- * @type {Object<string,number>}
+ * 
+ * @constant {Object<string,number>}
  */
 const TCGP_EXPANSIONS = {
-  "p-a": 100,
-  a1: 286,
-  a1a: 86,
-  a2: 207,
-  a2a: 96,
-  a2b: 111,
-  a3: 239,
-  a3a: 103,
-  a3b: 107,
-  a4: 241,
-  a4a: 105,
-  b1: 331,
+  "p-a": 100, a1: 286, a1a: 86,
+  a2: 207, a2a: 96, a2b: 111,
+  a3: 239, a3a: 103, a3b: 107,
+  a4: 241, a4a: 105,
+  b1: 331, b1a: 103,
+  b2: 234,
 };
 
 /**

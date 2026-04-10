@@ -50,6 +50,7 @@ const utilityTools = {
       message: "enter a question to the selected language:"
     });
 
+    console.clear();
     magicBall(localeOpt, magicBallQuestion);
     setTimeout(refreshCallback, 5e3);
   }
