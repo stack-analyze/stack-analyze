@@ -23,10 +23,7 @@ const pokerGameOpts = [
   "basics-of-poker", "texas-holdem-poker"
 ];
 
-/**
- * 
- * @constant {Object<string,number>}
- */
+/** @type {Object<string,number>} */
 const TCGP_EXPANSIONS = {
   "p-a": 100, a1: 286, a1a: 86,
   a2: 207, a2a: 96, a2b: 111,

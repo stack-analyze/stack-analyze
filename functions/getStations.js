@@ -8,15 +8,15 @@ import colors from "colors";
  */
 const getStations = async (country) => {
   try {
-    const { data } = await axios.get(`https://de1.api.radio-browser.info/json/stations/bycountry/${country}`, {
-      params: { limit: 20 }
-    });
+    const { data } = await axios.get(`https://de1.api.radio-browser.info/json/stations/bycountry/${country}`);
 
-    const stations = data.map(({ name, state, codec }) => ({
+    const totalStationsList = Array.from(Array(20), () => data[Math.floor(Math.random() * data.length)])
+
+    const finalStationsList = totalStationsList.map(({ name, state, codec }) => ({
       name, state: state || "unknown", codec,
     }));
 
-    stations.length === 0 ? console.warn("no stations".yellow) : printTable(stations);
+    finalStationsList.length === 0 ? console.warn("no stations".yellow) : printTable(finalStationsList);
   } catch (err) {
     console.error(colors.red(err));
   }

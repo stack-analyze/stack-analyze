@@ -1,23 +1,24 @@
 #!/usr/bin/env node
 import ora from "ora";
 import colors from "colors";
-import { confirm } from "@inquirer/prompts";
+import { confirm, input } from "@inquirer/prompts";
 import figlet from "figlet";
 
 import { stackMenu } from "./menu.js";
 
-import {menuWebOpts, webTools} from "./hash/webTools.js";
-import {menuQueryOpts, queryTools} from "./hash/queryTools.js";
-import {infoTools, menuInfoOpts} from "./hash/infoTools.js";
-import {menuUtilityOpts, utilityTools} from "./hash/utilityTools.js";
-import {menuWallpaperOpts, wallpaperSelect} from "./hash/wallpaperSelect.js";
-import {aboutTool, menuAboutOpts} from "./about.js";
+import { menuWebOpts, webTools } from "./hash/webTools.js";
+import { menuQueryOpts, queryTools } from "./hash/queryTools.js";
+import { infoTools, menuInfoOpts } from "./hash/infoTools.js";
+import { menuUtilityOpts, utilityTools } from "./hash/utilityTools.js";
+import { menuWallpaperOpts, wallpaperSelect } from "./hash/wallpaperSelect.js";
+import { aboutTool, menuAboutOpts } from "./about.js";
 
 import { exitMsg } from "./utils.js";
 import { quoteSelect, menuQuoteOpts } from "./hash/quotesSelect.js";
+import getStations from "./functions/getStations.js";
 
 const [spinner, totalTime, pageSize] = [
-  ora({spinner: "dots11", color: "white" }), 
+  ora({ spinner: "dots11", color: "white" }),
   1e4, 9
 ];
 
@@ -162,6 +163,16 @@ async function mainMenu() {
       console.clear();
       quotesOpts();
     },
+    async stations() {
+      console.warn("some stations not visble only info".yellow);
+
+      const country = await input({
+        message: "enter a country for search:"
+      });
+
+      getStations(country);
+      setTimeout(returnMain, 5e3);
+    },
     about() {
       console.clear();
       aboutOpts();
@@ -169,7 +180,7 @@ async function mainMenu() {
   };
 
   const option = await stackMenu({
-    message: "what option do you want to analyze stack",
+    message: "what option do you want to analyze stack:",
     choices: [...Object.keys(menuList), "exit"],
     pageSize: 10
   });
@@ -194,8 +205,6 @@ for (let i = 50; i < totalTime; i += 50) {
   const percentage = i / totalTime * 100;
 
   setTimeout(() => {
-    /* gauge.pulse();
-    gauge.show(`Loading app... ${percentage * 100}%`.random, percentage); */
     spinner.text = `Loading app... ${Math.ceil(percentage)}%`.random;
     spinner.start();
   }, i);

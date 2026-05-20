@@ -1,6 +1,6 @@
 {
   "name": "stack-analyze",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "type": "module",
   "description": "cli tech stack analyze and pagespeed with node.js using the wappalyzer module. with google pagespeed api, hardware and crypto market",
   "main": "cli.js",
@@ -8,26 +8,26 @@
     "stack-analyze": "cli.js"
   },
   "dependencies": {
-    "@inquirer/prompts": "^7.9.0",
-    "@tcgdex/sdk": "^2.7.1",
-    "axios": "^1.13.1",
+    "@inquirer/prompts": "^8.4.3",
+    "@tcgdex/sdk": "^2.9.0",
+    "axios": "^1.16.1",
     "boxen": "^8.0.1",
-    "cheerio": "^1.1.2",
+    "cheerio": "^1.2.0",
     "cli-progress": "^3.12.0",
     "colors": "^1.4.0",
     "console-table-printer": "^2.15.0",
-    "figlet": "^1.9.3",
-    "inquirer": "^12.10.0",
-    "ora": "^9.0.0",
-    "systeminformation": "^5.27.11",
+    "figlet": "^1.11.0",
+    "inquirer": "^13.4.3",
+    "ora": "^9.4.0",
+    "systeminformation": "^5.31.6",
     "timeago.js": "^4.0.2",
-    "w3c-css-validator": "^1.4.0",
+    "w3c-css-validator": "^1.4.1",
     "wapalyzer": "^6.10.65"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "eslint": "^9.39.1",
-    "globals": "^16.5.0",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
     "jsdoc": "^4.0.5"
   },
   "scripts": {

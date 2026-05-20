@@ -86,16 +86,6 @@ const infoTools = {
 
     setTimeout(refreshCallback, 5e3);
   },
-  async getStations(refreshCallback) {
-    console.warn("some stations not visble only info".yellow);
-    
-    const country = await input({
-      message: "enter country"
-    });
-
-    getStations(country);
-    setTimeout(refreshCallback, 5e3);
-  }
 };
 
 const menuInfoOpts = [...Object.keys(infoTools), returnMainOpts];
